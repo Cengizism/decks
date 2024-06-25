@@ -1,18 +1,8 @@
 import { getAllDecks, getCardsByDeck, getDeckBySlug } from '@/lib/api';
 import { HOME_OG_IMAGE_URL } from '@/lib/constants';
-import {
-  Breadcrumbs,
-  Card,
-  CardActionArea,
-  CardHeader,
-  CardMedia,
-  Grid,
-  Link,
-  Stack,
-  Typography,
-} from '@mui/material';
 import { Metadata } from 'next';
-import NextLink from 'next/link';
+import Image from 'next/image';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 type Params = {
@@ -31,73 +21,38 @@ export default async function Deck({ params }: Params) {
   const cards = await getCardsByDeck(deck.folder);
 
   return (
-    <Stack spacing={4}>
-      <Typography variant='h2'>{deck.title}</Typography>
+    <>
+      <h3>{deck.title}</h3>
 
-      <Breadcrumbs aria-label='breadcrumb'>
-        <Link underline='hover' color='inherit' href='/' component={NextLink}>
-          Home
-        </Link>
-        <Typography color='text.primary'>{deck.title}</Typography>
-      </Breadcrumbs>
+      <div>
+        <Link href='/'>Home</Link>
+        &nbsp;|&nbsp;
+        <span>{deck.title}</span>
+      </div>
 
-      <article>
-        <Typography variant='body1'>{deck.description}</Typography>
-      </article>
+      <p>{deck.description}</p>
 
       {cards.length > 0 && (
-        <Grid container spacing={4}>
+        <div>
           {cards.map((card, index) => {
             return (
-              <Grid item key={index} xs={4}>
-                <Card
-                  sx={{
-                    minHeight: { xs: 300, sm: 400 },
-                  }}
-                >
-                  <CardActionArea
-                    href={`/card/${card.slug}`}
-                    component={NextLink}
-                    sx={{
-                      zIndex: 1,
-                    }}
-                  >
-                    <CardHeader
-                      title={card.title}
-                      titleTypographyProps={{
-                        sx: {
-                          fontSize: '1.2rem',
-                          fontWeight: 'bold',
-                          color: 'white',
-                        },
-                      }}
-                      sx={{
-                        position: 'relative',
-                        zIndex: 1,
-                      }}
-                    />
-                    <CardMedia
-                      component='img'
-                      height='194'
-                      image={card.coverImage}
-                      alt={card.title}
-                      sx={{
-                        position: 'absolute',
-                        top: 0,
-                        left: 0,
-                        width: '100%',
-                        height: { xs: 300, sm: 400 },
-                        zIndex: 0,
-                      }}
-                    />
-                  </CardActionArea>
-                </Card>
-              </Grid>
+              <div key={index}>
+                <Link href={`/card/${card.slug}`} passHref>
+                  <h4>{card.title}</h4>
+
+                  <Image
+                    src={card.coverImage}
+                    alt={card.title}
+                    width={120}
+                    height={60}
+                  />
+                </Link>
+              </div>
             );
           })}
-        </Grid>
+        </div>
       )}
-    </Stack>
+    </>
   );
 }
 

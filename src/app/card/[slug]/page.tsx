@@ -1,9 +1,8 @@
 import CoverImage from '@/app/components/cover-image';
 import { getAllCards, getCardBySlug, getDeckTitle } from '@/lib/api';
 import markdownToHtml from '@/lib/markdownToHtml';
-import { Breadcrumbs, Link, Stack, Typography } from '@mui/material';
 import { Metadata } from 'next';
-import NextLink from 'next/link';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import markdownStyles from '../../../styles/markdown-styles.module.css';
@@ -24,32 +23,26 @@ export default async function Card({ params }: Params) {
   const content = await markdownToHtml(card.content || '');
 
   return (
-    <Stack spacing={4}>
-      <Typography variant='h2'>{card.title}</Typography>
+    <>
+      <h3>Card</h3>
 
-      <Breadcrumbs aria-label='breadcrumb'>
-        <Link underline='hover' color='inherit' href='/' component={NextLink}>
-          Home
-        </Link>
-        <Link
-          underline='hover'
-          color='inherit'
-          href={`/deck/${card.deck}`}
-          component={NextLink}
-        >
-          {getDeckTitle(card.deck)}
-        </Link>
-        <Typography color='text.primary'>{card.title}</Typography>
-      </Breadcrumbs>
+      <div>
+        <Link href='/'>Home</Link>
+        &nbsp;|&nbsp;
+        <Link href={`/deck/${card.deck}`}>{getDeckTitle(card.deck)}</Link>
+        &nbsp;|&nbsp;
+        <span>{card.title}</span>
+      </div>
 
       <article>
+        <h4>{card.title}</h4>
         <CoverImage title={card.title} src={card.coverImage} />
         <div
           className={markdownStyles['markdown']}
           dangerouslySetInnerHTML={{ __html: content }}
         />
       </article>
-    </Stack>
+    </>
   );
 }
 

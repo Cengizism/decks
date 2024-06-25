@@ -1,11 +1,7 @@
 import { DESCRIPTION, HOME_OG_IMAGE_URL, TITLE } from '@/lib/constants';
-import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
-import CssBaseline from '@mui/material/CssBaseline';
-import { ThemeProvider } from '@mui/material/styles';
 import type { Metadata } from 'next';
 import * as React from 'react';
 
-import theme from '../theme';
 import Main from './main';
 
 export const metadata: Metadata = {
@@ -58,13 +54,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
       </head>
 
       <body>
-        <AppRouterCacheProvider options={{ enableCssLayer: true }}>
-          <ThemeProvider theme={theme}>
-            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-            <CssBaseline />
-            <Main>{props.children}</Main>
-          </ThemeProvider>
-        </AppRouterCacheProvider>
+        <Main>{props.children}</Main>
       </body>
     </html>
   );
