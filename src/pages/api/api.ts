@@ -4,7 +4,7 @@ import fs from 'fs/promises';
 import matter from 'gray-matter';
 import path from 'path';
 
-import decks from '../../content/decks.json';
+import decks from '../../../content/decks.json';
 
 const contentDirectory = path.join(process.cwd(), 'content');
 

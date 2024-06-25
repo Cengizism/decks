@@ -1,8 +1,13 @@
 import { DESCRIPTION, HOME_OG_IMAGE_URL, TITLE } from '@/lib/constants';
+import '@/styles/globals.css';
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import * as React from 'react';
 
-import Main from './main';
+// import * as React from 'react';
+import Menu from './components/menu';
+// import Main from './main';
+import { Providers } from './providers';
 
 export const metadata: Metadata = {
   // TODO: "metadataBase" needs to be updated with env variables
@@ -54,7 +59,19 @@ export default function RootLayout(props: { children: React.ReactNode }) {
       </head>
 
       <body>
-        <Main>{props.children}</Main>
+        <Providers>
+          <main>
+            <header>
+              <Link href='/'>
+                <h2>Alten Decks</h2>
+              </Link>
+            </header>
+            <nav>
+              <Menu />
+            </nav>
+            <div>{props.children}</div>
+          </main>
+        </Providers>
       </body>
     </html>
   );
