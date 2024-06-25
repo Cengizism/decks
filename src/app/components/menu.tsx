@@ -1,14 +1,14 @@
-import React from "react";
+import InfoIcon from '@mui/icons-material/Info';
+import StyleIcon from '@mui/icons-material/Style';
 import {
   List,
   ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
-} from "@mui/material";
-import NextLink from "next/link";
-import StyleIcon from "@mui/icons-material/Style";
-import InfoIcon from "@mui/icons-material/Info";
+} from '@mui/material';
+import NextLink from 'next/link';
+import React from 'react';
 
 export default function Menu({ open }: { open: boolean }) {
   return (
@@ -16,29 +16,29 @@ export default function Menu({ open }: { open: boolean }) {
       <ListItem
         disablePadding
         sx={{
-          display: "block",
+          display: 'block',
         }}
       >
         <ListItemButton
-          href="/"
+          href='/'
           component={NextLink}
           sx={{
             minHeight: 48,
-            justifyContent: open ? "initial" : "center",
+            justifyContent: open ? 'initial' : 'center',
             px: 2.5,
           }}
         >
           <ListItemIcon
             sx={{
               minWidth: 0,
-              mr: open ? 3 : "auto",
-              justifyContent: "center",
+              mr: open ? 3 : 'auto',
+              justifyContent: 'center',
             }}
           >
             <StyleIcon />
           </ListItemIcon>
           <ListItemText
-            primary="Decks"
+            primary='Decks'
             sx={{
               opacity: open ? 1 : 0,
             }}
@@ -49,29 +49,29 @@ export default function Menu({ open }: { open: boolean }) {
       <ListItem
         disablePadding
         sx={{
-          display: "block",
+          display: 'block',
         }}
       >
         <ListItemButton
-          href="/about"
+          href='/about'
           component={NextLink}
           sx={{
             minHeight: 48,
-            justifyContent: open ? "initial" : "center",
+            justifyContent: open ? 'initial' : 'center',
             px: 2.5,
           }}
         >
           <ListItemIcon
             sx={{
               minWidth: 0,
-              mr: open ? 3 : "auto",
-              justifyContent: "center",
+              mr: open ? 3 : 'auto',
+              justifyContent: 'center',
             }}
           >
             <InfoIcon />
           </ListItemIcon>
           <ListItemText
-            primary="About"
+            primary='About'
             sx={{
               opacity: open ? 1 : 0,
             }}

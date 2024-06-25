@@ -1,23 +1,22 @@
-import * as React from "react";
-import { getAllDecks } from "@/lib/api";
+import { getAllDecks } from '@/lib/api';
 import {
   Card,
   CardActionArea,
   CardHeader,
   CardMedia,
+  Grid,
   Stack,
   Typography,
-  Grid,
-} from "@mui/material";
-import NextLink from "next/link";
-import { DeckType } from "@/interfaces/types";
+} from '@mui/material';
+import NextLink from 'next/link';
+import * as React from 'react';
 
 export default async function Index() {
   const allDecks = await getAllDecks();
 
   return (
     <Stack spacing={4}>
-      <Typography variant="h2">Decks</Typography>
+      <Typography variant='h2'>Decks</Typography>
 
       {allDecks.length > 0 && (
         <Grid container spacing={4}>
@@ -40,29 +39,29 @@ export default async function Index() {
                       title={deck.title}
                       titleTypographyProps={{
                         sx: {
-                          fontSize: "1.2rem",
-                          fontWeight: "bold",
-                          color: "white",
+                          fontSize: '1.2rem',
+                          fontWeight: 'bold',
+                          color: 'white',
                         },
                       }}
                       sx={{
-                        position: "relative",
+                        position: 'relative',
                         zIndex: 1,
                       }}
                     />
                     <CardMedia
-                      component="img"
-                      height="194"
+                      component='img'
+                      height='194'
                       // image={deck.coverImage}
                       // alt={deck.title}
                       sx={{
-                        position: "absolute",
+                        position: 'absolute',
                         top: 0,
                         left: 0,
-                        width: "100%",
+                        width: '100%',
                         height: { xs: 300, sm: 400 },
                         zIndex: 0,
-                        backgroundColor: "RGBA(0,0,0,0.5)",
+                        backgroundColor: 'RGBA(0,0,0,0.5)',
                       }}
                     />
                   </CardActionArea>

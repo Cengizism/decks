@@ -1,12 +1,12 @@
-import * as React from "react";
-import { Typography, Stack } from "@mui/material";
+import { Stack, Typography } from '@mui/material';
+import * as React from 'react';
 
 export default function About() {
   return (
     <Stack spacing={4}>
-      <Typography variant="h2">About</Typography>
+      <Typography variant='h2'>About</Typography>
 
-      <Typography variant="body1">
+      <Typography variant='body1'>
         Venenatis cras sed felis eget velit. Consectetur libero id faucibus nisl
         tincidunt. Gravida in fermentum et sollicitudin ac orci phasellus
         egestas tellus. Volutpat consequat mauris nunc congue nisi vitae. Id

@@ -34,6 +34,7 @@ pnpm dev
 Some additional notes..
 
 ## TODOS
+
 - Site url ffrom environment variable needs generalization
 - Change openGraph image to Alten Decks logo
 - Install `eslint` and `prettier` for code formatting

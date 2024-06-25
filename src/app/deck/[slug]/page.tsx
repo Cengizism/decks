@@ -1,19 +1,19 @@
-import { Metadata } from "next";
-import { notFound } from "next/navigation";
-import { getAllDecks, getDeckBySlug, getCardsByDeck } from "@/lib/api";
+import { getAllDecks, getCardsByDeck, getDeckBySlug } from '@/lib/api';
+import { HOME_OG_IMAGE_URL } from '@/lib/constants';
 import {
-  Typography,
-  Stack,
   Breadcrumbs,
-  Link,
   Card,
   CardActionArea,
   CardHeader,
   CardMedia,
   Grid,
-} from "@mui/material";
-import NextLink from "next/link";
-import { HOME_OG_IMAGE_URL } from "@/lib/constants";
+  Link,
+  Stack,
+  Typography,
+} from '@mui/material';
+import { Metadata } from 'next';
+import NextLink from 'next/link';
+import { notFound } from 'next/navigation';
 
 type Params = {
   params: {
@@ -32,17 +32,17 @@ export default async function Deck({ params }: Params) {
 
   return (
     <Stack spacing={4}>
-      <Typography variant="h2">{deck.title}</Typography>
+      <Typography variant='h2'>{deck.title}</Typography>
 
-      <Breadcrumbs aria-label="breadcrumb">
-        <Link underline="hover" color="inherit" href="/" component={NextLink}>
+      <Breadcrumbs aria-label='breadcrumb'>
+        <Link underline='hover' color='inherit' href='/' component={NextLink}>
           Home
         </Link>
-        <Typography color="text.primary">{deck.title}</Typography>
+        <Typography color='text.primary'>{deck.title}</Typography>
       </Breadcrumbs>
 
       <article>
-        <Typography variant="body1">{deck.description}</Typography>
+        <Typography variant='body1'>{deck.description}</Typography>
       </article>
 
       {cards.length > 0 && (
@@ -66,26 +66,26 @@ export default async function Deck({ params }: Params) {
                       title={card.title}
                       titleTypographyProps={{
                         sx: {
-                          fontSize: "1.2rem",
-                          fontWeight: "bold",
-                          color: "white",
+                          fontSize: '1.2rem',
+                          fontWeight: 'bold',
+                          color: 'white',
                         },
                       }}
                       sx={{
-                        position: "relative",
+                        position: 'relative',
                         zIndex: 1,
                       }}
                     />
                     <CardMedia
-                      component="img"
-                      height="194"
+                      component='img'
+                      height='194'
                       image={card.coverImage}
                       alt={card.title}
                       sx={{
-                        position: "absolute",
+                        position: 'absolute',
                         top: 0,
                         left: 0,
-                        width: "100%",
+                        width: '100%',
                         height: { xs: 300, sm: 400 },
                         zIndex: 0,
                       }}
