@@ -1,5 +1,6 @@
 'use client';
 
+import { DeckType } from '@/interfaces/types';
 import {
   Text,
   Title1,
@@ -24,7 +25,7 @@ const useStyles = makeStyles({
 
 export default function Index() {
   const styles = useStyles();
-  const [allDecks, setAllDecks] = useState([]);
+  const [allDecks, setAllDecks] = useState([] as Array<DeckType>);
 
   useEffect(() => {
     const fetchData = async () => {
