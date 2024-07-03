@@ -1,5 +1,5 @@
 import { getAllDecks, getCardsByDeck, getDeckBySlug } from '@/lib/api';
-import { HOME_OG_IMAGE_URL } from '@/lib/constants';
+import { HOME_OG_IMAGE_URL, TITLE } from '@/lib/constants';
 import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -57,7 +57,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
     return notFound();
   }
 
-  const title = `${deck.title} | Alten Decks - Deck`;
+  const title = `${deck.title} | ${TITLE}`;
 
   return {
     title,

@@ -1,5 +1,6 @@
-import CoverImage from '@/app/components/cover-image';
+import CoverImage from '@/components/cover-image';
 import { getAllCards, getCardBySlug, getDeckTitle } from '@/lib/api';
+import { TITLE } from '@/lib/constants';
 import markdownToHtml from '@/lib/markdownToHtml';
 import { Metadata } from 'next';
 import Link from 'next/link';
@@ -53,7 +54,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
     return notFound();
   }
 
-  const title = `${card.title} | Next.js based content platform`;
+  const title = `${card.title} | ${TITLE}`;
 
   return {
     title,
