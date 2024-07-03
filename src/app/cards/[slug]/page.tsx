@@ -30,7 +30,7 @@ export default async function CardPage({ params }: Params) {
       <div>
         <Link href='/'>Home</Link>
         &nbsp;|&nbsp;
-        <Link href={`/deck/${card.deck}`}>{getDeckTitle(card.deck)}</Link>
+        <Link href={`/decks/${card.deck}`}>{getDeckTitle(card.deck)}</Link>
         &nbsp;|&nbsp;
         <span>{card.title}</span>
       </div>

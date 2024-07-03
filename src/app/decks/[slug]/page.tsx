@@ -31,7 +31,7 @@ export default async function DeckPage({ params }: Params) {
         <div>
           {cards.map((card) => (
             <div key={card.slug}>
-              <Link href={`/card/${card.slug}`} passHref>
+              <Link href={`/cards/${card.slug}`} passHref>
                 <h4>{card.title}</h4>
                 <Image
                   src={card.coverImage}

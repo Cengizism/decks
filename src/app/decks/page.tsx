@@ -10,7 +10,7 @@ export default async function DecksPage() {
         <div>
           {decks.map((deck, index) => (
             <div key={index}>
-              <Link href={`/deck/${deck.folder}`} passHref>
+              <Link href={`/decks/${deck.folder}`} passHref>
                 <h4>{deck.title}</h4>
               </Link>
             </div>
