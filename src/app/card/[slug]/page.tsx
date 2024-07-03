@@ -13,7 +13,7 @@ type Params = {
   };
 };
 
-export default async function Card({ params }: Params) {
+export default async function CardPage({ params }: Params) {
   const card = await getCardBySlug(params.slug);
 
   if (!card) {

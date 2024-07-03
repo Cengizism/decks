@@ -1,10 +1,9 @@
-// 'use client';
-// import { getAllDecks, getCardsByDeck, getDeckBySlug } from '@/lib/api';
+import { getAllDecks, getCardsByDeck, getDeckBySlug } from '@/lib/api';
 import { HOME_OG_IMAGE_URL } from '@/lib/constants';
 import { Metadata } from 'next';
-import React from 'react';
-
-import Deck from '../deck';
+import Image from 'next/image';
+import Link from 'next/link';
+import { notFound } from 'next/navigation';
 
 type Params = {
   params: {
@@ -13,40 +12,64 @@ type Params = {
 };
 
 export default async function DeckPage({ params }: Params) {
-  // const deck = await getDeckBySlug(params.slug);
+  const deck = await getDeckBySlug(params.slug);
 
-  // if (!deck) {
-  //   return notFound();
-  // }
+  if (!deck) {
+    return notFound();
+  }
 
-  // const cards = await getCardsByDeck(deck.folder);
+  const cards = await getCardsByDeck(deck.folder);
 
-  return <Deck deckName={params.slug} />;
+  return (
+    <>
+      <h3>Cards of that deck</h3>
+      <div>
+        <Link href='/'>Home</Link>
+        &nbsp;|&nbsp;
+      </div>
+      {cards.length > 0 ? (
+        <div>
+          {cards.map((card) => (
+            <div key={card.slug}>
+              <Link href={`/card/${card.slug}`} passHref>
+                <h4>{card.title}</h4>
+                <Image
+                  src={card.coverImage}
+                  alt={card.title}
+                  width={120}
+                  height={60}
+                />
+              </Link>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div>No cards found for this deck.</div>
+      )}
+    </>
+  );
 }
 
-// export async function generateMetadata({ params }: Params): Promise<Metadata> {
-//   const deck = await getDeckBySlug(params.slug);
+export async function generateMetadata({ params }: Params): Promise<Metadata> {
+  const deck = await getDeckBySlug(params.slug);
 
-//   if (!deck) {
-//     return notFound();
-//   }
+  if (!deck) {
+    return notFound();
+  }
 
-//   const title = `${deck.title} | Alten Decks - Deck`;
+  const title = `${deck.title} | Alten Decks - Deck`;
 
-//   return {
-//     title,
-//     openGraph: {
-//       title,
-//       images: [HOME_OG_IMAGE_URL],
-//     },
-//   };
-// }
+  return {
+    title,
+    openGraph: {
+      title,
+      images: [HOME_OG_IMAGE_URL],
+    },
+  };
+}
 
 export async function generateStaticParams() {
-  // Use environment variable to get the base URL
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-  const response = await fetch(`${baseUrl}/api/decks`);
-  const decks = await response.json();
+  const decks = await getAllDecks();
 
   return decks.map((deck) => ({
     slug: deck.folder,

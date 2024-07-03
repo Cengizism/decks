@@ -1,5 +1,5 @@
+import { getAllDecks } from '@/lib/api';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { getAllDecks } from '../api'; // Adjust the import path as necessary
 
 export default async function handler(
   req: NextApiRequest,
