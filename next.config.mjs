@@ -2,8 +2,8 @@
 const nextConfig = {
   experimental: {
     swcPlugins: [
-      ['fluentui-next-appdir-directive', { paths: ['@griffel', '@fluentui'] }]
-  ],
+      ['fluentui-next-appdir-directive', { paths: ['@griffel', '@fluentui'] }],
+    ],
   },
 };
 

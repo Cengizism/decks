@@ -78,14 +78,14 @@ export async function getCardBySlug(slug: string): Promise<CardType | null> {
   try {
     const fileContents = await fs.readFile(fullPath, 'utf8');
     const { data, content } = matter(fileContents);
-    const card = { 
-      ...data, 
-      slug: realSlug, 
-      content, 
+    const card = {
+      ...data,
+      slug: realSlug,
+      content,
       deck: {
         folder: deckFolder,
         title: getDeckTitle(deckFolder) || '',
-      }
+      },
     } as CardType;
     cache.cards.set(realSlug, card);
     return card;
@@ -132,7 +132,8 @@ export async function getCardsByDeck(deckFolder: string): Promise<CardType[]> {
   return allCards.filter((card) => card.deck.folder === deckFolder);
 }
 
-function watchDirectory(directory: string) { // TODO: This is more likely for local development, so maybe we can remove this in production
+function watchDirectory(directory: string) {
+  // TODO: This is more likely for local development, so maybe we can remove this in production
   watch(directory, async (eventType, filename) => {
     if (filename && (eventType === 'change' || eventType === 'rename')) {
       cache.slugs = [];

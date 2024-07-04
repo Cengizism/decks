@@ -8,7 +8,7 @@ export default async function DecksPage() {
   return (
     <>
       <DeckHeader />
-      
+
       {decks.length > 0 && (
         <div>
           {decks.map((deck, index) => (

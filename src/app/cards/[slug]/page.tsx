@@ -2,11 +2,10 @@ import CoverImage from '@/components/cards/cover-image';
 import { getAllCards, getCardBySlug, getDeckTitle } from '@/lib/api';
 import { TITLE } from '@/lib/constants';
 import markdownToHtml from '@/lib/markdown-to-html';
+import markdownStyles from '@/styles/markdown-styles.module.css';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-
-import markdownStyles from '@/styles/markdown-styles.module.css';
 
 type Params = {
   params: {
@@ -30,7 +29,9 @@ export default async function CardPage({ params }: Params) {
       <div>
         <Link href='/'>Home</Link>
         &nbsp;|&nbsp;
-        <Link href={`/decks/${card.deck}`}>{getDeckTitle(card.deck)}</Link>
+        <Link href={`/decks/${card.deck}`}>
+          {getDeckTitle(card.deck.folder)}
+        </Link>
         &nbsp;|&nbsp;
         <span>{card.title}</span>
       </div>
