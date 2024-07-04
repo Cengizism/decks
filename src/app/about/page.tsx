@@ -1,9 +1,12 @@
+import BreadCrumps from '@/components/bread-crumps';
+import Header from '@/components/header';
 import * as React from 'react';
 
 export default function About() {
   return (
     <>
-      <h3>About</h3>
+      <BreadCrumps />
+      <Header title='About' />
 
       <p>
         Venenatis cras sed felis eget velit. Consectetur libero id faucibus nisl

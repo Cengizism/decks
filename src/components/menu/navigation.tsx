@@ -2,8 +2,8 @@ import { makeStyles } from '@fluentui/react-components';
 import {
   Board20Filled,
   Board20Regular,
-  BookInformation20Filled,
-  BookInformation20Regular,
+  Info20Filled,
+  Info20Regular,
   BookStar20Filled,
   BookStar20Regular,
   bundleIcon,
@@ -23,11 +23,17 @@ import HamburgerMenu from './hamburger-menu';
 const DashboardIcons = bundleIcon(Board20Filled, Board20Regular);
 const DecksIcons = bundleIcon(BookStar20Filled, BookStar20Regular);
 const AboutIcons = bundleIcon(
-  BookInformation20Filled,
-  BookInformation20Regular
+  Info20Filled,
+  Info20Regular,
 );
 
 const useStyles = makeStyles({
+  root: {
+    paddingTop: '18px',
+  },
+  hamburger: {
+    paddingLeft: '14px',
+  },
   navigation: {
     '& a': {
       textDecoration: 'none',
@@ -50,8 +56,8 @@ const Navigation = ({ isOpen, toggleHamburgerMenu }: NavigationProps) => {
   const styles = useStyles();
 
   return (
-    <NavDrawer open={isOpen} type='inline'>
-      <NavDrawerHeader>
+    <NavDrawer open={isOpen} type='inline' className={styles.root}>
+      <NavDrawerHeader className={styles.hamburger}>
         <HamburgerMenu toggleHamburgerMenu={toggleHamburgerMenu} />
       </NavDrawerHeader>
 

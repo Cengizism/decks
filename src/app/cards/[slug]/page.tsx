@@ -1,10 +1,12 @@
-import CoverImage from '@/components/cards/cover-image';
+import BreadCrumps from '@/components/bread-crumps';
+import CoverImage from '@/components/cover-image';
+import Header from '@/components/header';
 import { getAllCards, getCardBySlug, getDeckTitle } from '@/lib/api';
 import { TITLE } from '@/lib/constants';
 import markdownToHtml from '@/lib/markdown-to-html';
 import markdownStyles from '@/styles/markdown-styles.module.css';
 import { Metadata } from 'next';
-import Link from 'next/link';
+// import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 type Params = {
@@ -24,21 +26,22 @@ export default async function CardPage({ params }: Params) {
 
   return (
     <>
-      <h3>Card</h3>
-
-      <div>
+      {/* <div>
         <Link href='/'>Home</Link>
         &nbsp;|&nbsp;
-        <Link href={`/decks/${card.deck}`}>
+        <Link href={`/decks/${card.deck.folder}`}>
           {getDeckTitle(card.deck.folder)}
         </Link>
         &nbsp;|&nbsp;
         <span>{card.title}</span>
-      </div>
+      </div> */}
+
+      <BreadCrumps />
+      <Header title={card.title} subTitle={card.excerpt} />
+
+      <CoverImage title={card.title} src={card.coverImage} />
 
       <article>
-        <h4>{card.title}</h4>
-        <CoverImage title={card.title} src={card.coverImage} />
         <div
           className={markdownStyles['markdown']}
           dangerouslySetInnerHTML={{ __html: content }}

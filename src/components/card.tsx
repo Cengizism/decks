@@ -12,9 +12,8 @@ import {
   CardFooter,
   CardHeader,
   CardPreview,
-  CardProps,
 } from '@fluentui/react-components';
-import { Heart24Regular } from '@fluentui/react-icons';
+// import { Heart24Regular } from '@fluentui/react-icons';
 import Image from 'next/image';
 import Link from 'next/link';
 import * as React from 'react';
@@ -43,11 +42,11 @@ const useStyles = makeStyles({
   },
 });
 
-type CardPresentationProps = {
+type CardComponentProps = {
   card: CardType;
 };
 
-const CardPresentation = ({ card }: CardPresentationProps) => {
+const CardComponent = ({ card }: CardComponentProps) => {
   const styles = useStyles();
 
   return (
@@ -63,13 +62,13 @@ const CardPresentation = ({ card }: CardPresentationProps) => {
             {card.deck.title}
           </Caption1>
         }
-        action={
-          <Button
-            appearance='transparent'
-            className={styles.bookmark}
-            icon={<Heart24Regular />}
-          />
-        }
+        // action={
+        //   <Button
+        //     appearance='transparent'
+        //     className={styles.bookmark}
+        //     icon={<Heart24Regular />}
+        //   />
+        // }
       />
 
       <Body1 truncate wrap={false} className={styles.text}>
@@ -85,4 +84,4 @@ const CardPresentation = ({ card }: CardPresentationProps) => {
   );
 };
 
-export default CardPresentation;
+export default CardComponent;

@@ -1,9 +1,10 @@
-import Intro from '@/components/intro';
+import Header from '@/components/header';
+import { DESCRIPTION } from '@/lib/constants';
 
 export default async function Index() {
   return (
     <>
-      <Intro />
+      <Header title='Welcome to the platform' subTitle={DESCRIPTION} />
     </>
   );
 }

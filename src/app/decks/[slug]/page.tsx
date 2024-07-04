@@ -1,5 +1,6 @@
-import CardsListing from '@/components/cards/cards-listing';
-import DeckHeader from '@/components/decks/deck-header';
+import BreadCrumps from '@/components/bread-crumps';
+import Cards from '@/components/cards';
+import Header from '@/components/header';
 import { getAllDecks, getCardsByDeck, getDeckBySlug } from '@/lib/api';
 import { HOME_OG_IMAGE_URL, TITLE } from '@/lib/constants';
 import { Metadata } from 'next';
@@ -22,10 +23,14 @@ export default async function DeckPage({ params }: Params) {
 
   return (
     <>
-      <DeckHeader deck={deck} />
+      <BreadCrumps deck={deck} />
+      <Header 
+        title={deck.title}
+        subTitle={deck.description}
+      />
 
       {cards.length > 0 ? (
-        <CardsListing cards={cards} />
+        <Cards cards={cards} />
       ) : (
         <div>No cards found for this deck.</div>
       )}

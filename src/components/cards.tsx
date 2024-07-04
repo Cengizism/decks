@@ -4,28 +4,29 @@ import { CardType } from '@/interfaces/types';
 import { makeStyles } from '@fluentui/react-components';
 import React from 'react';
 
-import CardPresentation from './card-presentation';
+import Card from './card';
 
 const useStyles = makeStyles({
   main: {
     gap: '16px',
     display: 'flex',
     flexWrap: 'wrap',
+    margin: '0 6px'
   },
 });
 
-const CardsListing = ({ cards }: { cards: CardType[] }) => {
+const Cards = ({ cards }: { cards: CardType[] }) => {
   const styles = useStyles();
 
   return (
     <div>
       <div className={styles.main}>
         {cards.map((card) => (
-          <CardPresentation card={card} key={card.title} />
+          <Card card={card} key={card.title} />
         ))}
       </div>
     </div>
   );
 };
 
-export default CardsListing;
+export default Cards;

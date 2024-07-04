@@ -1,6 +1,8 @@
 'use client';
 
-import { makeStyles } from '@fluentui/react-components';
+import AltenLogo from '@/components/alten-logo';
+import { TITLE } from '@/lib/constants';
+import { Title1, makeStyles, tokens } from '@fluentui/react-components';
 import * as React from 'react';
 
 import HamburgerMenu from './menu/hamburger-menu';
@@ -11,13 +13,44 @@ const useStyles = makeStyles({
     overflow: 'hidden',
     display: 'flex',
     height: '100vh',
+    width: '100vw',
   },
-  content: {
+  body: {
     flex: '1',
-    padding: '16px',
     display: 'grid',
+    flexGrow: 1,
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
+    height: '100vh',
+  },
+  header: {
+    display: 'flex',
+    justifyContent: 'left',
+    gap: '20px',
+    padding: '16px',
+    alignItems: 'center',
+    borderBottom: `1px solid ${tokens.colorNeutralStroke1}`,
+
+    '& > button': {
+      marginTop: '4px',
+    },
+
+    '& hgroup': {
+      display: 'flex',
+      gap: '10px',
+      alignItems: 'center',
+    },
+  },
+  content: {
+    display: 'flex',
+    flexDirection: 'column',
+    padding: '16px 16px 90px 16px',
+    height: '100vh',
+    width: '100vw !important',
+    overflow: 'auto',
+  },
+  narrowed: {
+    width: 'calc(100vw - 260px) !important',
   },
 });
 
@@ -31,14 +64,25 @@ export default function Main(props: { children: React.ReactNode }) {
   };
 
   return (
-    <main className={styles.root}>
+    <div className={styles.root}>
       <Navigation isOpen={isOpen} toggleHamburgerMenu={toggleHamburgerMenu} />
 
-      <div className={styles.content}>
-        {!isOpen && <HamburgerMenu toggleHamburgerMenu={toggleHamburgerMenu} />}
+      <div className={styles.body}>
+        <header className={styles.header}>
+          {!isOpen && (
+            <HamburgerMenu toggleHamburgerMenu={toggleHamburgerMenu} />
+          )}
 
-        <div>{props.children}</div>
+          <hgroup>
+            <AltenLogo />
+            <Title1>{TITLE}</Title1>
+          </hgroup>
+        </header>
+
+        <div className={`${styles.content} ${isOpen ? styles.narrowed : ''}`}>
+          {props.children}
+        </div>
       </div>
-    </main>
+    </div>
   );
 }

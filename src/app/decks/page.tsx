@@ -1,4 +1,5 @@
-import DeckHeader from '@/components/decks/deck-header';
+import BreadCrumps from '@/components/bread-crumps';
+import Header from '@/components/header';
 import { getAllDecks } from '@/lib/api';
 import Link from 'next/link';
 
@@ -7,7 +8,11 @@ export default async function DecksPage() {
 
   return (
     <>
-      <DeckHeader />
+      <BreadCrumps />
+      <Header 
+        title='Decks'
+        subTitle='Here you can find all the decks available in the platform.'
+      />
 
       {decks.length > 0 && (
         <div>
