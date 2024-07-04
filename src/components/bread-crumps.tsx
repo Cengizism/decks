@@ -20,23 +20,14 @@ import React from 'react';
 const DashboardIcons = bundleIcon(Board20Filled, Board20Regular);
 const DecksIcons = bundleIcon(BookStar20Filled, BookStar20Regular);
 
-const BreadCrumps = ({ deck, card }: { deck?: DeckType; card?: CardType }) => {
-  const decksPath = deck ? `/decks` : '';
+interface BreadCrumpsProps {
+  deck?: DeckType;
+  card?: CardType;
+}
 
-  console.log('deck', deck);
-
-  {/* <div>
-        <Link href='/'>Home</Link>
-        &nbsp;|&nbsp;
-        <Link href={`/decks/${card.deck.folder}`}>
-          {getDeckTitle(card.deck.folder)}
-        </Link>
-        &nbsp;|&nbsp;
-        <span>{card.title}</span>
-      </div> */}
-
+const BreadCrumps: React.FC<BreadCrumpsProps> = ({ deck, card }) => {
   return (
-    <Breadcrumb aria-label='Decks path'>
+    <Breadcrumb>
       <BreadcrumbItem>
         <Link href='/'>
           <BreadcrumbButton icon={<DashboardIcons />}>
@@ -46,7 +37,7 @@ const BreadCrumps = ({ deck, card }: { deck?: DeckType; card?: CardType }) => {
       </BreadcrumbItem>
       <BreadcrumbDivider />
       <BreadcrumbItem>
-        <Link href={decksPath}>
+        <Link href='/decks'>
           <BreadcrumbButton icon={<DecksIcons />}>Decks</BreadcrumbButton>
         </Link>
       </BreadcrumbItem>
@@ -54,7 +45,25 @@ const BreadCrumps = ({ deck, card }: { deck?: DeckType; card?: CardType }) => {
         <>
           <BreadcrumbDivider />
           <BreadcrumbItem>
-            <BreadcrumbButton>{deck.title}</BreadcrumbButton>
+            <Link href={`/decks/${deck.folder}`}>
+              <BreadcrumbButton>{deck.title}</BreadcrumbButton>
+            </Link>
+          </BreadcrumbItem>
+        </>
+      )}
+      {card && (
+        <>
+          <BreadcrumbDivider />
+          <BreadcrumbItem>
+            <Link href={`/decks/${card.deck.folder}`}>
+              <BreadcrumbButton>{card.deck.title}</BreadcrumbButton>
+            </Link>
+          </BreadcrumbItem>
+          <BreadcrumbDivider />
+          <BreadcrumbItem>
+            <Link href={`/decks/${card.deck.folder}/${card.slug}`}>
+              <BreadcrumbButton>{card.title}</BreadcrumbButton>
+            </Link>
           </BreadcrumbItem>
         </>
       )}
