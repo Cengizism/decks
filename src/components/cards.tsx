@@ -11,7 +11,8 @@ const useStyles = makeStyles({
     gap: '16px',
     display: 'flex',
     flexWrap: 'wrap',
-    margin: '0 6px'
+    margin: '0 6px',
+    rowGap: '36px',
   },
 });
 
@@ -19,12 +20,10 @@ const Cards = ({ cards }: { cards: CardType[] }) => {
   const styles = useStyles();
 
   return (
-    <div>
-      <div className={styles.main}>
-        {cards.map((card) => (
-          <Card card={card} key={card.title} />
-        ))}
-      </div>
+    <div className={styles.main}>
+      {cards.map((card) => (
+        <Card card={card} key={card.title} />
+      ))}
     </div>
   );
 };

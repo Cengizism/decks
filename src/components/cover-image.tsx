@@ -18,6 +18,7 @@ const useStyles = makeStyles({
     height: 'auto',
   },
   image: {
+    top: 0,
     width: '100%',
     minHeight: '400px',
     objectFit: 'cover',

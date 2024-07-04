@@ -1,12 +1,11 @@
 import BreadCrumps from '@/components/bread-crumps';
 import CoverImage from '@/components/cover-image';
 import Header from '@/components/header';
-import { getAllCards, getCardBySlug, getDeckTitle } from '@/lib/api';
+import { getAllCards, getCardBySlug } from '@/lib/api';
 import { TITLE } from '@/lib/constants';
 import markdownToHtml from '@/lib/markdown-to-html';
 import markdownStyles from '@/styles/markdown-styles.module.css';
 import { Metadata } from 'next';
-// import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 type Params = {
@@ -26,20 +25,13 @@ export default async function CardPage({ params }: Params) {
 
   return (
     <>
-      {/* <div>
-        <Link href='/'>Home</Link>
-        &nbsp;|&nbsp;
-        <Link href={`/decks/${card.deck.folder}`}>
-          {getDeckTitle(card.deck.folder)}
-        </Link>
-        &nbsp;|&nbsp;
-        <span>{card.title}</span>
-      </div> */}
-
-      <BreadCrumps />
+      <BreadCrumps card={card} />
       <Header title={card.title} subTitle={card.excerpt} />
 
-      <CoverImage title={card.title} src={card.coverImage} />
+      <CoverImage
+        src={`/images/content/${card.deck.folder}/${card.coverImage}`}
+        title={card.title}
+      />
 
       <article>
         <div
@@ -64,7 +56,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
     title,
     openGraph: {
       title,
-      images: card.ogImage ? [card.ogImage.url] : [],
+      images: card.coverImage ? [card.coverImage] : [],
     },
   };
 }

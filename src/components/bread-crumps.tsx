@@ -23,6 +23,18 @@ const DecksIcons = bundleIcon(BookStar20Filled, BookStar20Regular);
 const BreadCrumps = ({ deck, card }: { deck?: DeckType; card?: CardType }) => {
   const decksPath = deck ? `/decks` : '';
 
+  console.log('deck', deck);
+
+  {/* <div>
+        <Link href='/'>Home</Link>
+        &nbsp;|&nbsp;
+        <Link href={`/decks/${card.deck.folder}`}>
+          {getDeckTitle(card.deck.folder)}
+        </Link>
+        &nbsp;|&nbsp;
+        <span>{card.title}</span>
+      </div> */}
+
   return (
     <Breadcrumb aria-label='Decks path'>
       <BreadcrumbItem>

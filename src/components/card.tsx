@@ -13,7 +13,7 @@ import {
   CardHeader,
   CardPreview,
 } from '@fluentui/react-components';
-// import { Heart24Regular } from '@fluentui/react-icons';
+import { Heart24Regular } from '@fluentui/react-icons';
 import Image from 'next/image';
 import Link from 'next/link';
 import * as React from 'react';
@@ -52,7 +52,12 @@ const CardComponent = ({ card }: CardComponentProps) => {
   return (
     <Card className={styles.card}>
       <CardPreview className={styles.grayBackground}>
-        <Image src={card.coverImage} alt={card.title} width={120} height={60} />
+        <Image
+          src={`/images/content/${card.deck.folder}/${card.coverImage}`}
+          alt={card.title}
+          width={120}
+          height={60}
+        />
       </CardPreview>
 
       <CardHeader
@@ -62,13 +67,13 @@ const CardComponent = ({ card }: CardComponentProps) => {
             {card.deck.title}
           </Caption1>
         }
-        // action={
-        //   <Button
-        //     appearance='transparent'
-        //     className={styles.bookmark}
-        //     icon={<Heart24Regular />}
-        //   />
-        // }
+        action={
+          <Button
+            appearance='transparent'
+            className={styles.bookmark}
+            icon={<Heart24Regular />}
+          />
+        }
       />
 
       <Body1 truncate wrap={false} className={styles.text}>

@@ -7,9 +7,6 @@ export type CardType = {
   title: string;
   excerpt: string;
   coverImage: string;
-  ogImage: {
-    url: string;
-  };
   content: string;
 };
 

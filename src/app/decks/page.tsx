@@ -1,7 +1,7 @@
 import BreadCrumps from '@/components/bread-crumps';
+import Decks from '@/components/decks';
 import Header from '@/components/header';
 import { getAllDecks } from '@/lib/api';
-import Link from 'next/link';
 
 export default async function DecksPage() {
   const decks = await getAllDecks();
@@ -9,22 +9,12 @@ export default async function DecksPage() {
   return (
     <>
       <BreadCrumps />
-      <Header 
+      <Header
         title='Decks'
         subTitle='Here you can find all the decks available in the platform.'
       />
 
-      {decks.length > 0 && (
-        <div>
-          {decks.map((deck, index) => (
-            <div key={index}>
-              <Link href={`/decks/${deck.folder}`} passHref>
-                <h4>{deck.title}</h4>
-              </Link>
-            </div>
-          ))}
-        </div>
-      )}
+      {decks.length > 0 && <Decks decks={decks} />}
     </>
   );
 }
