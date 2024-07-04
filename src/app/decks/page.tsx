@@ -1,3 +1,4 @@
+import DeckHeader from '@/components/decks/deck-header';
 import { getAllDecks } from '@/lib/api';
 import Link from 'next/link';
 
@@ -6,6 +7,8 @@ export default async function DecksPage() {
 
   return (
     <>
+      <DeckHeader />
+      
       {decks.length > 0 && (
         <div>
           {decks.map((deck, index) => (

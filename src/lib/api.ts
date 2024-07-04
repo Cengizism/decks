@@ -43,7 +43,7 @@ async function findDeckFolderByCardSlug(
 ): Promise<string | undefined> {
   for (const deck of decks) {
     const deckPath = path.join(contentDirectory, deck.folder);
-    const cardFiles = await readDirectory(deckPath);
+    const cardFiles = await readDirectory(deckPath); // TODO: Maybe do this processing during the cards initially being read
 
     if (cardFiles.includes(slug + '.mdx')) {
       return deck.folder;
@@ -68,17 +68,25 @@ export async function getCardBySlug(slug: string): Promise<CardType | null> {
     return cache.cards.get(realSlug) || null;
   }
 
-  const deck = await findDeckFolderByCardSlug(realSlug);
-  if (!deck) {
+  const deckFolder = await findDeckFolderByCardSlug(realSlug);
+  if (!deckFolder) {
     console.error('Deck not found for slug:', { slug });
     return null;
   }
-  const fullPath = path.join(contentDirectory, deck, `${realSlug}.mdx`);
+  const fullPath = path.join(contentDirectory, deckFolder, `${realSlug}.mdx`);
 
   try {
     const fileContents = await fs.readFile(fullPath, 'utf8');
     const { data, content } = matter(fileContents);
-    const card = { ...data, slug: realSlug, content, deck } as CardType;
+    const card = { 
+      ...data, 
+      slug: realSlug, 
+      content, 
+      deck: {
+        folder: deckFolder,
+        title: getDeckTitle(deckFolder) || '',
+      }
+    } as CardType;
     cache.cards.set(realSlug, card);
     return card;
   } catch (error) {
@@ -119,12 +127,12 @@ export async function getDeckBySlug(slug: string): Promise<DeckType | null> {
   return decks.find((deck) => deck.folder === slug) || null;
 }
 
-export async function getCardsByDeck(deck: string): Promise<CardType[]> {
+export async function getCardsByDeck(deckFolder: string): Promise<CardType[]> {
   const allCards = await getAllCards();
-  return allCards.filter((card) => card.deck === deck);
+  return allCards.filter((card) => card.deck.folder === deckFolder);
 }
 
-function watchDirectory(directory: string) {
+function watchDirectory(directory: string) { // TODO: This is more likely for local development, so maybe we can remove this in production
   watch(directory, async (eventType, filename) => {
     if (filename && (eventType === 'change' || eventType === 'rename')) {
       cache.slugs = [];

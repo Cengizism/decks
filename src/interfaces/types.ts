@@ -1,7 +1,11 @@
 export type CardType = {
   slug: string;
-  deck: string;
+  deck: {
+    folder: string;
+    title: string;
+  };
   title: string;
+  excerpt: string;
   coverImage: string;
   ogImage: {
     url: string;

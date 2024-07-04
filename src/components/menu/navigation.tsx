@@ -1,3 +1,4 @@
+import { makeStyles } from '@fluentui/react-components';
 import {
   Board20Filled,
   Board20Regular,
@@ -26,35 +27,51 @@ const AboutIcons = bundleIcon(
   BookInformation20Regular
 );
 
+const useStyles = makeStyles({
+  navigation: {
+    '& a': {
+      textDecoration: 'none',
+      color: 'inherit',
+    },
+    '& a button': {
+      ':hover': {
+        cursor: 'pointer',
+      },
+    },
+  },
+});
+
 type NavigationProps = {
   isOpen: boolean;
   toggleHamburgerMenu: () => void;
 };
 
 const Navigation = ({ isOpen, toggleHamburgerMenu }: NavigationProps) => {
+  const styles = useStyles();
+
   return (
     <NavDrawer open={isOpen} type='inline'>
       <NavDrawerHeader>
         <HamburgerMenu toggleHamburgerMenu={toggleHamburgerMenu} />
       </NavDrawerHeader>
 
-      <NavDrawerBody>
-        <NavItem icon={<DashboardIcons />} value='1'>
-          <Link href='/' passHref>
+      <NavDrawerBody className={styles.navigation}>
+        <Link href='/'>
+          <NavItem icon={<DashboardIcons />} value='1'>
             Dashboard
-          </Link>
-        </NavItem>
-        <NavItem icon={<AboutIcons />} value='2'>
-          <Link href='/about' passHref>
+          </NavItem>
+        </Link>
+        <Link href='/about'>
+          <NavItem icon={<AboutIcons />} value='2'>
             About
-          </Link>
-        </NavItem>
+          </NavItem>
+        </Link>
         <NavDivider />
-        <NavItem icon={<DecksIcons />} value='3'>
-          <Link href='/decks' passHref>
+        <Link href='/decks'>
+          <NavItem icon={<DecksIcons />} value='3'>
             Decks
-          </Link>
-        </NavItem>
+          </NavItem>
+        </Link>
       </NavDrawerBody>
     </NavDrawer>
   );

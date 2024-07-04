@@ -21,6 +21,7 @@
     "@fluentui/react-icons": "^2.0.247",
     "@fluentui/react-nav-preview": "^0.5.0",
     "date-fns": "^3.6.0",
+    "fluentui-next-appdir-directive": "^0.1.7",
     "gray-matter": "^4.0.3",
     "next": "14.2.4",
     "react": "^18.3.1",

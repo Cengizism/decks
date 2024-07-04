@@ -1,12 +1,12 @@
-import CoverImage from '@/components/cover-image';
+import CoverImage from '@/components/cards/cover-image';
 import { getAllCards, getCardBySlug, getDeckTitle } from '@/lib/api';
 import { TITLE } from '@/lib/constants';
-import markdownToHtml from '@/lib/markdownToHtml';
+import markdownToHtml from '@/lib/markdown-to-html';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
-import markdownStyles from '../../../styles/markdown-styles.module.css';
+import markdownStyles from '@/styles/markdown-styles.module.css';
 
 type Params = {
   params: {
