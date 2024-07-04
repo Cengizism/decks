@@ -24,10 +24,7 @@ export default async function DeckPage({ params }: Params) {
   return (
     <>
       <BreadCrumps deck={deck} />
-      <Header 
-        title={deck.title}
-        subTitle={deck.description}
-      />
+      <Header title={deck.title} subTitle={deck.description} />
 
       {cards.length > 0 ? (
         <Cards cards={cards} />

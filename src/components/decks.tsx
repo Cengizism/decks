@@ -4,8 +4,6 @@ import { DeckType } from '@/interfaces/types';
 import {
   Button,
   Caption1,
-  Subtitle1,
-  Text,
   Title3,
   makeStyles,
   mergeClasses,

@@ -60,7 +60,7 @@ async function findDeckFolderByCardSlug(
 
 export function getDeckTitle(folder: string): string | undefined {
   const deck = decks.find((deck: DeckType) => deck.folder === folder);
-  
+
   return deck?.title;
 }
 

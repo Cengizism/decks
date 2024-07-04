@@ -2,10 +2,10 @@ import { makeStyles } from '@fluentui/react-components';
 import {
   Board20Filled,
   Board20Regular,
-  Info20Filled,
-  Info20Regular,
   BookStar20Filled,
   BookStar20Regular,
+  Info20Filled,
+  Info20Regular,
   bundleIcon,
 } from '@fluentui/react-icons';
 import {
@@ -22,10 +22,7 @@ import HamburgerMenu from './hamburger-menu';
 
 const DashboardIcons = bundleIcon(Board20Filled, Board20Regular);
 const DecksIcons = bundleIcon(BookStar20Filled, BookStar20Regular);
-const AboutIcons = bundleIcon(
-  Info20Filled,
-  Info20Regular,
-);
+const AboutIcons = bundleIcon(Info20Filled, Info20Regular);
 
 const useStyles = makeStyles({
   root: {
