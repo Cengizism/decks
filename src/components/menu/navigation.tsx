@@ -14,6 +14,7 @@ import {
   NavDrawerBody,
   NavDrawerHeader,
   NavItem,
+  NavSectionHeader,
 } from '@fluentui/react-nav-preview';
 import Link from 'next/link';
 import React from 'react';
@@ -69,7 +70,10 @@ const Navigation = ({ isOpen, toggleHamburgerMenu }: NavigationProps) => {
             About
           </NavItem>
         </Link>
+
         <NavDivider />
+
+        <NavSectionHeader>Content</NavSectionHeader>
         <Link href='/decks'>
           <NavItem icon={<DecksIcons />} value='3'>
             Decks
