@@ -7,7 +7,7 @@ export default function About() {
       <Header title='About' subTitle='A community based knowledge sharing platform' />
 
       <p>
-        Decks is meant to be a community based knowledge sharing platform. It’s
+        Alten Decks is meant to be a community based knowledge sharing platform. It’s
         content is driven by the collaborators. It consists of decks and cards.
         Decks are the logical cluster of subject related topics, which are cards
         in this context. A card comes with the crucial information to know and
