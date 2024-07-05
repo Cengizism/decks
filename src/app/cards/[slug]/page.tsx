@@ -26,7 +26,7 @@ export default async function CardPage({ params }: Params) {
   return (
     <>
       <BreadCrumps card={card} />
-      <Header title={card.title} subTitle={card.excerpt} />
+      <Header title={card.title} subTitle={card.excerpt} date={card.lastModified} />
 
       <CoverImage
         src={`/api/content/${card.deck.folder}/images/${card.coverImage}`}

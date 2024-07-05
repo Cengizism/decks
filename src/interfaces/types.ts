@@ -8,6 +8,7 @@ export type CardType = {
   excerpt: string;
   coverImage: string;
   content: string;
+  lastModified: Date;
 };
 
 export interface DeckType {

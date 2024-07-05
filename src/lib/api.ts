@@ -103,7 +103,10 @@ export async function getCardBySlug(slug: string): Promise<CardType | null> {
   const fullPath = path.join(contentDirectory, deckFolder, `${realSlug}.mdx`);
 
   try {
-    const fileContents = await fs.readFile(fullPath, 'utf8');
+    const [fileContents, stats] = await Promise.all([
+      fs.readFile(fullPath, 'utf8'),
+      fs.stat(fullPath)
+    ]);
     const { data, content } = matter(fileContents);
 
     const deck = decks.find((d: DeckType) => d.folder === deckFolder);
@@ -123,6 +126,7 @@ export async function getCardBySlug(slug: string): Promise<CardType | null> {
         folder: deckFolder,
         title: deck?.title || '',
       },
+      lastModified: stats.mtime
     } as CardType;
 
     cache.cards.set(realSlug, card);

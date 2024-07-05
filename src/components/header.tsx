@@ -1,6 +1,6 @@
 'use client';
 
-import { Body1, Subtitle2, Title2 } from '@fluentui/react-components';
+import { Caption1, Subtitle2, Title2 } from '@fluentui/react-components';
 import { makeStyles, tokens } from '@fluentui/react-components';
 import React from 'react';
 
@@ -16,7 +16,15 @@ const useStyles = makeStyles({
   },
 });
 
-const Header = ({ title, subTitle }: { title: string; subTitle?: string }) => {
+const Header = ({
+  title,
+  subTitle,
+  date,
+}: {
+  title: string;
+  subTitle?: string;
+  date?: Date;
+}) => {
   const styles = useStyles();
 
   return (
@@ -24,6 +32,12 @@ const Header = ({ title, subTitle }: { title: string; subTitle?: string }) => {
       <Title2 block>{title}</Title2>
       {subTitle && (
         <Subtitle2 className={styles.subTitle}>{subTitle}</Subtitle2>
+      )}
+      {date && (
+        <Caption1>
+          Last modified:{' '}
+          <time dateTime={date.toISOString()}>{date.toString()}</time>
+        </Caption1>
       )}
     </header>
   );
