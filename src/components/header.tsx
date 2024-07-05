@@ -8,7 +8,7 @@ const useStyles = makeStyles({
   header: {
     display: 'flex',
     flexDirection: 'column',
-    gap: '8px',
+    gap: '6px',
     margin: '20px 6px 36px 6px',
   },
   subTitle: {
