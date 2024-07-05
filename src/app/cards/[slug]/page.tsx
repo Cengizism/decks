@@ -29,7 +29,7 @@ export default async function CardPage({ params }: Params) {
       <Header title={card.title} subTitle={card.excerpt} />
 
       <CoverImage
-        src={`/images/content/${card.deck.folder}/${card.coverImage}`}
+        src={`/api/content/${card.deck.folder}/images/${card.coverImage}`}
         title={card.title}
       />
 

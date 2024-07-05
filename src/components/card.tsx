@@ -53,7 +53,7 @@ const CardComponent = ({ card }: CardComponentProps) => {
     <Card className={styles.card}>
       <CardPreview className={styles.grayBackground}>
         <Image
-          src={`/images/content/${card.deck.folder}/${card.coverImage}`}
+          src={`/api/content/${card.deck.folder}/images/${card.coverImage}`}
           alt={card.title}
           width={120}
           height={60}

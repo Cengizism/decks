@@ -18,8 +18,16 @@ const cache = {
 
 // Utility Functions
 async function readDirectory(folderPath: string): Promise<string[]> {
-  const files = await fs.readdir(folderPath);
-  return files.filter((file) => !excludeFiles.includes(file));
+  const files = await fs.readdir(folderPath, { withFileTypes: true });
+
+  return files
+    .filter(
+      (file) =>
+        file.isFile() &&
+        file.name.endsWith('.mdx') &&
+        !excludeFiles.includes(file.name)
+    )
+    .map((file) => file.name);
 }
 
 async function getDeckContents(folder: string): Promise<string[]> {
@@ -100,10 +108,17 @@ export async function getCardBySlug(slug: string): Promise<CardType | null> {
 
     const deck = decks.find((d: DeckType) => d.folder === deckFolder);
 
+    const processedContent = content.replace(
+      /!\[([^\]]*)\]\((images\/[^)]+)\)/g,
+      (match, imageTitle, imageFileNameWithExtension) => {
+        return `![${imageTitle}](/api/content/${deckFolder}/${imageFileNameWithExtension})`;
+      }
+    );
+
     const card = {
       ...data,
       slug: realSlug,
-      content,
+      content: processedContent,
       deck: {
         folder: deckFolder,
         title: deck?.title || '',
@@ -176,10 +191,9 @@ function startWatchingDeckDirectories() {
     );
 
     return () => unwatchers.forEach((unwatch) => unwatch());
-  } else {
-    console.log('Watching directories is disabled in production');
-    return () => {};
   }
+
+  return () => { };
 }
 
 (async () => {
