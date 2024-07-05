@@ -99,7 +99,7 @@ To add a new deck of cards, follow these steps:
    Add the image in markdown content like this:
 
    ```md
-   ![Cover Image](images/<image-file-name-with-extension>)
+   ![Image Alt Title](images/<image-file-name-with-extension>)
    ```
 
 ## Notes
