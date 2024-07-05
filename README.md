@@ -7,6 +7,7 @@ The platform consists of `decks` and `cards`. Decks are logical clusters of subj
 ## How to Use
 
 Before developing or adding new content, please refer to the following sections:
+
 - [Installation](/docs/INSTALLATION.md)
 - [Content Structure and Adding New Content](/docs/CONTENT.md)
 

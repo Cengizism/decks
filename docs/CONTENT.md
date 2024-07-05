@@ -7,6 +7,7 @@ The content for the platform is located in the `/content` folder and organised a
 - **Decks**: Each deck is represented by a folder in the `/content` directory. The deck folders are listed in the `decks.json` manifest file.
 
   Example `decks.json`:
+
   ```json
   [
     {
@@ -35,6 +36,7 @@ To add a new deck of cards, follow these steps:
 1. **Expand the `decks.json` file**: Add a new entry for your deck in the `decks.json` file. Ensure each deck has a unique folder name, title, and description.
 
    Example:
+
    ```json
    [
      {
@@ -58,6 +60,7 @@ To add a new deck of cards, follow these steps:
 2. **Add accompanying cards in MDX format**: Create a new folder under `/content` matching the `folder` name specified in `decks.json`. **Folder names must be unique and contain no special characters or spaces.** Inside this folder, add your card files with `.mdx` extension. Each card file should have a meta section (front matter) and content.
 
    Example of a card file (`card-1.mdx`):
+
    ```md
    ---
    title: 'Card 1'

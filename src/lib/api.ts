@@ -1,6 +1,6 @@
 import { CardSlugType, CardType, DeckType } from '@/interfaces/types';
-import fs from 'fs/promises';
 import { watch } from 'fs';
+import fs from 'fs/promises';
 import matter from 'gray-matter';
 import path from 'path';
 
@@ -128,7 +128,9 @@ export async function getAllCards(): Promise<CardType[]> {
   const slugs = await getCardSlugs();
   const cardPromises = slugs.map(({ slug }) => getCardBySlug(slug));
 
-  const cards = (await Promise.all(cardPromises)).filter((card) => card !== null) as CardType[];
+  const cards = (await Promise.all(cardPromises)).filter(
+    (card) => card !== null
+  ) as CardType[];
   cards.forEach((card) => cache.cards.set(card.slug, card));
 
   return cards;
@@ -155,23 +157,28 @@ export async function getCardsByDeck(deckFolder: string): Promise<CardType[]> {
 
 // Watchers and Initialization Functions
 function watchDirectory(directory: string) {
-  const watcher = watch(directory, (eventType: string, filename: string | null) => {
-    if (filename && (eventType === 'change' || eventType === 'rename')) {
-      updateCache(directory);
+  const watcher = watch(
+    directory,
+    (eventType: string, filename: string | null) => {
+      if (filename && (eventType === 'change' || eventType === 'rename')) {
+        updateCache(directory);
+      }
     }
-  });
+  );
 
   return () => watcher.close();
 }
 
 function startWatchingDeckDirectories() {
   if (process.env.NODE_ENV === 'development') {
-    const unwatchers = decks.map((deck) => watchDirectory(path.join(contentDirectory, deck.folder)));
+    const unwatchers = decks.map((deck) =>
+      watchDirectory(path.join(contentDirectory, deck.folder))
+    );
 
     return () => unwatchers.forEach((unwatch) => unwatch());
   } else {
     console.log('Watching directories is disabled in production');
-    return () => { };
+    return () => {};
   }
 }
 
