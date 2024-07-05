@@ -1,36 +1,57 @@
 import { CardSlugType, CardType, DeckType } from '@/interfaces/types';
-import { watch } from 'fs';
 import fs from 'fs/promises';
+import { watch } from 'fs';
 import matter from 'gray-matter';
 import path from 'path';
 
 import decks from '../../content/decks.json';
 
+const excludeFiles: string[] = ['.DS_Store'];
 const contentDirectory = path.join(process.cwd(), 'content');
 
 const cache = {
   slugs: [] as CardSlugType[],
   cards: new Map<string, CardType>(),
   decks: decks,
+  deckContents: new Map<string, string[]>(),
 };
 
-const excludeFiles: string[] = ['.DS_Store'];
-
+// Utility Functions
 async function readDirectory(folderPath: string): Promise<string[]> {
   const files = await fs.readdir(folderPath);
-
   return files.filter((file) => !excludeFiles.includes(file));
 }
 
+async function getDeckContents(folder: string): Promise<string[]> {
+  if (cache.deckContents.has(folder)) {
+    return cache.deckContents.get(folder) || [];
+  }
+
+  const contents = await readDirectory(path.join(contentDirectory, folder));
+  cache.deckContents.set(folder, contents);
+
+  return contents;
+}
+
+async function updateCache(directory: string) {
+  cache.slugs = [];
+  cache.cards.clear();
+  cache.deckContents.clear();
+
+  await getCardSlugs();
+  await getAllCards();
+
+  console.log(`Cache updated due to changes in ${directory}`);
+}
+
+// Card Retrieval Functions
 export async function getCardSlugs(): Promise<CardSlugType[]> {
   if (cache.slugs.length > 0) {
     return cache.slugs;
   }
 
   const slugPromises = decks.map(async ({ folder }) => {
-    const deckPath = path.join(contentDirectory, folder);
-
-    const slugs = await readDirectory(deckPath);
+    const slugs = await getDeckContents(folder);
 
     return slugs.map((slug) => ({
       slug: slug.replace(/\.mdx$/, ''),
@@ -39,29 +60,8 @@ export async function getCardSlugs(): Promise<CardSlugType[]> {
   });
 
   cache.slugs = (await Promise.all(slugPromises)).flat();
+
   return cache.slugs;
-}
-
-// TODO: Instead of reading the directory, fetch it from the cache (getCardSlugs)
-async function findDeckFolderByCardSlug(
-  slug: string
-): Promise<string | undefined> {
-  for (const deck of decks) {
-    const deckPath = path.join(contentDirectory, deck.folder);
-
-    const cardFiles = await readDirectory(deckPath); // TODO: Maybe do this processing during the cards initially being read
-
-    if (cardFiles.includes(slug + '.mdx')) {
-      return deck.folder;
-    }
-  }
-  return undefined;
-}
-
-export function getDeckTitle(folder: string): string | undefined {
-  const deck = decks.find((deck: DeckType) => deck.folder === folder);
-
-  return deck?.title;
 }
 
 export async function getCardBySlug(slug: string): Promise<CardType | null> {
@@ -76,18 +76,29 @@ export async function getCardBySlug(slug: string): Promise<CardType | null> {
     return cache.cards.get(realSlug) || null;
   }
 
-  const deckFolder = await findDeckFolderByCardSlug(realSlug);
+  let deckFolder: string | undefined;
+
+  for (const deck of decks) {
+    const cardFiles = await getDeckContents(deck.folder);
+
+    if (cardFiles.includes(realSlug + '.mdx')) {
+      deckFolder = deck.folder;
+      break;
+    }
+  }
 
   if (!deckFolder) {
     console.error('Deck not found for slug:', { slug });
     return null;
   }
+
   const fullPath = path.join(contentDirectory, deckFolder, `${realSlug}.mdx`);
 
   try {
     const fileContents = await fs.readFile(fullPath, 'utf8');
-
     const { data, content } = matter(fileContents);
+
+    const deck = decks.find((d: DeckType) => d.folder === deckFolder);
 
     const card = {
       ...data,
@@ -95,7 +106,7 @@ export async function getCardBySlug(slug: string): Promise<CardType | null> {
       content,
       deck: {
         folder: deckFolder,
-        title: getDeckTitle(deckFolder) || '',
+        title: deck?.title || '',
       },
     } as CardType;
 
@@ -108,34 +119,25 @@ export async function getCardBySlug(slug: string): Promise<CardType | null> {
   }
 }
 
+// Deck Retrieval Functions
 export async function getAllCards(): Promise<CardType[]> {
   if (cache.cards.size > 0) {
     return Array.from(cache.cards.values());
   }
 
   const slugs = await getCardSlugs();
-
   const cardPromises = slugs.map(({ slug }) => getCardBySlug(slug));
 
-  const cards = (await Promise.all(cardPromises)).filter(
-    (card) => card !== null
-  ) as CardType[];
-
-  cards.forEach((card) => card && cache.cards.set(card.slug, card));
+  const cards = (await Promise.all(cardPromises)).filter((card) => card !== null) as CardType[];
+  cards.forEach((card) => cache.cards.set(card.slug, card));
 
   return cards;
-}
-
-async function readCardFiles(folder: string): Promise<string[]> {
-  const deckPath = path.join(contentDirectory, folder);
-
-  return await readDirectory(deckPath);
 }
 
 export async function getAllDecks(): Promise<DeckType[]> {
   const deckPromises = decks.map(async (deck) => ({
     ...deck,
-    cards: await readCardFiles(deck.folder),
+    cards: await getDeckContents(deck.folder),
   }));
 
   return await Promise.all(deckPromises);
@@ -151,26 +153,26 @@ export async function getCardsByDeck(deckFolder: string): Promise<CardType[]> {
   return allCards.filter((card) => card.deck.folder === deckFolder);
 }
 
+// Watchers and Initialization Functions
 function watchDirectory(directory: string) {
-  // TODO: This is more likely for local development, so maybe we can remove this in production
-  watch(directory, async (eventType, filename) => {
+  const watcher = watch(directory, (eventType: string, filename: string | null) => {
     if (filename && (eventType === 'change' || eventType === 'rename')) {
-      cache.slugs = [];
-      cache.cards.clear();
-
-      await getCardSlugs();
-      await getAllCards();
-
-      console.log(`Cache updated due to changes in ${directory}`);
+      updateCache(directory);
     }
   });
+
+  return () => watcher.close();
 }
 
 function startWatchingDeckDirectories() {
-  decks.forEach((deck) => {
-    const deckPath = path.join(contentDirectory, deck.folder);
-    watchDirectory(deckPath);
-  });
+  if (process.env.NODE_ENV === 'development') {
+    const unwatchers = decks.map((deck) => watchDirectory(path.join(contentDirectory, deck.folder)));
+
+    return () => unwatchers.forEach((unwatch) => unwatch());
+  } else {
+    console.log('Watching directories is disabled in production');
+    return () => { };
+  }
 }
 
 (async () => {
