@@ -1,38 +1,25 @@
-# Decks
+# Alten Decks
 
-This is a statically generated learning platform for Alten consultants.
+Alten Decks is a community-based knowledge sharing platform. Its content is driven by collaborators.
 
-It is based on NextJS, ReactJS, Google Material Design and TypeScript.
+The platform consists of `decks` and `cards`. Decks are logical clusters of subject-related topics, represented by cards. A card contains crucial information about the topic and provides links to external resources for further reading. Users can read and bookmark cards, allowing them to return to them later. In future iterations, the platform aims to include discussions around card topics for sharing ideas and experiences.
 
-The blog posts are stored in `/_posts` as Markdown files with front matter
-support. Adding a new Markdown file in there will create a new content.
+## How to Use
 
-To create the blog posts we use [`remark`](https://github.com/remarkjs/remark)
-and [`remark-html`](https://github.com/remarkjs/remark-html) to convert the
-Markdown files into an HTML string, and then send it down as a prop to the page.
-The metadata of every post is handled by
-[`gray-matter`](https://github.com/jonschlinkert/gray-matter) and also sent in
-props to the page.
+Before developing or adding new content, please refer to the following sections:
+- [Installation](/docs/INSTALLATION.md)
+- [Content Structure and Adding New Content](/docs/CONTENT.md)
 
-## Demo
+Please note that this project is currently under active development, and many parts and structures may change over time. However, the content and content structure are less likely to change frequently.
 
-To be hosted..
+## Maintainer
 
-## Deploy your own
+This project is maintained by [Cengiz Ulusoy](mailto:cengiz.ulusoy@alten.nl). Feel free to contact for questions, feedback, or contributions.
 
-How to deploy guide..
+## Stack
 
-## How to use
-
-```bash
-pnpm install
-pnpm dev
-```
+The project is based on `NextJS`, `ReactJS`, `Microsoft Fluent`, and `TypeScript`.
 
 ## Notes
 
-Some additional notes..
-
-## TODOS
-
-- Change openGraph image to Alten Decks logo
+Installation and content markdown files are located under the `docs` folder in the project root.
