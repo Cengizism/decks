@@ -2,6 +2,7 @@
 
 import { Caption1, Subtitle2, Title2 } from '@fluentui/react-components';
 import { makeStyles, tokens } from '@fluentui/react-components';
+import { format } from 'date-fns';
 import React from 'react';
 
 const useStyles = makeStyles({
@@ -16,16 +17,16 @@ const useStyles = makeStyles({
   },
 });
 
-const Header = ({
-  title,
-  subTitle,
-  date,
-}: {
+interface HeaderProps {
   title: string;
   subTitle?: string;
   date?: Date;
-}) => {
+}
+
+const Header: React.FC<HeaderProps> = ({ title, subTitle, date }) => {
   const styles = useStyles();
+
+  const formattedDate = date ? format(date, 'EEEE, d MMMM yyyy') : null;
 
   return (
     <header className={styles.header}>
@@ -33,10 +34,10 @@ const Header = ({
       {subTitle && (
         <Subtitle2 className={styles.subTitle}>{subTitle}</Subtitle2>
       )}
-      {date && (
+      {formattedDate && (
         <Caption1>
-          Last modified:{' '}
-          <time dateTime={date.toISOString()}>{date.toString()}</time>
+          <strong>Last modified:</strong>{' '}
+          <time dateTime={date!.toISOString()}>{formattedDate}</time>
         </Caption1>
       )}
     </header>
