@@ -13,10 +13,11 @@ import {
   CardHeader,
   CardPreview,
 } from '@fluentui/react-components';
-// import { Heart24Regular } from '@fluentui/react-icons';
-import Image from 'next/image';
+import { Heart24Regular } from '@fluentui/react-icons';
 import Link from 'next/link';
-import * as React from 'react';
+import React from 'react';
+
+import CoverImage from './cover-image';
 
 const useStyles = makeStyles({
   card: {
@@ -24,13 +25,24 @@ const useStyles = makeStyles({
     maxWidth: '100%',
     height: 'fit-content',
   },
+  link: {
+    textDecoration: 'none',
+    color: 'inherit',
+
+    '&:hover': {
+      textDecoration: 'underline',
+      opacity: '0.8',
+    },
+  },
   caption: {
     color: tokens.colorNeutralForeground3,
     width: '290px',
     display: 'block',
     overflow: 'hidden',
   },
-  text: { margin: '0' },
+  text: {
+    margin: '0',
+  },
   grayBackground: {
     backgroundColor: tokens.colorNeutralBackground3,
   },
@@ -42,38 +54,43 @@ const useStyles = makeStyles({
   },
 });
 
-type CardComponentProps = {
+interface CardComponentProps {
   card: CardType;
-};
+}
 
-const CardComponent = ({ card }: CardComponentProps) => {
+const CardComponent: React.FC<CardComponentProps> = ({ card }) => {
   const styles = useStyles();
 
   return (
     <Card className={styles.card}>
       <CardPreview className={styles.grayBackground}>
-        <Image
+        <CoverImage
           src={`/api/content/${card.deck.folder}/images/${card.coverImage}`}
-          alt={card.title}
-          width={120}
-          height={60}
+          title={card.title}
+          slug={card.slug}
         />
       </CardPreview>
 
       <CardHeader
-        header={<Title3 truncate>{card.title}</Title3>}
-        description={
-          <Caption1 truncate wrap={false} className={styles.caption}>
-            {card.deck.title}
-          </Caption1>
+        header={
+          <Link className={styles.link} href={`/cards/${card.slug}`}>
+            <Title3 truncate>{card.title}</Title3>
+          </Link>
         }
-        // action={
-        //   <Button
-        //     appearance='transparent'
-        //     className={styles.bookmark}
-        //     icon={<Heart24Regular />}
-        //   />
-        // }
+        description={
+          <Link className={styles.link} href={`/decks/${card.deck.folder}`}>
+            <Caption1 truncate wrap={false} className={styles.caption}>
+              {card.deck.title}
+            </Caption1>
+          </Link>
+        }
+        action={
+          <Button
+            appearance='transparent'
+            className={styles.bookmark}
+            icon={<Heart24Regular />}
+          />
+        }
       />
 
       <Body1 truncate wrap={false} className={styles.text}>

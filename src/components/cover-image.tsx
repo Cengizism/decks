@@ -10,18 +10,20 @@ type Props = {
   slug?: string;
 };
 
+const IMAGE_HEIGHT = 400;
+
 const useStyles = makeStyles({
   cover: {
     position: 'relative',
-    overflow: 'hidden',
     width: '100%',
-    height: 'auto',
-  },
-  image: {
-    top: 0,
-    width: '100%',
-    minHeight: '400px',
-    objectFit: 'cover',
+    height: `${IMAGE_HEIGHT}px !important`,
+    minHeight: `${IMAGE_HEIGHT}px`,
+
+    '& img': {
+      width: '100%',
+      height: '100%',
+      objectFit: 'cover',
+    },
   },
 });
 
@@ -30,21 +32,16 @@ const CoverImage = ({ title, src, slug }: Props) => {
 
   const image = (
     <div className={styles.cover}>
-      <div className={styles.image}>
-        <Image src={src} alt={`Cover Image for ${title}`} fill />
-      </div>
+      <Image src={src} alt={`Cover Image for ${title}`} fill />
     </div>
   );
-  return (
-    <div>
-      {slug ? (
-        <Link href={`/cards/${slug}`} aria-label={title}>
-          {image}
-        </Link>
-      ) : (
-        image
-      )}
-    </div>
+
+  return slug ? (
+    <Link href={`/cards/${slug}`} passHref>
+      {image}
+    </Link>
+  ) : (
+    image
   );
 };
 
