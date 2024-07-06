@@ -17,9 +17,9 @@
     "format:fix": "prettier --write --ignore-path .gitignore ."
   },
   "dependencies": {
-    "@fluentui/react-components": "^9.54.2",
+    "@fluentui/react-components": "^9.54.4",
     "@fluentui/react-icons": "^2.0.247",
-    "@fluentui/react-nav-preview": "^0.5.0",
+    "@fluentui/react-nav-preview": "^0.5.1",
     "date-fns": "^3.6.0",
     "fluentui-next-appdir-directive": "^0.1.7",
     "gray-matter": "^4.0.3",
@@ -32,13 +32,13 @@
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
-    "@types/node": "^20.14.8",
+    "@types/node": "^20.14.10",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "eslint": "^8.57.0",
     "eslint-config-next": "14.2.4",
     "eslint-config-prettier": "^9.1.0",
     "prettier": "^3.3.2",
-    "typescript": "^5.4.5"
+    "typescript": "^5.5.3"
   }
 }
