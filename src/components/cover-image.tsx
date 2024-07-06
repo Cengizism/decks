@@ -3,12 +3,13 @@
 import { makeStyles } from '@fluentui/react-components';
 import Image from 'next/image';
 import Link from 'next/link';
+import React from 'react';
 
-type Props = {
+interface CoverImageProps {
   title: string;
   src: string;
   slug?: string;
-};
+}
 
 const IMAGE_HEIGHT = 400;
 
@@ -27,22 +28,23 @@ const useStyles = makeStyles({
   },
 });
 
-const CoverImage = ({ title, src, slug }: Props) => {
+const CoverImage: React.FC<CoverImageProps> = ({ title, src, slug }) => {
   const styles = useStyles();
 
   const image = (
     <div className={styles.cover}>
-      <Image src={src} alt={`Cover Image for ${title}`} fill />
+      <Image
+        src={src}
+        alt={`Cover Image for ${title}`}
+        fill
+        sizes='100%'
+        quality={80}
+        priority
+      />
     </div>
   );
 
-  return slug ? (
-    <Link href={`/cards/${slug}`} passHref>
-      {image}
-    </Link>
-  ) : (
-    image
-  );
+  return slug ? <Link href={`/cards/${slug}`}>{image}</Link> : image;
 };
 
 export default CoverImage;
