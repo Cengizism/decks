@@ -13,7 +13,7 @@ const cache = {
   slugs: [] as CardSlugType[],
   cards: new Map<string, CardType>(),
   decks: decks,
-  deckContents: new Map<string, string[]>(),
+  deckContents: new Map<string, string[]>(), // TODO: Either use this one or deck.cardSlugs
 };
 
 // Utility Functions
@@ -158,7 +158,7 @@ export async function getAllCards(): Promise<CardType[]> {
 export async function getAllDecks(): Promise<DeckType[]> {
   const deckPromises = decks.map(async (deck) => ({
     ...deck,
-    cards: await getDeckContents(deck.folder),
+    cardSlugs: await getDeckContents(deck.folder),
   }));
 
   return await Promise.all(deckPromises);
