@@ -1,9 +1,8 @@
 'use client';
 
 import AltenLogo from '@/components/alten-logo';
-import { TITLE } from '@/lib/constants';
-import { Title1, makeStyles, tokens } from '@fluentui/react-components';
-import * as React from 'react';
+import { makeStyles, tokens } from '@fluentui/react-components';
+import React, { useCallback, useState } from 'react';
 
 import HamburgerMenu from './menu/hamburger-menu';
 import Navigation from './menu/navigation';
@@ -54,14 +53,18 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Main(props: { children: React.ReactNode }) {
+interface MainProps {
+  children: React.ReactNode;
+}
+
+const Main: React.FC<MainProps> = ({ children }) => {
   const styles = useStyles();
 
-  const [isOpen, setIsOpen] = React.useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
-  const toggleHamburgerMenu = () => {
-    setIsOpen(!isOpen);
-  };
+  const toggleHamburgerMenu = useCallback(() => {
+    setIsOpen((prev) => !prev);
+  }, []);
 
   return (
     <div className={styles.root}>
@@ -73,16 +76,15 @@ export default function Main(props: { children: React.ReactNode }) {
             <HamburgerMenu toggleHamburgerMenu={toggleHamburgerMenu} />
           )}
 
-          <hgroup>
-            <AltenLogo />
-            <Title1>{TITLE}</Title1>
-          </hgroup>
+          <AltenLogo />
         </header>
 
         <div className={`${styles.content} ${isOpen ? styles.narrowed : ''}`}>
-          {props.children}
+          {children}
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default Main;
