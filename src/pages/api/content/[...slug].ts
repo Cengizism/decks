@@ -1,5 +1,5 @@
-import { NextApiRequest, NextApiResponse } from 'next';
 import { createReadStream, stat } from 'fs';
+import { NextApiRequest, NextApiResponse } from 'next';
 import { join } from 'path';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -23,7 +23,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       svg: 'image/svg+xml',
     };
 
-    const contentType = contentTypeMap[extension || ''] || 'application/octet-stream';
+    const contentType =
+      contentTypeMap[extension || ''] || 'application/octet-stream';
 
     res.setHeader('Content-Type', contentType);
     stream.pipe(res);

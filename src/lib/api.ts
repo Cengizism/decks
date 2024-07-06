@@ -105,7 +105,7 @@ export async function getCardBySlug(slug: string): Promise<CardType | null> {
   try {
     const [fileContents, stats] = await Promise.all([
       fs.readFile(fullPath, 'utf8'),
-      fs.stat(fullPath)
+      fs.stat(fullPath),
     ]);
     const { data, content } = matter(fileContents);
 
@@ -126,7 +126,7 @@ export async function getCardBySlug(slug: string): Promise<CardType | null> {
         folder: deckFolder,
         title: deck?.title || '',
       },
-      lastModified: stats.mtime
+      lastModified: stats.mtime,
     } as CardType;
 
     cache.cards.set(realSlug, card);
@@ -197,7 +197,7 @@ function startWatchingDeckDirectories() {
     return () => unwatchers.forEach((unwatch) => unwatch());
   }
 
-  return () => { };
+  return () => {};
 }
 
 (async () => {

@@ -28,6 +28,7 @@ The learning content, referred to as "Decks" and "Cards," is stored in the `/con
 Markdown files are in [MDX](https://mdxjs.com/docs/what-is-mdx/) format, allowing you to use JSX in your markdown content. You can import components, such as interactive charts or alerts, and embed them within your content. This makes writing long-form content with components more dynamic and engaging.
 
 ### Decks
+
 Each deck is represented by a folder in the `/content` directory. The deck folders are listed in the `decks.json` manifest file.
 
 Example `decks.json`:
@@ -48,6 +49,7 @@ Example `decks.json`:
 ```
 
 ### Cards
+
 Each deck contains multiple cards, which are Markdown files within the respective deck folder. Each card file has front matter for metadata.
 
 ## Adding New Content
