@@ -1,7 +1,7 @@
 import Header from '@/components/header';
-import * as React from 'react';
+import React from 'react';
 
-export default function About() {
+const About: React.FC = () => {
   return (
     <>
       <Header
@@ -9,17 +9,20 @@ export default function About() {
         subTitle='A community based knowledge sharing platform'
       />
 
+      {/* TODO: This content should come from a markdown as well */}
       <p>
-        Alten Decks is meant to be a community based knowledge sharing platform.
-        It’s content is driven by the collaborators. It consists of decks and
-        cards. Decks are the logical cluster of subject related topics, which
-        are cards in this context. A card comes with the crucial information to
-        know and attract attention of/to the topic. Card has links to external
-        resources for further reading as well. Users can read and bookmark cards
-        so they can always come back to them. In the future iterations, idea is
-        to make it open for conversations around the card topics for sharing
-        ideas and experiences.
+        Alten Decks is designed to be a community-based knowledge sharing
+        platform. Its content is driven by collaborators and consists of decks
+        and cards. Decks are logical clusters of subject-related topics, which
+        are represented by cards in this context. Each card provides crucial
+        information on a topic and includes links to external resources for
+        further reading. Users can read and bookmark cards, allowing them to
+        return to them easily. In future iterations, the platform aims to
+        facilitate conversations around card topics to share ideas and
+        experiences.
       </p>
     </>
   );
-}
+};
+
+export default About;

@@ -8,14 +8,15 @@ import markdownStyles from '@/styles/markdown-styles.module.css';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
-type Params = {
+interface Params {
   params: {
     slug: string;
   };
-};
+}
 
 export default async function CardPage({ params }: Params) {
-  const card = await getCardBySlug(params.slug);
+  const { slug } = params;
+  const card = await getCardBySlug(slug);
 
   if (!card) {
     return notFound();
@@ -39,7 +40,7 @@ export default async function CardPage({ params }: Params) {
 
       <article>
         <div
-          className={markdownStyles['markdown']}
+          className={markdownStyles.markdown}
           dangerouslySetInnerHTML={{ __html: content }}
         />
       </article>
@@ -48,7 +49,8 @@ export default async function CardPage({ params }: Params) {
 }
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
-  const card = await getCardBySlug(params.slug);
+  const { slug } = params;
+  const card = await getCardBySlug(slug);
 
   if (!card) {
     return notFound();

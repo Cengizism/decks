@@ -21,39 +21,38 @@ const useStyles = makeStyles({
     margin: '0 6px',
     rowGap: '36px',
   },
-
   title: { margin: '0 0 12px' },
-
   card: {
     width: '300px',
     maxWidth: '100%',
     height: 'fit-content',
   },
-
   flex: {
     gap: '4px',
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
   },
-
   caption: {
     color: tokens.colorNeutralForeground3,
   },
-
   cardFooter: {
     alignItems: 'center',
     justifyContent: 'space-between',
   },
 });
 
-const Decks = ({ decks }: { decks: DeckType[] }) => {
+interface DecksProps {
+  decks: DeckType[];
+}
+
+const Decks: React.FC<DecksProps> = ({ decks }) => {
   const styles = useStyles();
 
   return (
     <div className={styles.main}>
-      {decks.map((deck, index) => (
-        <Card className={styles.card} key={index}>
+      {decks.map((deck) => (
+        <Card className={styles.card} key={deck.folder}>
           <CardHeader
             header={<Title3 truncate>{deck.title}</Title3>}
             description={
@@ -62,13 +61,11 @@ const Decks = ({ decks }: { decks: DeckType[] }) => {
               </Caption1>
             }
           />
-
           <footer className={mergeClasses(styles.flex, styles.cardFooter)}>
             <span>
-              <strong>Cards:</strong> {deck.cards?.length}
+              <strong>Cards:</strong> {deck.cardSlugs?.length ?? 0}
             </span>
-
-            <Link href={`/decks/${deck.folder}`}>
+            <Link href={`/decks/${deck.folder}`} passHref>
               <Button>Open deck</Button>
             </Link>
           </footer>

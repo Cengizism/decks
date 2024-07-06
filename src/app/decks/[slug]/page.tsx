@@ -6,14 +6,15 @@ import { HOME_OG_IMAGE_URL, TITLE } from '@/lib/constants';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
-type Params = {
+interface Params {
   params: {
     slug: string;
   };
-};
+}
 
 export default async function DeckPage({ params }: Params) {
-  const deck = await getDeckBySlug(params.slug);
+  const { slug } = params;
+  const deck = await getDeckBySlug(slug);
 
   if (!deck) {
     return notFound();
@@ -36,7 +37,8 @@ export default async function DeckPage({ params }: Params) {
 }
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
-  const deck = await getDeckBySlug(params.slug);
+  const { slug } = params;
+  const deck = await getDeckBySlug(slug);
 
   if (!deck) {
     return notFound();

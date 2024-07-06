@@ -16,13 +16,17 @@ const useStyles = makeStyles({
   },
 });
 
-const Cards = ({ cards }: { cards: CardType[] }) => {
+interface CardsProps {
+  cards: CardType[];
+}
+
+const Cards: React.FC<CardsProps> = ({ cards }) => {
   const styles = useStyles();
 
   return (
     <div className={styles.main}>
       {cards.map((card) => (
-        <Card card={card} key={card.title} />
+        <Card card={card} key={card.slug} />
       ))}
     </div>
   );

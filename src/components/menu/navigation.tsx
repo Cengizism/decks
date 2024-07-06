@@ -48,35 +48,47 @@ const useStyles = makeStyles({
   },
 });
 
-type NavigationProps = {
+interface NavigationProps {
   isOpen: boolean;
   toggleHamburgerMenu: () => void;
-};
+}
 
-const Navigation = ({ isOpen, toggleHamburgerMenu }: NavigationProps) => {
+const Navigation: React.FC<NavigationProps> = ({
+  isOpen,
+  toggleHamburgerMenu,
+}) => {
   const styles = useStyles();
   const pathname = usePathname();
 
-  const [selectedValue, setSelectedValue] = useState('1');
+  const [selectedValue, setSelectedValue] = useState(pathname);
 
   useEffect(() => {
-    switch (pathname) {
-      case '/':
-        setSelectedValue('1');
-        break;
-      case '/about':
-        setSelectedValue('2');
-        break;
-      default:
-    }
+    setSelectedValue(pathname);
   }, [pathname]);
+
+  const MenuItem: React.FC<{
+    path: string;
+    icon: React.ReactNode;
+    text: string;
+  }> = ({ path, icon, text }) => (
+    <Link href={path} passHref>
+      <NavItem
+        icon={<>{icon}</>}
+        value={path}
+        onClick={() => setSelectedValue(path)}
+        aria-selected={selectedValue === path}
+      >
+        {text}
+      </NavItem>
+    </Link>
+  );
 
   return (
     <NavDrawer
       open={isOpen}
       type='inline'
       className={styles.root}
-      defaultValue={selectedValue}
+      defaultValue={selectedValue ?? ''}
       selectedValue={selectedValue}
     >
       <NavDrawerHeader className={styles.hamburger}>
@@ -84,37 +96,12 @@ const Navigation = ({ isOpen, toggleHamburgerMenu }: NavigationProps) => {
       </NavDrawerHeader>
 
       <NavDrawerBody className={styles.navigation}>
-        <Link href='/'>
-          <NavItem
-            icon={<DashboardIcons />}
-            value='1'
-            onClick={() => setSelectedValue('1')}
-          >
-            Dashboard
-          </NavItem>
-        </Link>
-        <Link href='/about'>
-          <NavItem
-            icon={<AboutIcons />}
-            value='2'
-            onClick={() => setSelectedValue('2')}
-          >
-            About
-          </NavItem>
-        </Link>
+        <MenuItem path='/' icon={<DashboardIcons />} text='Dashboard' />
+        <MenuItem path='/about' icon={<AboutIcons />} text='About' />
 
         <NavDivider />
-
         <NavSectionHeader>Content</NavSectionHeader>
-        <Link href='/decks'>
-          <NavItem
-            icon={<DecksIcons />}
-            value='3'
-            onClick={() => setSelectedValue('3')}
-          >
-            Decks
-          </NavItem>
-        </Link>
+        <MenuItem path='/decks' icon={<DecksIcons />} text='Decks' />
       </NavDrawerBody>
     </NavDrawer>
   );

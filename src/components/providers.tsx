@@ -11,7 +11,11 @@ import {
 import { useServerInsertedHTML } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 
-export function Providers({ children }: { children: React.ReactNode }) {
+interface ProvidersProps {
+  children: React.ReactNode;
+}
+
+export function Providers({ children }: ProvidersProps) {
   const [renderer] = useState(() => createDOMRenderer());
   const didRenderRef = useRef(false);
 
@@ -23,7 +27,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
 
   useServerInsertedHTML(() => {
     if (didRenderRef.current) {
-      return;
+      return null;
     }
     didRenderRef.current = true;
     return <>{renderToStyleElements(renderer)}</>;

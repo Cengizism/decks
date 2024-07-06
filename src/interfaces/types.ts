@@ -15,7 +15,7 @@ export interface DeckType {
   folder: string;
   title: string;
   description: string;
-  cards?: string[];
+  cardSlugs?: string[];
 }
 
 export interface CardSlugType {

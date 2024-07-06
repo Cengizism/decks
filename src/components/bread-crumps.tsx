@@ -29,7 +29,7 @@ const BreadCrumps: React.FC<BreadCrumpsProps> = ({ deck, card }) => {
   return (
     <Breadcrumb>
       <BreadcrumbItem>
-        <Link href='/'>
+        <Link href='/' passHref>
           <BreadcrumbButton icon={<DashboardIcons />}>
             Dashboard
           </BreadcrumbButton>
@@ -37,7 +37,7 @@ const BreadCrumps: React.FC<BreadCrumpsProps> = ({ deck, card }) => {
       </BreadcrumbItem>
       <BreadcrumbDivider />
       <BreadcrumbItem>
-        <Link href='/decks'>
+        <Link href='/decks' passHref>
           <BreadcrumbButton icon={<DecksIcons />}>Decks</BreadcrumbButton>
         </Link>
       </BreadcrumbItem>
@@ -53,7 +53,7 @@ const BreadCrumps: React.FC<BreadCrumpsProps> = ({ deck, card }) => {
         <>
           <BreadcrumbDivider />
           <BreadcrumbItem>
-            <Link href={`/decks/${card.deck.folder}`}>
+            <Link href={`/decks/${card.deck.folder}`} passHref>
               <BreadcrumbButton>{card.deck.title}</BreadcrumbButton>
             </Link>
           </BreadcrumbItem>

@@ -18,7 +18,11 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout(props: { children: React.ReactNode }) {
+interface RootLayoutProps {
+  children: React.ReactNode;
+}
+
+const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
   return (
     <html lang='en'>
       <head>
@@ -56,9 +60,11 @@ export default function RootLayout(props: { children: React.ReactNode }) {
 
       <body>
         <Providers>
-          <Main>{props.children}</Main>
+          <Main>{children}</Main>
         </Providers>
       </body>
     </html>
   );
-}
+};
+
+export default RootLayout;
