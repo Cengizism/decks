@@ -1,4 +1,4 @@
-import { CardType } from '@/interfaces/types';
+import { DeckType } from '@/interfaces/types';
 import {
   Body1,
   Button,
@@ -15,16 +15,20 @@ import {
   CardPreview,
 } from '@fluentui/react-components';
 import {
-  Bookmark24Filled,
-  Bookmark24Regular,
+  BookmarkMultiple24Filled,
+  BookmarkMultiple24Regular,
   bundleIcon,
 } from '@fluentui/react-icons';
 import Link from 'next/link';
 import React from 'react';
 
 import CoverImage from './cover-image';
+import DeckContributor from './deck-contributor';
 
-const BookmarkIcons = bundleIcon(Bookmark24Filled, Bookmark24Regular);
+const BookmarkMultipleIcons = bundleIcon(
+  BookmarkMultiple24Filled,
+  BookmarkMultiple24Regular
+);
 
 const useStyles = makeStyles({
   card: {
@@ -33,6 +37,9 @@ const useStyles = makeStyles({
     height: 'fit-content',
   },
   link: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'middle',
     textDecoration: 'none',
     color: 'inherit',
 
@@ -57,7 +64,7 @@ const useStyles = makeStyles({
     position: 'absolute',
     top: '10px',
     right: '5px',
-    color: tokens.colorNeutralBackground1,
+    // color: tokens.colorNeutralBackground1,
   },
   footer: {
     display: 'flex',
@@ -67,33 +74,25 @@ const useStyles = makeStyles({
   },
 });
 
-interface CardComponentProps {
-  card: CardType;
+interface DeckComponentProps {
+  deck: DeckType;
 }
 
-const CardComponent: React.FC<CardComponentProps> = ({ card }) => {
+const DeckComponent: React.FC<DeckComponentProps> = ({ deck }) => {
   const styles = useStyles();
 
   return (
     <Card className={styles.card}>
-      <CardPreview className={styles.grayBackground}>
-        <CoverImage
-          src={`/api/content/${card.deck.folder}/images/${card.coverImage}`}
-          title={card.title}
-          slug={card.slug}
-        />
-      </CardPreview>
-
       <CardHeader
         header={
-          <Link className={styles.link} href={`/cards/${card.slug}`}>
-            <Title3 truncate>{card.title}</Title3>
+          <Link className={styles.link} href={`/decks/${deck.folder}`}>
+            <Title3 truncate>{deck.title}</Title3>
           </Link>
         }
         description={
-          <Link className={styles.link} href={`/decks/${card.deck.folder}`}>
+          <Link className={styles.link} href={`/`}>
             <Caption1 truncate wrap={false} className={styles.caption}>
-              {card.deck.title}
+              Sample path
             </Caption1>
           </Link>
         }
@@ -101,22 +100,34 @@ const CardComponent: React.FC<CardComponentProps> = ({ card }) => {
           <Button
             appearance='transparent'
             className={styles.bookmark}
-            icon={<BookmarkIcons />}
+            icon={<BookmarkMultipleIcons />}
           />
         }
       />
 
+      <CardPreview className={styles.grayBackground}>
+        <CoverImage
+          src={`/api/content/deck-2/images/cover-3.jpg`}
+          title='Sample title'
+        />
+      </CardPreview>
+
       <Body1 truncate wrap={false} className={styles.text}>
-        {card.excerpt}
+        {deck.description}
       </Body1>
 
       <CardFooter className={styles.footer}>
-        <Link href={`/cards/${card.slug}`}>
-          <Button>Read more</Button>
+        <Link href={`/decks/${deck.folder}`}>
+          <Button>Open deck</Button>
         </Link>
+        <Text>
+          <strong>Cards:</strong> {deck.cardSlugs?.length ?? 0}
+        </Text>
       </CardFooter>
+
+      <DeckContributor />
     </Card>
   );
 };
 
-export default CardComponent;
+export default DeckComponent;
