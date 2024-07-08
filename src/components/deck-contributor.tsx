@@ -1,3 +1,4 @@
+import { ContributorType } from '@/interfaces/types';
 import {
   Body1,
   Caption1,
@@ -45,7 +46,11 @@ const useStyles = makeStyles({
   },
 });
 
-const DeckContributor: React.FC = () => {
+interface DeckContributorProps {
+  contributor: ContributorType | undefined;
+}
+
+const DeckContributor: React.FC<DeckContributorProps> = ({ contributor }) => {
   const styles = useStyles();
 
   return (
@@ -55,15 +60,20 @@ const DeckContributor: React.FC = () => {
         image={<PersonCircle32Filled className={styles.subtle} />}
         header={
           <Body1>
-            <b>Contributor Name</b>
+            <b>{contributor ? contributor.name : 'Anonymous'}</b>
           </Body1>
         }
         description={
-          <Link className={styles.link} href={`/`}>
-            <Caption1 className={styles.caption}>
-              All decks of contributor
-            </Caption1>
-          </Link>
+          contributor ? (
+            <Link
+              className={styles.link}
+              href={`/contributors/${contributor?.id}`}
+            >
+              <Caption1 className={styles.caption}>
+                All decks of contributor
+              </Caption1>
+            </Link>
+          ) : null
         }
       />
     </>

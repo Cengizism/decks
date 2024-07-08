@@ -1,10 +1,12 @@
-import { CardSlugType, CardType, DeckType } from '@/interfaces/types';
+import { CardSlugType, CardType, DeckType, PathType, ContributorType } from '@/interfaces/types';
 import { watch } from 'fs';
 import fs from 'fs/promises';
 import matter from 'gray-matter';
 import path from 'path';
 
 import decks from '../../content/decks.json';
+import paths from '../../content/paths.json';
+import contributors from '../../content/contributors.json';
 
 const excludeFiles: string[] = ['.DS_Store'];
 const contentDirectory = path.join(process.cwd(), 'content');
@@ -13,13 +15,14 @@ const cache = {
   slugs: [] as CardSlugType[],
   cards: new Map<string, CardType>(),
   decks: decks,
-  deckContents: new Map<string, string[]>(), // TODO: Either use this one or deck.cardSlugs
+  deckContents: new Map<string, string[]>(),
+  paths: paths,
+  contributors: contributors,
 };
 
 // Utility Functions
 async function readDirectory(folderPath: string): Promise<string[]> {
   const files = await fs.readdir(folderPath, { withFileTypes: true });
-
   return files
     .filter(
       (file) =>
@@ -156,22 +159,92 @@ export async function getAllCards(): Promise<CardType[]> {
 }
 
 export async function getAllDecks(): Promise<DeckType[]> {
-  const deckPromises = decks.map(async (deck) => ({
-    ...deck,
-    cardSlugs: await getDeckContents(deck.folder),
-  }));
+  const deckPromises = decks.map(async (deck) => {
+    const cardSlugs = await getDeckContents(deck.folder);
+    const path = cache.paths.find((p: PathType) => p.id === deck.pathId);
+    const contributor = cache.contributors.find(
+      (c: ContributorType) => c.id === deck.contributorId
+    );
+
+    const enrichedDeck: DeckType = {
+      ...deck,
+      cardSlugs,
+      path: path ? { id: path.id, title: path.title } : undefined,
+      contributor: contributor
+        ? { id: contributor.id, name: contributor.name }
+        : undefined,
+    };
+
+    delete enrichedDeck.pathId;
+    delete enrichedDeck.contributorId;
+
+    return enrichedDeck;
+  });
 
   return await Promise.all(deckPromises);
 }
 
+
 export async function getDeckBySlug(slug: string): Promise<DeckType | null> {
-  return decks.find((deck) => deck.folder === slug) || null;
+  const deck = decks.find((deck) => deck.folder === slug) || null;
+
+  if (deck) {
+    const enrichedDeck: DeckType = {
+      ...deck,
+      cardSlugs: await getDeckContents(slug),
+      path: cache.paths.find((p: PathType) => p.id === deck.pathId),
+      contributor: cache.contributors.find(
+        (c: ContributorType) => c.id === deck.contributorId
+      ),
+    };
+
+    if (enrichedDeck.path) {
+      delete enrichedDeck.path.description;
+    }
+
+    if (enrichedDeck.contributor) {
+      delete enrichedDeck.contributor.bio;
+    }
+
+    delete enrichedDeck.pathId;
+    delete enrichedDeck.contributorId;
+
+    return enrichedDeck;
+  }
+
+  return null;
 }
 
 export async function getCardsByDeck(deckFolder: string): Promise<CardType[]> {
   const allCards = await getAllCards();
-
   return allCards.filter((card) => card.deck.folder === deckFolder);
+}
+
+// Path Retrieval Functions
+export async function getAllPaths(): Promise<PathType[]> {
+  return cache.paths.map((path: PathType) => ({
+    id: path.id,
+    title: path.title,
+  }));
+}
+
+export async function getPathById(id: string): Promise<PathType | null> {
+  const path = cache.paths.find((p: PathType) => p.id === id) || null;
+  return path ? { id: path.id, title: path.title } : null;
+}
+
+// Contributor Retrieval Functions
+export async function getAllContributors(): Promise<ContributorType[]> {
+  return cache.contributors.map((contributor: ContributorType) => ({
+    id: contributor.id,
+    name: contributor.name,
+  }));
+}
+
+export async function getContributorById(id: string): Promise<ContributorType | null> {
+  const contributor =
+    cache.contributors.find((c: ContributorType) => c.id === id) || null;
+  return contributor ? { id: contributor.id, name: contributor.name } : null;
 }
 
 // Watchers and Initialization Functions
@@ -197,7 +270,7 @@ function startWatchingDeckDirectories() {
     return () => unwatchers.forEach((unwatch) => unwatch());
   }
 
-  return () => {};
+  return () => { };
 }
 
 (async () => {

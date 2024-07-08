@@ -81,6 +81,8 @@ interface DeckComponentProps {
 const DeckComponent: React.FC<DeckComponentProps> = ({ deck }) => {
   const styles = useStyles();
 
+  console.log(deck);
+
   return (
     <Card className={styles.card}>
       <CardHeader
@@ -90,9 +92,9 @@ const DeckComponent: React.FC<DeckComponentProps> = ({ deck }) => {
           </Link>
         }
         description={
-          <Link className={styles.link} href={`/`}>
+          <Link className={styles.link} href={`/paths/${deck.path?.id}`}>
             <Caption1 truncate wrap={false} className={styles.caption}>
-              Sample path
+              {deck.path?.title ?? 'No path'}
             </Caption1>
           </Link>
         }
@@ -107,8 +109,8 @@ const DeckComponent: React.FC<DeckComponentProps> = ({ deck }) => {
 
       <CardPreview className={styles.grayBackground}>
         <CoverImage
-          src={`/api/content/deck-2/images/cover-3.jpg`}
-          title='Sample title'
+          src={`/${deck.image}`}
+          title={deck.title}
         />
       </CardPreview>
 
@@ -125,7 +127,7 @@ const DeckComponent: React.FC<DeckComponentProps> = ({ deck }) => {
         </Text>
       </CardFooter>
 
-      <DeckContributor />
+      <DeckContributor contributor={deck.contributor} />
     </Card>
   );
 };

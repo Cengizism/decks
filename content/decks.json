@@ -1,12 +1,18 @@
 [
   {
     "folder": "deck-1",
-    "title": "Deck 1",
-    "description": "This is the first deck"
+    "title": "ReactJS",
+    "description": "ReactJS is an open-source JavaScript library that is used for building user interfaces specifically for single-page applications.",
+    "pathId": "front-end",
+    "image": "front-end.png",
+    "contributorId": "john-doe"
   },
   {
     "folder": "deck-2",
-    "title": "Deck 2",
-    "description": "This is the second deck"
+    "title": "UI Patterns",
+    "description": "User interface (UI) patterns are recurring solutions that solve common design problems. Designers and developers use them as a shortcut to solve common usability problems.",
+    "pathId": "user-experience",
+    "image": "user-experience.png",
+    "contributorId": "jane-smit"
   }
 ]

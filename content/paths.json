@@ -1,0 +1,82 @@
+[
+  {
+    "id": "front-end",
+    "title": "Front-End Development",
+    "description": "Front-end development is the practice of producing HTML, CSS, and JavaScript for a website or Web Application so that a user can see and interact with them directly."
+  },
+  {
+    "id": "back-end",
+    "title": "Back-End Development",
+    "description": "Back-end development is the practice of building the server-side of a website or Web Application, and creating the logic, database interactions, and user authentication."
+  },
+  {
+    "id": "user-experience",
+    "title": "User Experience Design",
+    "description": "User Experience Design is the process of enhancing user satisfaction with a product by improving the usability, accessibility, and pleasure provided in the interaction with the product."
+  },
+  {
+    "id": "scrum-agile",
+    "title": "Scrum & Agile",
+    "description": "Scrum is a framework that helps teams work together. Much like a rugby team (where it gets its name) training for the big game, Scrum encourages teams to learn through experiences, self-organize while working on a problem, and reflect on their wins and losses to continuously improve."
+  },
+  {
+    "id": "devops",
+    "title": "DevOps",
+    "description": "DevOps is a set of practices that combines software development (Dev) and IT operations (Ops). It aims to shorten the systems development life cycle and provide continuous delivery with high software quality."
+  },
+  {
+    "id": "Embedded",
+    "title": "Embedded Systems",
+    "description": "An embedded system is a computer system—a combination of a computer processor, computer memory, and input/output peripheral devices—that has a dedicated function within a larger mechanical or electrical system."
+  },
+  {
+    "id": "data-science",
+    "title": "Data Science",
+    "description": "Data science is an inter-disciplinary field that uses scientific methods, processes, algorithms and systems to extract knowledge and insights from structured and unstructured data."
+  },
+  {
+    "id": "cyber-security",
+    "title": "Cyber Security",
+    "description": "Cybersecurity is the practice of protecting systems, networks, and programs from digital attacks. These cyberattacks are usually aimed at accessing, changing, or destroying sensitive information; extorting money from users; or interrupting normal business processes."
+  },
+  {
+    "id": "blockchain",
+    "title": "Blockchain",
+    "description": "A blockchain is a growing list of records, called blocks, that are linked using cryptography. Each block contains a cryptographic hash of the previous block, a timestamp, and transaction data."
+  },
+  {
+    "id": "cloud-computing",
+    "title": "Cloud Computing",
+    "description": "Cloud computing is the on-demand availability of computer system resources, especially data storage and computing power, without direct active management by the user."
+  },
+  {
+    "id": "internet-of-things",
+    "title": "Internet of Things",
+    "description": "The Internet of Things (IoT) describes the network of physical objects—“things”—that are embedded with sensors, software, and other technologies for the purpose of connecting and exchanging data with other devices and systems over the internet."
+  },
+  {
+    "id": "artificial-intelligence",
+    "title": "Artificial Intelligence",
+    "description": "Artificial intelligence (AI) is the simulation of human intelligence processes by machines, especially computer systems. These processes include learning (the acquisition of information and rules for using the information), reasoning (using rules to reach approximate or definite conclusions) and self-correction."
+  },
+  {
+    "id": "machine-learning",
+    "title": "Machine Learning",
+    "description": "Machine learning is an application of artificial intelligence (AI) that provides systems the ability to automatically learn and improve from experience without being explicitly programmed."
+  },
+  {
+    "id": "augmented-reality",
+    "title": "Augmented Reality",
+    "description": "Augmented reality (AR) is an interactive experience of a real-world environment where the objects that reside in the real world are enhanced by computer-generated perceptual information, sometimes across multiple sensory modalities, including visual, auditory, haptic, somatosensory, and olfactory."
+  },
+  {
+    "id": "virtual-reality",
+    "title": "Virtual Reality",
+    "description": "Virtual reality (VR) is a simulated experience that can be similar to or completely different from the real world. Applications of virtual reality include entertainment (e.g. video games) and education (e.g. medical or military training)."
+  },
+  {
+    "id": "data-science",
+    "title": "Data Science",
+    "description": "Data science is an inter-disciplinary field that uses scientific methods, processes, algorithms and systems to extract knowledge and insights from structured and unstructured data."
+  }
+]
