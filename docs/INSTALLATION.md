@@ -15,12 +15,6 @@ Follow these steps to set up the development environment:
 
 2. **Clone the Repository**:
 
-   **Note**: Move to your documents or repositories folder, or if not present, create one.
-   ```bash
-   mkdir ˜/repos
-   cd ˜/repos
-   ```
-
    ```bash
    git clone https://altenitbitfs@dev.azure.com/altenitbitfs/Decks/_git/Decks
    cd Decks
