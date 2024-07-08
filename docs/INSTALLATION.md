@@ -8,11 +8,18 @@ Follow these steps to set up the development environment:
 
    - **NodeJS**: Download and install NodeJS from the [official website](https://nodejs.org/).
    - **pnpm**: Install pnpm globally using npm:
+      - *For MacOS users: Administrator privileges needed: Run the following command with sudo: supply the local machine password U use to login in to your Mac.*
      ```bash
-     npm install -g pnpm
+     sudo npm install -g pnpm
      ```
 
 2. **Clone the Repository**:
+
+   **Note**: Move to your documents or repositories folder, or if not present, create one.
+   ```bash
+   mkdir ˜/repos
+   cd ˜/repos
+   ```
 
    ```bash
    git clone https://altenitbitfs@dev.azure.com/altenitbitfs/Decks/_git/Decks
