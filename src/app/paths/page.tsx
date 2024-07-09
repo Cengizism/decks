@@ -1,3 +1,4 @@
+import BreadCrumps from '@/components/bread-crumps';
 import Header from '@/components/header';
 import Paths from '@/components/paths';
 import { PathType } from '@/interfaces/types';
@@ -8,6 +9,7 @@ const PathsPage: React.FC = async () => {
 
   return (
     <>
+      <BreadCrumps />
       <Header
         title='Paths'
         subTitle='Follow the paths to learn more about a specific topic.'

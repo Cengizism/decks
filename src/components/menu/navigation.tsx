@@ -6,6 +6,8 @@ import {
   Board20Regular,
   BookStar20Filled,
   BookStar20Regular,
+  BranchFork20Filled,
+  BranchFork20Regular,
   Info20Filled,
   Info20Regular,
   bundleIcon,
@@ -25,8 +27,9 @@ import React, { useEffect, useState } from 'react';
 import HamburgerMenu from './hamburger-menu';
 
 const DashboardIcons = bundleIcon(Board20Filled, Board20Regular);
-const DecksIcons = bundleIcon(BookStar20Filled, BookStar20Regular);
 const AboutIcons = bundleIcon(Info20Filled, Info20Regular);
+const PathsIcons = bundleIcon(BranchFork20Filled, BranchFork20Regular);
+const DecksIcons = bundleIcon(BookStar20Filled, BookStar20Regular);
 
 const useStyles = makeStyles({
   root: {
@@ -101,7 +104,7 @@ const Navigation: React.FC<NavigationProps> = ({
 
         <NavDivider />
         <NavSectionHeader>Content</NavSectionHeader>
-        <MenuItem path='/paths' text='Paths' />
+        <MenuItem path='/paths' icon={<PathsIcons />} text='Paths' />
         <MenuItem path='/decks' icon={<DecksIcons />} text='Decks' />
       </NavDrawerBody>
     </NavDrawer>

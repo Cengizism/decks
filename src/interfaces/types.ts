@@ -1,9 +1,17 @@
 export type CardType = {
   slug: string;
-  deck: {
-    folder: string;
-    title: string;
-  };
+  deck:
+    | {
+        folder: string | undefined;
+        title: string | undefined;
+        path:
+          | {
+              id: string;
+              title: string;
+            }
+          | undefined;
+      }
+    | undefined;
   title: string;
   excerpt: string;
   coverImage: string;
@@ -15,7 +23,7 @@ export interface DeckType {
   folder: string;
   title: string;
   description: string;
-  pathId?: string;
+  pathId?: string | undefined;
   path?: PathType;
   image: string;
   contributorId?: string;
@@ -32,7 +40,7 @@ export interface PathType {
   id: string;
   title: string;
   description?: string;
-  deckCount?: number;  // Added this line to include deckCount
+  deckCount?: number;
 }
 
 export interface ContributorType {
