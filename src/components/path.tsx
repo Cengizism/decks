@@ -2,30 +2,13 @@ import { PathType } from '@/interfaces/types';
 import {
   Body1,
   Button,
-  Caption1,
   Text,
   Title3,
   makeStyles,
-  tokens,
 } from '@fluentui/react-components';
-import {
-  Card,
-  CardFooter,
-  CardHeader,
-  CardPreview,
-} from '@fluentui/react-components';
-import {
-  BookmarkMultiple24Filled,
-  BookmarkMultiple24Regular,
-  bundleIcon,
-} from '@fluentui/react-icons';
+import { Card, CardFooter, CardHeader } from '@fluentui/react-components';
 import Link from 'next/link';
 import React from 'react';
-
-const BookmarkMultipleIcons = bundleIcon(
-  BookmarkMultiple24Filled,
-  BookmarkMultiple24Regular
-);
 
 const useStyles = makeStyles({
   card: {
@@ -45,23 +28,8 @@ const useStyles = makeStyles({
       opacity: '0.8',
     },
   },
-  caption: {
-    color: tokens.colorNeutralForeground3,
-    width: '290px',
-    display: 'block',
-    overflow: 'hidden',
-  },
   text: {
     margin: '0',
-  },
-  grayBackground: {
-    backgroundColor: tokens.colorNeutralBackground3,
-  },
-  bookmark: {
-    position: 'absolute',
-    top: '10px',
-    right: '5px',
-    // color: tokens.colorNeutralBackground1,
   },
   footer: {
     display: 'flex',
@@ -80,8 +48,6 @@ const PathComponent: React.FC<PathComponentProps> = ({ path }) => {
 
   const hasDecks = path.deckCount && path.deckCount > 0;
 
-  console.log(path);
-
   return (
     <Card className={styles.card}>
       <CardHeader
@@ -90,18 +56,6 @@ const PathComponent: React.FC<PathComponentProps> = ({ path }) => {
             <Title3 truncate>{path.title}</Title3>
           </Link>
         }
-        // description={
-        //   <Caption1 truncate wrap={false} className={styles.caption}>
-        //       {path.description}
-        //     </Caption1>
-        // }
-        // action={
-        //   <Button
-        //     appearance='transparent'
-        //     className={styles.bookmark}
-        //     icon={<BookmarkMultipleIcons />}
-        //   />
-        // }
       />
 
       <Body1 truncate wrap={false} className={styles.text}>
