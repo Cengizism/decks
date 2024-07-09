@@ -32,6 +32,7 @@ export interface PathType {
   id: string;
   title: string;
   description?: string;
+  deckCount?: number;  // Added this line to include deckCount
 }
 
 export interface ContributorType {

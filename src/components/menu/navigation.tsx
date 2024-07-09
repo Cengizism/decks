@@ -68,7 +68,7 @@ const Navigation: React.FC<NavigationProps> = ({
 
   const MenuItem: React.FC<{
     path: string;
-    icon: React.ReactNode;
+    icon?: React.ReactNode;
     text: string;
   }> = ({ path, icon, text }) => (
     <Link href={path} passHref>
@@ -101,6 +101,7 @@ const Navigation: React.FC<NavigationProps> = ({
 
         <NavDivider />
         <NavSectionHeader>Content</NavSectionHeader>
+        <MenuItem path='/paths' text='Paths' />
         <MenuItem path='/decks' icon={<DecksIcons />} text='Decks' />
       </NavDrawerBody>
     </NavDrawer>

@@ -1,4 +1,4 @@
-import { DeckType } from '@/interfaces/types';
+import { PathType } from '@/interfaces/types';
 import {
   Body1,
   Button,
@@ -21,9 +21,6 @@ import {
 } from '@fluentui/react-icons';
 import Link from 'next/link';
 import React from 'react';
-
-import CoverImage from './cover-image';
-import DeckContributor from './deck-contributor';
 
 const BookmarkMultipleIcons = bundleIcon(
   BookmarkMultiple24Filled,
@@ -74,60 +71,61 @@ const useStyles = makeStyles({
   },
 });
 
-interface DeckComponentProps {
-  deck: DeckType;
+interface PathComponentProps {
+  path: PathType;
 }
 
-const DeckComponent: React.FC<DeckComponentProps> = ({ deck }) => {
+const PathComponent: React.FC<PathComponentProps> = ({ path }) => {
   const styles = useStyles();
+
+  const hasDecks = path.deckCount && path.deckCount > 0;
+
+  console.log(path);
 
   return (
     <Card className={styles.card}>
       <CardHeader
         header={
-          <Link className={styles.link} href={`/decks/${deck.folder}`}>
-            <Title3 truncate>{deck.title}</Title3>
+          <Link className={styles.link} href={`/paths/${path.id}`}>
+            <Title3 truncate>{path.title}</Title3>
           </Link>
         }
-        description={
-          <Link className={styles.link} href={`/paths/${deck.path?.id}`}>
-            <Caption1 truncate wrap={false} className={styles.caption}>
-              {deck.path?.title ?? 'No path'}
-            </Caption1>
-          </Link>
-        }
-        action={
-          <Button
-            appearance='transparent'
-            className={styles.bookmark}
-            icon={<BookmarkMultipleIcons />}
-          />
-        }
+        // description={
+        //   <Caption1 truncate wrap={false} className={styles.caption}>
+        //       {path.description}
+        //     </Caption1>
+        // }
+        // action={
+        //   <Button
+        //     appearance='transparent'
+        //     className={styles.bookmark}
+        //     icon={<BookmarkMultipleIcons />}
+        //   />
+        // }
       />
 
-      <CardPreview className={styles.grayBackground}>
-        <CoverImage
-          src={`/${deck.image}`}
-          title={deck.title}
-        />
-      </CardPreview>
-
       <Body1 truncate wrap={false} className={styles.text}>
-        {deck.description}
+        {path.description}
       </Body1>
 
       <CardFooter className={styles.footer}>
-        <Link href={`/decks/${deck.folder}`}>
-          <Button>Open deck</Button>
-        </Link>
+        {hasDecks ? (
+          <Link href={`/paths/${path.id}`}>
+            <Button>View decks</Button>
+          </Link>
+        ) : null}
         <Text>
-          <strong>Cards:</strong> {deck.cardSlugs?.length ?? 0}
+          {hasDecks ? (
+            <>
+              <strong>Decks:</strong> {path.deckCount}
+            </>
+          ) : (
+            'No decks for this path'
+          )}
         </Text>
       </CardFooter>
-
-      <DeckContributor contributor={deck.contributor} />
     </Card>
   );
 };
 
-export default DeckComponent;
+export default PathComponent;

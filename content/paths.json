@@ -73,10 +73,5 @@
     "id": "virtual-reality",
     "title": "Virtual Reality",
     "description": "Virtual reality (VR) is a simulated experience that can be similar to or completely different from the real world. Applications of virtual reality include entertainment (e.g. video games) and education (e.g. medical or military training)."
-  },
-  {
-    "id": "data-science",
-    "title": "Data Science",
-    "description": "Data science is an inter-disciplinary field that uses scientific methods, processes, algorithms and systems to extract knowledge and insights from structured and unstructured data."
   }
 ]
