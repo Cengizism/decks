@@ -60,9 +60,7 @@ async function updateCache(directory: string) {
   console.log(`Cache updated due to changes in ${directory}`);
 }
 
-function enrichDeck(
-  deck: DeckType & { path?: { id: string; title: string } }
-): DeckType {
+function enrichDeck(deck: DeckType): DeckType {
   const path = store.paths.find((p: PathType) => p.id === deck.pathId);
   const contributor = store.contributors.find(
     (c: ContributorType) => c.id === deck.contributorId
@@ -70,8 +68,7 @@ function enrichDeck(
 
   const enrichedDeck: DeckType = {
     ...deck,
-    pathId: deck.pathId || '',
-    path: deck?.path ? { id: deck.path.id, title: deck.path.title } : undefined,
+    path: path ? { id: path.id, title: path.title } : undefined,
     contributor: contributor
       ? { id: contributor.id, name: contributor.name }
       : undefined,
@@ -83,15 +80,13 @@ function enrichDeck(
 function enrichCard(card: CardType, deck: DeckType): CardType {
   return {
     ...card,
-    deck: deck
-      ? {
-          folder: deck.folder,
-          title: deck.title,
-          path: deck.path
-            ? { id: deck.path.id, title: deck.path.title }
-            : undefined,
-        }
-      : undefined,
+    deck: {
+      folder: deck.folder,
+      title: deck.title,
+      path: deck.path
+        ? { id: deck.path.id, title: deck.path.title }
+        : undefined,
+    },
   };
 }
 
@@ -262,7 +257,13 @@ export async function getPathById(id: string): Promise<PathType | null> {
 
 export async function getDecksByPathId(pathId: string): Promise<DeckType[]> {
   const filteredDecks = decks.filter((deck) => deck.pathId === pathId);
-  return filteredDecks.map((deck) => enrichDeck(deck));
+  const enrichedDecks = await Promise.all(
+    filteredDecks.map(async (deck) => {
+      const cardSlugs = await getDeckContents(deck.folder);
+      return enrichDeck({ ...deck, cardSlugs });
+    })
+  );
+  return enrichedDecks;
 }
 
 // New Function: Get Path by Deck ID
