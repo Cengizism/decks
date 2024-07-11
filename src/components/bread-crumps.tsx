@@ -1,6 +1,5 @@
 'use client';
 
-import { NavigationTree } from '@/interfaces/types';
 import {
   Breadcrumb,
   BreadcrumbButton,
@@ -19,6 +18,8 @@ import {
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React from 'react';
+
+import { NavigationTree } from '@/interfaces/types';
 
 const DashboardIcons = bundleIcon(Board20Filled, Board20Regular);
 const DecksIcons = bundleIcon(BookStar20Filled, BookStar20Regular);
@@ -72,7 +73,7 @@ const BreadCrumps: React.FC<BreadCrumpsProps> = ({ nodes }) => {
         </>
       )}
 
-      {nodes?.deck && (
+      {nodes?.deck && !nodes?.card && (
         <>
           <BreadcrumbDivider />
           <BreadcrumbItem>
@@ -87,14 +88,18 @@ const BreadCrumps: React.FC<BreadCrumpsProps> = ({ nodes }) => {
 
       {nodes?.card && (
         <>
-          <BreadcrumbDivider />
-          <BreadcrumbItem>
-            <Link href={`/decks/${nodes.deck?.id}`} passHref>
-              <BreadcrumbButton icon={<DecksIcons />}>
-                {nodes.deck?.title}
-              </BreadcrumbButton>
-            </Link>
-          </BreadcrumbItem>
+          {nodes.deck && (
+            <>
+              <BreadcrumbDivider />
+              <BreadcrumbItem>
+                <Link href={`/decks/${nodes.deck.id}`} passHref>
+                  <BreadcrumbButton icon={<DecksIcons />}>
+                    {nodes.deck.title}
+                  </BreadcrumbButton>
+                </Link>
+              </BreadcrumbItem>
+            </>
+          )}
           <BreadcrumbDivider />
           <BreadcrumbItem>
             <BreadcrumbButton>{nodes.card.title}</BreadcrumbButton>
