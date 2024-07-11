@@ -46,7 +46,7 @@ interface PathComponentProps {
 const PathComponent: React.FC<PathComponentProps> = ({ path }) => {
   const styles = useStyles();
 
-  const hasDecks = path.deckCount && path.deckCount > 0;
+  // const hasDecks = path.deckCount && path.deckCount > 0;
 
   return (
     <Card className={styles.card}>
@@ -62,7 +62,7 @@ const PathComponent: React.FC<PathComponentProps> = ({ path }) => {
         {path.description}
       </Body1>
 
-      <CardFooter className={styles.footer}>
+      {/* <CardFooter className={styles.footer}>
         {hasDecks ? (
           <Link href={`/paths/${path.id}`}>
             <Button>View decks</Button>
@@ -77,7 +77,7 @@ const PathComponent: React.FC<PathComponentProps> = ({ path }) => {
             'No decks for this path'
           )}
         </Text>
-      </CardFooter>
+      </CardFooter> */}
     </Card>
   );
 };

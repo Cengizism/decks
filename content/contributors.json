@@ -2,11 +2,13 @@
   {
     "id": "john-doe",
     "name": "John Doe",
+    "email": "john.doe@mail.com",
     "bio": "John is a front-end developer who has been working in the industry for 10 years. He is passionate about building responsive websites and web applications that are accessible to everyone."
   },
   {
     "id": "jane-smit",
     "name": "Jane Smit",
+    "email": "jane.smit@mail.com",
     "bio": "Jane is a user experience designer who has been working in the industry for 5 years. She is passionate about creating intuitive and easy-to-use designs that delight users."
   }
 ]

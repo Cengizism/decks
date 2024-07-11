@@ -89,13 +89,13 @@ const DeckComponent: React.FC<DeckComponentProps> = ({ deck }) => {
             <Title3 truncate>{deck.title}</Title3>
           </Link>
         }
-        description={
-          <Link className={styles.link} href={`/paths/${deck.path?.id}`}>
-            <Caption1 truncate wrap={false} className={styles.caption}>
-              {deck.path?.title ?? 'No path'}
-            </Caption1>
-          </Link>
-        }
+        // description={
+        //   <Link className={styles.link} href={`/paths/${deck.path?.id}`}>
+        //     <Caption1 truncate wrap={false} className={styles.caption}>
+        //       {deck.path?.title ?? 'No path'}
+        //     </Caption1>
+        //   </Link>
+        // }
         action={
           <Button
             appearance='transparent'
@@ -117,12 +117,12 @@ const DeckComponent: React.FC<DeckComponentProps> = ({ deck }) => {
         <Link href={`/decks/${deck.folder}`}>
           <Button>Open deck</Button>
         </Link>
-        <Text>
+        {/* <Text>
           <strong>Cards:</strong> {deck.cardSlugs?.length ?? 0}
-        </Text>
+        </Text> */}
       </CardFooter>
 
-      <DeckContributor contributor={deck.contributor} />
+      {/* <DeckContributor contributor={deck.contributor} /> */}
     </Card>
   );
 };

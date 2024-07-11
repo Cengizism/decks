@@ -1,334 +1,199 @@
 import {
-  CardSlugType,
   CardType,
   ContributorType,
   DeckType,
   PathType,
 } from '@/interfaces/types';
-import { watch } from 'fs';
-import fs from 'fs/promises';
+import fs from 'fs';
 import matter from 'gray-matter';
-import path from 'path';
+import { join } from 'path';
 
 import contributors from '../../content/contributors.json';
 import decks from '../../content/decks.json';
 import paths from '../../content/paths.json';
 
-const excludeFiles: string[] = ['.DS_Store'];
-const contentDirectory = path.join(process.cwd(), 'content');
+const contentDirectory = join(process.cwd(), 'content');
 
-const store = {
-  slugs: [] as CardSlugType[],
-  cards: new Map<string, CardType>(),
-  decks: new Map<string, string[]>(),
-  paths: paths as PathType[],
-  contributors: contributors as ContributorType[],
-};
-
-// Utility Functions
-async function readDirectory(folderPath: string): Promise<string[]> {
-  const files = await fs.readdir(folderPath, { withFileTypes: true });
-  return files
-    .filter(
-      (file) =>
-        file.isFile() &&
-        file.name.endsWith('.mdx') &&
-        !excludeFiles.includes(file.name)
-    )
-    .map((file) => file.name);
+// File system functions
+function readCardFiles(folder: string): string[] {
+  const deckPath = join(contentDirectory, folder);
+  const cardFiles = fs
+    .readdirSync(deckPath)
+    .filter((file) => file.endsWith('.mdx'));
+  return cardFiles;
 }
 
-async function getDeckContents(folder: string): Promise<string[]> {
-  if (store.decks.has(folder)) {
-    return store.decks.get(folder) || [];
-  }
-
-  const contents = await readDirectory(path.join(contentDirectory, folder));
-  store.decks.set(folder, contents);
-
-  return contents;
-}
-
-async function updateCache(directory: string) {
-  store.slugs = [];
-  store.cards.clear();
-  store.decks.clear();
-
-  await getCardSlugs();
-  await getAllCards();
-
-  console.log(`Cache updated due to changes in ${directory}`);
-}
-
-function enrichDeck(deck: DeckType): DeckType {
-  const path = store.paths.find((p: PathType) => p.id === deck.pathId);
-  const contributor = store.contributors.find(
-    (c: ContributorType) => c.id === deck.contributorId
-  );
-
-  const enrichedDeck: DeckType = {
-    ...deck,
-    path: path ? { id: path.id, title: path.title } : undefined,
-    contributor: contributor
-      ? { id: contributor.id, name: contributor.name }
-      : undefined,
-  };
-
-  return enrichedDeck;
-}
-
-function enrichCard(card: CardType, deck: DeckType): CardType {
-  return {
-    ...card,
-    deck: {
-      folder: deck.folder,
-      title: deck.title,
-      path: deck.path
-        ? { id: deck.path.id, title: deck.path.title }
-        : undefined,
-    },
-  };
-}
-
-// Card Retrieval Functions
-export async function getCardSlugs(): Promise<CardSlugType[]> {
-  if (store.slugs.length > 0) {
-    return store.slugs;
-  }
-
-  const slugPromises = decks.map(async ({ folder }) => {
-    const slugs = await getDeckContents(folder);
-    return slugs.map((slug) => ({
-      slug: slug.replace(/\.mdx$/, ''),
-      deck: folder,
+// Indexing functions
+export function indexCardIds(): { cardId: string }[] {
+  return decks.flatMap(({ folder }) => {
+    const cardFiles = readCardFiles(folder);
+    return cardFiles.map((cardId) => ({
+      cardId: cardId.replace(/\.mdx$/, ''),
     }));
   });
-
-  store.slugs = (await Promise.all(slugPromises)).flat();
-
-  return store.slugs;
 }
 
-export async function getCardBySlug(slug: string): Promise<CardType | null> {
+export function indexDeckIds(): { deckId: string }[] {
+  return decks.map((deck) => ({
+    deckId: deck.folder,
+  }));
+}
+
+export function indexPathIds(): { pathId: string }[] {
+  return paths.map((path) => ({
+    pathId: path.id,
+  }));
+}
+
+export function indexContributorIds(): { contributorId: string }[] {
+  return contributors.map((contributor) => ({
+    contributorId: contributor.id,
+  }));
+}
+
+// Deck functions
+export function findDeckByCardId(cardId: string): DeckType | undefined {
+  for (const deck of decks) {
+    const cardFiles = readCardFiles(deck.folder);
+    if (cardFiles.includes(cardId + '.mdx')) {
+      return deck;
+    }
+  }
+  return undefined;
+}
+
+export function getDeckTitle(folder: string): string | undefined {
+  const deck = decks.find((deck: DeckType) => deck.folder === folder);
+  return deck?.title;
+}
+
+export function getAllDecks(): DeckType[] {
+  return decks.map((deck) => ({
+    ...deck,
+    // Extract cardSlugs for the deck
+    // cardSlugs: readCardFiles(deck.folder)
+  }));
+}
+
+export function getDeckById(id: string): DeckType | null {
+  const deck = decks.find((deck) => deck.folder === id) || null;
+  return deck;
+}
+
+export function getDecksByPathId(pathId: string): DeckType[] {
+  return decks
+    .filter((deck) => deck.pathId === pathId)
+    .map((deck) => ({
+      ...deck,
+      // Extract cardSlugs for the deck
+      // cardSlugs: readCardFiles(deck.folder)
+    }));
+}
+
+// Card functions
+export function getCardById(slug: string): CardType | null {
   if (!slug) {
     console.error('Invalid slug parameter:', { slug });
     return null;
   }
 
-  const realSlug = slug.replace(/\.mdx$/, '');
-
-  if (store.cards.has(realSlug)) {
-    return store.cards.get(realSlug) || null;
-  }
-
-  const deckFolder = decks.find((deck) =>
-    (store.decks.get(deck.folder) || []).includes(realSlug + '.mdx')
-  )?.folder;
-
-  if (!deckFolder) {
+  const fsCardId = slug.replace(/\.mdx$/, '');
+  const deck = findDeckByCardId(fsCardId);
+  if (!deck) {
     console.error('Deck not found for slug:', { slug });
     return null;
   }
 
-  const fullPath = path.join(contentDirectory, deckFolder, `${realSlug}.mdx`);
+  const fullPath = join(contentDirectory, deck.folder, `${fsCardId}.mdx`);
 
   try {
-    const [fileContents, stats] = await Promise.all([
-      fs.readFile(fullPath, 'utf8'),
-      fs.stat(fullPath),
-    ]);
+    const fileContents = fs.readFileSync(fullPath, 'utf8');
     const { data, content } = matter(fileContents);
-
-    let deck: DeckType | undefined = decks.find(
-      (d: DeckType) => d.folder === deckFolder
-    );
-    if (!deck) {
-      console.error('Deck not found:', { deckFolder });
-      return null;
-    }
-
-    deck = enrichDeck(deck);
 
     const processedContent = content.replace(
       /!\[([^\]]*)\]\((images\/[^)]+)\)/g,
       (match, imageTitle, imageFileNameWithExtension) => {
-        return `![${imageTitle}](/api/content/${deckFolder}/${imageFileNameWithExtension})`;
+        return `![${imageTitle}](/api/content/${deck.folder}/${imageFileNameWithExtension})`;
       }
     );
 
-    const card: CardType = {
-      title: data.title,
-      excerpt: data.excerpt,
-      coverImage: data.coverImage,
-      slug: realSlug,
+    const card = {
+      ...data,
+      id: fsCardId,
       content: processedContent,
-      deck: {
-        folder: deck.folder,
-        title: deck.title,
-        path: deck.path
-          ? { id: deck.path.id, title: deck.path.title }
-          : undefined,
-      },
-      lastModified: stats.mtime,
-    };
+      // deck: deck.folder
+    } as CardType;
 
-    const enrichedCard = deck ? enrichCard(card, deck) : card;
-    store.cards.set(realSlug, enrichedCard);
-
-    return enrichedCard;
+    return card;
   } catch (error) {
     console.error(`Error reading file at path ${fullPath}:`, error);
     return null;
   }
 }
 
-// Deck Retrieval Functions
-export async function getAllCards(): Promise<CardType[]> {
-  if (store.cards.size > 0) {
-    return Array.from(store.cards.values());
-  }
-
-  const slugs = await getCardSlugs();
-  const cardPromises = slugs.map(({ slug }) => getCardBySlug(slug));
-
-  const cards = (await Promise.all(cardPromises)).filter(
-    (card) => card !== null
-  ) as CardType[];
-  cards.forEach((card) => store.cards.set(card.slug, card));
-
-  return cards;
+// New function to get cards by deck
+export function getCardsOfDeck(deck: DeckType): CardType[] {
+  const { folder: deckFolder } = deck;
+  const cardFiles = readCardFiles(deckFolder);
+  return cardFiles
+    .map((cardId) => getCardById(cardId.replace(/\.mdx$/, '')))
+    .filter((card) => card !== null) as CardType[];
 }
 
-export async function getAllDecks(): Promise<DeckType[]> {
-  const deckPromises = decks.map(async (deck) => {
-    const cardSlugs = await getDeckContents(deck.folder);
-    return enrichDeck({ ...deck, cardSlugs });
-  });
-
-  return await Promise.all(deckPromises);
-}
-
-export async function getDeckBySlug(slug: string): Promise<DeckType | null> {
-  const deck = decks.find((deck) => deck.folder === slug) || null;
-
-  if (deck) {
-    const enrichedDeck = enrichDeck({
-      ...deck,
-      cardSlugs: await getDeckContents(slug),
-    });
-
-    return enrichedDeck;
-  }
-
-  return null;
-}
-
-export async function getCardsByDeck(deckFolder: string): Promise<CardType[]> {
-  const allCards = await getAllCards();
-  return allCards.filter(
-    (card) => card.deck && card.deck.folder === deckFolder
-  );
-}
-
-// Path Retrieval Functions
-export async function getAllPaths(): Promise<PathType[]> {
-  const pathsWithDeckCount = store.paths.map((path: PathType) => {
-    const deckCount = decks.filter((deck) => deck.pathId === path.id).length;
+// Path functions
+export function getAllPaths(): PathType[] {
+  return paths.map((path: PathType) => {
+    // Extract deckCount for the path
+    // const deckCount = decks.filter(deck => deck.pathId === path.id).length;
     return {
       ...path,
-      deckCount,
+      // deckCount
     };
   });
-
-  return pathsWithDeckCount;
 }
 
-export async function getPathById(id: string): Promise<PathType | null> {
-  const path = store.paths.find((p: PathType) => p.id === id) || null;
+export function getPathById(id: string): PathType | null {
+  const path = paths.find((p: PathType) => p.id === id) || null;
   if (path) {
-    const deckCount = decks.filter((deck) => deck.pathId === id).length;
+    // Extract deckCount for the path
+    // const deckCount = decks.filter(deck => deck.pathId === id).length;
     return {
       ...path,
-      deckCount,
+      // deckCount
     };
   }
   return null;
 }
 
-export async function getDecksByPathId(pathId: string): Promise<DeckType[]> {
-  const filteredDecks = decks.filter((deck) => deck.pathId === pathId);
-  const enrichedDecks = await Promise.all(
-    filteredDecks.map(async (deck) => {
-      const cardSlugs = await getDeckContents(deck.folder);
-      return enrichDeck({ ...deck, cardSlugs });
-    })
-  );
-  return enrichedDecks;
-}
-
-// New Function: Get Path by Deck ID
-export async function getPathByDeckId(
-  deckId: string
-): Promise<PathType | null> {
+export function getPathOfDeck(deckId: string): PathType | null {
   const deck = decks.find((deck) => deck.folder === deckId) || null;
   if (deck) {
-    const path =
-      store.paths.find((p: PathType) => p.id === deck.pathId) || null;
+    const path = paths.find((p: PathType) => p.id === deck.pathId) || null;
     if (path) {
+      // Extract deckCount for the path
+      // const deckCount = decks.filter(d => d.pathId === path.id).length;
       return {
         ...path,
-        deckCount: decks.filter((d) => d.pathId === path.id).length,
+        // deckCount
       };
     }
   }
   return null;
 }
 
-// Contributor Retrieval Functions
-export async function getAllContributors(): Promise<ContributorType[]> {
-  return store.contributors.map((contributor: ContributorType) => ({
+// Contributor functions
+export function getAllContributors(): ContributorType[] {
+  return contributors.map((contributor: ContributorType) => ({
     id: contributor.id,
     name: contributor.name,
+    email: contributor.email,
   }));
 }
 
-export async function getContributorById(
-  id: string
-): Promise<ContributorType | null> {
+export function getContributorById(id: string): ContributorType | null {
   const contributor =
-    store.contributors.find((c: ContributorType) => c.id === id) || null;
-  return contributor ? { id: contributor.id, name: contributor.name } : null;
+    contributors.find((c: ContributorType) => c.id === id) || null;
+  return contributor
+    ? { id: contributor.id, name: contributor.name, email: contributor.email }
+    : null;
 }
-
-// Watchers and Initialization Functions
-function watchDirectory(directory: string) {
-  const watcher = watch(
-    directory,
-    (eventType: string, filename: string | null) => {
-      if (filename && (eventType === 'change' || eventType === 'rename')) {
-        updateCache(directory);
-      }
-    }
-  );
-
-  return () => watcher.close();
-}
-
-function startWatchingDeckDirectories() {
-  if (process.env.NODE_ENV === 'development') {
-    const unwatchers = decks.map((deck) =>
-      watchDirectory(path.join(contentDirectory, deck.folder))
-    );
-
-    return () => unwatchers.forEach((unwatch) => unwatch());
-  }
-
-  return () => {};
-}
-
-(async () => {
-  await getCardSlugs();
-  await getAllCards();
-
-  startWatchingDeckDirectories();
-})();

@@ -32,7 +32,7 @@ interface BreadCrumpsProps {
 
 const BreadCrumps: React.FC<BreadCrumpsProps> = ({ path, deck, card }) => {
   const pathname = usePathname();
-  const effectivePath = path || deck?.path || card?.deck?.path;
+  // const effectivePath = path || deck?.path || card?.deck?.path;
 
   return (
     <Breadcrumb>
@@ -62,7 +62,7 @@ const BreadCrumps: React.FC<BreadCrumpsProps> = ({ path, deck, card }) => {
         </>
       )}
 
-      {effectivePath && (
+      {/* {effectivePath && (
         <>
           <BreadcrumbDivider />
           <BreadcrumbItem>
@@ -73,9 +73,9 @@ const BreadCrumps: React.FC<BreadCrumpsProps> = ({ path, deck, card }) => {
             </Link>
           </BreadcrumbItem>
         </>
-      )}
+      )} */}
 
-      {deck && (
+      {/* {deck && (
         <>
           <BreadcrumbDivider />
           <BreadcrumbItem>
@@ -103,7 +103,7 @@ const BreadCrumps: React.FC<BreadCrumpsProps> = ({ path, deck, card }) => {
             <BreadcrumbButton>{card.title}</BreadcrumbButton>
           </BreadcrumbItem>
         </>
-      )}
+      )} */}
     </Breadcrumb>
   );
 };

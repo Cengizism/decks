@@ -26,7 +26,7 @@ const Cards: React.FC<CardsProps> = ({ cards }) => {
   return (
     <div className={styles.main}>
       {cards.map((card) => (
-        <Card card={card} key={card.slug} />
+        <Card card={card} key={card.id} />
       ))}
     </div>
   );

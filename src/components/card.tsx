@@ -77,30 +77,30 @@ const CardComponent: React.FC<CardComponentProps> = ({ card }) => {
   return (
     <Card className={styles.card}>
       <CardPreview className={styles.grayBackground}>
-        <CoverImage
+        {/* <CoverImage
           src={
             card.deck?.folder
               ? `/api/content/${card.deck.folder}/images/${card.coverImage}`
               : ''
           }
           title={card.title}
-          slug={card.slug}
-        />
+          slug={card.id}
+        /> */}
       </CardPreview>
 
       <CardHeader
         header={
-          <Link className={styles.link} href={`/cards/${card.slug}`}>
+          <Link className={styles.link} href={`/cards/${card.id}`}>
             <Title3 truncate>{card.title}</Title3>
           </Link>
         }
-        description={
-          <Link className={styles.link} href={`/decks/${card.deck?.folder}`}>
-            <Caption1 truncate wrap={false} className={styles.caption}>
-              {card.deck?.title}
-            </Caption1>
-          </Link>
-        }
+        // description={
+        //   <Link className={styles.link} href={`/decks/${card.deck?.folder}`}>
+        //     <Caption1 truncate wrap={false} className={styles.caption}>
+        //       {card.deck?.title}
+        //     </Caption1>
+        //   </Link>
+        // }
         action={
           <Button
             appearance='transparent'
@@ -115,7 +115,7 @@ const CardComponent: React.FC<CardComponentProps> = ({ card }) => {
       </Body1>
 
       <CardFooter className={styles.footer}>
-        <Link href={`/cards/${card.slug}`}>
+        <Link href={`/cards/${card.id}`}>
           <Button>Read more</Button>
         </Link>
       </CardFooter>

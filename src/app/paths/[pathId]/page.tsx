@@ -1,7 +1,12 @@
-import BreadCrumps from '@/components/bread-crumps';
+// import BreadCrumps from '@/components/bread-crumps';
 import Decks from '@/components/decks';
 import Header from '@/components/header';
-import { getAllPaths, getDecksByPathId, getPathById } from '@/lib/api';
+import {
+  // getAllPaths,
+  getDecksByPathId,
+  getPathById,
+  indexPathIds,
+} from '@/lib/api';
 import { HOME_OG_IMAGE_URL, TITLE } from '@/lib/constants';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
@@ -9,23 +14,23 @@ import path from 'path';
 
 interface Params {
   params: {
-    slug: string;
+    pathId: string;
   };
 }
 
-export default async function PathPage({ params }: Params) {
-  const { slug } = params;
-  const path = await getPathById(slug);
+export default function PathPage({ params }: Params) {
+  const { pathId } = params;
+  const path = getPathById(pathId);
 
   if (!path) {
     return notFound();
   }
 
-  const decks = await getDecksByPathId(path.id);
+  const decks = getDecksByPathId(path.id);
 
   return (
     <>
-      <BreadCrumps path={path} />
+      {/* <BreadCrumps path={path} /> */}
       <Header title={path.title} subTitle={path.description} />
 
       {decks.length > 0 ? (
@@ -37,9 +42,9 @@ export default async function PathPage({ params }: Params) {
   );
 }
 
-export async function generateMetadata({ params }: Params): Promise<Metadata> {
-  const { slug } = params;
-  const path = await getPathById(slug);
+export function generateMetadata({ params }: Params): Metadata {
+  const { pathId } = params;
+  const path = getPathById(pathId);
 
   if (!path) {
     return notFound();
@@ -56,10 +61,10 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   };
 }
 
-export async function generateStaticParams() {
-  const paths = await getAllPaths();
+export function generateStaticParams() {
+  const pathIds = indexPathIds();
 
-  return paths.map((path) => ({
-    slug: path.id,
+  return pathIds.map(({ pathId }) => ({
+    pathId,
   }));
 }

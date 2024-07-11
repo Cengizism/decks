@@ -1,30 +1,30 @@
-import BreadCrumps from '@/components/bread-crumps';
+// import BreadCrumps from '@/components/bread-crumps';
 import Cards from '@/components/cards';
 import Header from '@/components/header';
-import { getAllDecks, getCardsByDeck, getDeckBySlug } from '@/lib/api';
+import { getCardsOfDeck, getDeckById, indexDeckIds } from '@/lib/api';
 import { HOME_OG_IMAGE_URL, TITLE } from '@/lib/constants';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 interface Params {
   params: {
-    slug: string;
+    deckId: string;
   };
 }
 
-export default async function DeckPage({ params }: Params) {
-  const { slug } = params;
-  const deck = await getDeckBySlug(slug);
+export default function DeckPage({ params }: Params) {
+  const { deckId } = params;
+  const deck = getDeckById(deckId);
 
   if (!deck) {
     return notFound();
   }
 
-  const cards = await getCardsByDeck(deck.folder);
+  const cards = getCardsOfDeck(deck);
 
   return (
     <>
-      <BreadCrumps deck={deck} />
+      {/* <BreadCrumps deck={deck} /> */}
       <Header title={deck.title} subTitle={deck.description} />
 
       {cards.length > 0 ? (
@@ -36,9 +36,9 @@ export default async function DeckPage({ params }: Params) {
   );
 }
 
-export async function generateMetadata({ params }: Params): Promise<Metadata> {
-  const { slug } = params;
-  const deck = await getDeckBySlug(slug);
+export function generateMetadata({ params }: Params): Metadata {
+  const { deckId } = params;
+  const deck = getDeckById(deckId);
 
   if (!deck) {
     return notFound();
@@ -55,10 +55,10 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   };
 }
 
-export async function generateStaticParams() {
-  const decks = await getAllDecks();
+export function generateStaticParams() {
+  const deckIds = indexDeckIds();
 
-  return decks.map((deck) => ({
-    slug: deck.folder,
+  return deckIds.map(({ deckId }) => ({
+    deckId,
   }));
 }
