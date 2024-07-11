@@ -8,5 +8,10 @@
     "folder": "deck-2",
     "title": "Deck 2",
     "description": "This is the second deck"
+  },
+  {
+    "folder": "unit-testing",
+    "title": "Unit Testing",
+    "description": "This deck explains different topics related to unit testing."
   }
 ]
