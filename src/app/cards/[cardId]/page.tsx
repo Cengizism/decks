@@ -36,7 +36,7 @@ export default async function CardPage({ params }: Params) {
 
       <CoverImage
         src={
-          deck ? `/api/content/${deck.folder}/images/${card.coverImage}` : ''
+          deck ? `/api/content/${deck.id}/images/${card.coverImage}` : ''
         }
         title={card.title}
       />

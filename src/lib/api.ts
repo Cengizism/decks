@@ -12,49 +12,48 @@ import contributors from '../../content/contributors.json';
 import decks from '../../content/decks.json';
 import paths from '../../content/paths.json';
 
+// File system functions
 const contentDirectory = join(process.cwd(), 'content');
 
-// File system functions
 function readCardFiles(folder: string): string[] {
   const deckPath = join(contentDirectory, folder);
-  const cardFiles = fs
-    .readdirSync(deckPath)
-    .filter((file) => file.endsWith('.mdx'));
-  return cardFiles;
+  return fs.readdirSync(deckPath).filter(file => file.endsWith('.mdx'));
 }
 
+// ------------------------------------------------------------------------------------------
 // Indexing functions
 export function indexCardIds(): { cardId: string }[] {
-  return decks.flatMap(({ folder }) => {
+  return decks.flatMap(({ id: folder }) => {
     const cardFiles = readCardFiles(folder);
-    return cardFiles.map((cardId) => ({
+    return cardFiles.map(cardId => ({
       cardId: cardId.replace(/\.mdx$/, ''),
     }));
   });
 }
 
 export function indexDeckIds(): { deckId: string }[] {
-  return decks.map((deck) => ({
-    deckId: deck.folder,
+  return decks.map(deck => ({
+    deckId: deck.id,
   }));
 }
 
 export function indexPathIds(): { pathId: string }[] {
-  return paths.map((path) => ({
+  return paths.map(path => ({
     pathId: path.id,
   }));
 }
 
 export function indexContributorIds(): { contributorId: string }[] {
-  return contributors.map((contributor) => ({
+  return contributors.map(contributor => ({
     contributorId: contributor.id,
   }));
 }
 
+// ------------------------------------------------------------------------------------------
 // Deck functions
 export function findDeckByCardId(cardId: string): DeckType | undefined {
   for (const deck of decks) {
-    const cardFiles = readCardFiles(deck.folder);
+    const cardFiles = readCardFiles(deck.id);
     if (cardFiles.includes(cardId + '.mdx')) {
       return deck;
     }
@@ -62,49 +61,34 @@ export function findDeckByCardId(cardId: string): DeckType | undefined {
   return undefined;
 }
 
-export function getDeckTitle(folder: string): string | undefined {
-  const deck = decks.find((deck: DeckType) => deck.folder === folder);
-  return deck?.title;
-}
-
 export function getAllDecks(): DeckType[] {
-  return decks.map((deck) => ({
-    ...deck,
-    // Extract cardSlugs for the deck
-    // cardSlugs: readCardFiles(deck.folder)
-  }));
+  return decks;
 }
 
 export function getDeckById(id: string): DeckType | null {
-  const deck = decks.find((deck) => deck.folder === id) || null;
-  return deck;
+  return decks.find(deck => deck.id === id) || null;
 }
 
 export function getDecksByPathId(pathId: string): DeckType[] {
-  return decks
-    .filter((deck) => deck.pathId === pathId)
-    .map((deck) => ({
-      ...deck,
-      // Extract cardSlugs for the deck
-      // cardSlugs: readCardFiles(deck.folder)
-    }));
+  return decks.filter(deck => deck.pathId === pathId);
 }
 
+// ------------------------------------------------------------------------------------------
 // Card functions
-export function getCardById(slug: string): CardType | null {
-  if (!slug) {
-    console.error('Invalid slug parameter:', { slug });
+export function getCardById(cardId: string): CardType | null {
+  if (!cardId) {
+    console.error('Invalid slug parameter:', { slug: cardId });
     return null;
   }
 
-  const fsCardId = slug.replace(/\.mdx$/, '');
-  const deck = findDeckByCardId(fsCardId);
+  const cardIdWithoutExtension = cardId.replace(/\.mdx$/, '');
+  const deck = findDeckByCardId(cardIdWithoutExtension);
   if (!deck) {
-    console.error('Deck not found for slug:', { slug });
+    console.error('Deck not found for slug:', { slug: cardId });
     return null;
   }
 
-  const fullPath = join(contentDirectory, deck.folder, `${fsCardId}.mdx`);
+  const fullPath = join(contentDirectory, deck.id, `${cardIdWithoutExtension}.mdx`);
 
   try {
     const fileContents = fs.readFileSync(fullPath, 'utf8');
@@ -112,88 +96,59 @@ export function getCardById(slug: string): CardType | null {
 
     const processedContent = content.replace(
       /!\[([^\]]*)\]\((images\/[^)]+)\)/g,
-      (match, imageTitle, imageFileNameWithExtension) => {
-        return `![${imageTitle}](/api/content/${deck.folder}/${imageFileNameWithExtension})`;
+      (_, imageTitle, imageFileNameWithExtension) => {
+        return `![${imageTitle}](/api/content/${deck.id}/${imageFileNameWithExtension})`;
       }
     );
 
-    const card = {
+    return {
       ...data,
-      id: fsCardId,
+      id: cardIdWithoutExtension,
       content: processedContent,
-      // deck: deck.folder
     } as CardType;
-
-    return card;
   } catch (error) {
     console.error(`Error reading file at path ${fullPath}:`, error);
     return null;
   }
 }
 
-// New function to get cards by deck
 export function getCardsOfDeck(deck: DeckType): CardType[] {
-  const { folder: deckFolder } = deck;
+  const { id: deckFolder } = deck;
   const cardFiles = readCardFiles(deckFolder);
   return cardFiles
-    .map((cardId) => getCardById(cardId.replace(/\.mdx$/, '')))
-    .filter((card) => card !== null) as CardType[];
+    .map(cardFileName => getCardById(cardFileName.replace(/\.mdx$/, '')))
+    .filter(card => card !== null) as CardType[];
 }
 
+// ------------------------------------------------------------------------------------------
 // Path functions
 export function getAllPaths(): PathType[] {
-  return paths.map((path: PathType) => {
-    // Extract deckCount for the path
-    // const deckCount = decks.filter(deck => deck.pathId === path.id).length;
-    return {
-      ...path,
-      // deckCount
-    };
-  });
+  return paths;
 }
 
 export function getPathById(id: string): PathType | null {
-  const path = paths.find((p: PathType) => p.id === id) || null;
-  if (path) {
-    // Extract deckCount for the path
-    // const deckCount = decks.filter(deck => deck.pathId === id).length;
-    return {
-      ...path,
-      // deckCount
-    };
-  }
-  return null;
+  return paths.find(path => path.id === id) || null;
 }
 
 export function getPathOfDeck(deckId: string): PathType | null {
-  const deck = decks.find((deck) => deck.folder === deckId) || null;
+  const deck = decks.find(deck => deck.id === deckId) || null;
   if (deck) {
-    const path = paths.find((p: PathType) => p.id === deck.pathId) || null;
-    if (path) {
-      // Extract deckCount for the path
-      // const deckCount = decks.filter(d => d.pathId === path.id).length;
-      return {
-        ...path,
-        // deckCount
-      };
-    }
+    return paths.find(path => path.id === deck.pathId) || null;
   }
   return null;
 }
 
+// ------------------------------------------------------------------------------------------
 // Contributor functions
 export function getAllContributors(): ContributorType[] {
-  return contributors.map((contributor: ContributorType) => ({
+  return contributors.map(contributor => ({
     id: contributor.id,
     name: contributor.name,
     email: contributor.email,
+    bio: contributor.bio,
   }));
 }
 
 export function getContributorById(id: string): ContributorType | null {
-  const contributor =
-    contributors.find((c: ContributorType) => c.id === id) || null;
-  return contributor
-    ? { id: contributor.id, name: contributor.name, email: contributor.email }
-    : null;
+  return contributors.find(contributor => contributor.id === id) || null;
 }

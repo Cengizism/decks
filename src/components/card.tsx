@@ -79,8 +79,8 @@ const CardComponent: React.FC<CardComponentProps> = ({ card }) => {
       <CardPreview className={styles.grayBackground}>
         {/* <CoverImage
           src={
-            card.deck?.folder
-              ? `/api/content/${card.deck.folder}/images/${card.coverImage}`
+            card.deck?.id
+              ? `/api/content/${card.deck.id}/images/${card.coverImage}`
               : ''
           }
           title={card.title}
@@ -95,7 +95,7 @@ const CardComponent: React.FC<CardComponentProps> = ({ card }) => {
           </Link>
         }
         // description={
-        //   <Link className={styles.link} href={`/decks/${card.deck?.folder}`}>
+        //   <Link className={styles.link} href={`/decks/${card.deck?.id}`}>
         //     <Caption1 truncate wrap={false} className={styles.caption}>
         //       {card.deck?.title}
         //     </Caption1>

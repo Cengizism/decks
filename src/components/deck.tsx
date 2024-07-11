@@ -85,7 +85,7 @@ const DeckComponent: React.FC<DeckComponentProps> = ({ deck }) => {
     <Card className={styles.card}>
       <CardHeader
         header={
-          <Link className={styles.link} href={`/decks/${deck.folder}`}>
+          <Link className={styles.link} href={`/decks/${deck.id}`}>
             <Title3 truncate>{deck.title}</Title3>
           </Link>
         }
@@ -106,7 +106,7 @@ const DeckComponent: React.FC<DeckComponentProps> = ({ deck }) => {
       />
 
       <CardPreview className={styles.grayBackground}>
-        <CoverImage src={`/${deck.image}`} title={deck.title} />
+        <CoverImage src={`/${deck.coverImage}`} title={deck.title} />
       </CardPreview>
 
       <Body1 truncate wrap={false} className={styles.text}>
@@ -114,7 +114,7 @@ const DeckComponent: React.FC<DeckComponentProps> = ({ deck }) => {
       </Body1>
 
       <CardFooter className={styles.footer}>
-        <Link href={`/decks/${deck.folder}`}>
+        <Link href={`/decks/${deck.id}`}>
           <Button>Open deck</Button>
         </Link>
         {/* <Text>

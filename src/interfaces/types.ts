@@ -1,17 +1,5 @@
 export type CardType = {
   id: string;
-  // deck:
-  //   | {
-  //       folder: string | undefined;
-  //       title: string | undefined;
-  //       path:
-  //         | {
-  //             id: string;
-  //             title: string;
-  //           }
-  //         | undefined;
-  //     }
-  //   | undefined;
   title: string;
   excerpt: string;
   coverImage: string;
@@ -20,32 +8,23 @@ export type CardType = {
 };
 
 export interface DeckType {
-  folder: string;
+  id: string;
   title: string;
   description: string;
-  // pathId?: string | undefined;
-  // path?: PathType;
-  image: string;
-  // contributorId?: string;
-  // contributor?: ContributorType;
-  // cardSlugs?: string[];
+  coverImage: string;
+  pathId: string;
+  contributorId: string;
 }
-
-// export interface CardSlugType {
-//   cardId: string;
-//   // deck: string;
-// }
 
 export interface PathType {
   id: string;
   title: string;
-  description?: string;
-  // deckCount?: number;
+  description: string;
 }
 
 export interface ContributorType {
   id: string;
   name: string;
   email: string;
-  bio?: string;
+  bio: string;
 }

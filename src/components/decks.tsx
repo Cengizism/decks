@@ -26,7 +26,7 @@ const Decks: React.FC<DecksProps> = ({ decks }) => {
   return (
     <div className={styles.main}>
       {decks.map((deck) => (
-        <Deck key={deck.folder} deck={deck} />
+        <Deck key={deck.id} deck={deck} />
       ))}
     </div>
   );
