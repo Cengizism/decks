@@ -1,6 +1,6 @@
 'use client';
 
-import { CardType, DeckType, PathType } from '@/interfaces/types';
+import { NavigationTree } from '@/interfaces/types';
 import {
   Breadcrumb,
   BreadcrumbButton,
@@ -25,14 +25,11 @@ const DecksIcons = bundleIcon(BookStar20Filled, BookStar20Regular);
 const PathsIcons = bundleIcon(BranchFork20Filled, BranchFork20Regular);
 
 interface BreadCrumpsProps {
-  path?: PathType | null;
-  deck?: DeckType | null;
-  card?: CardType | null;
+  nodes?: NavigationTree;
 }
 
-const BreadCrumps: React.FC<BreadCrumpsProps> = ({ path, deck, card }) => {
+const BreadCrumps: React.FC<BreadCrumpsProps> = ({ nodes }) => {
   const pathname = usePathname();
-  // const effectivePath = path || deck?.path || card?.deck?.path;
 
   return (
     <Breadcrumb>
@@ -62,48 +59,48 @@ const BreadCrumps: React.FC<BreadCrumpsProps> = ({ path, deck, card }) => {
         </>
       )}
 
-      {/* {effectivePath && (
+      {nodes?.path && (
         <>
           <BreadcrumbDivider />
           <BreadcrumbItem>
-            <Link href={`/paths/${effectivePath.id}`} passHref>
+            <Link href={`/paths/${nodes.path.id}`} passHref>
               <BreadcrumbButton icon={<PathsIcons />}>
-                {effectivePath.title}
-              </BreadcrumbButton>
-            </Link>
-          </BreadcrumbItem>
-        </>
-      )} */}
-
-      {/* {deck && (
-        <>
-          <BreadcrumbDivider />
-          <BreadcrumbItem>
-            <Link href={`/decks/${deck.id}`} passHref>
-              <BreadcrumbButton icon={<DecksIcons />}>
-                {deck.title}
+                {nodes.path.title}
               </BreadcrumbButton>
             </Link>
           </BreadcrumbItem>
         </>
       )}
 
-      {card && (
+      {nodes?.deck && (
         <>
           <BreadcrumbDivider />
           <BreadcrumbItem>
-            <Link href={`/decks/${card.deck?.id}`} passHref>
+            <Link href={`/decks/${nodes.deck.id}`} passHref>
               <BreadcrumbButton icon={<DecksIcons />}>
-                {card.deck?.title}
+                {nodes.deck.title}
+              </BreadcrumbButton>
+            </Link>
+          </BreadcrumbItem>
+        </>
+      )}
+
+      {nodes?.card && (
+        <>
+          <BreadcrumbDivider />
+          <BreadcrumbItem>
+            <Link href={`/decks/${nodes.deck?.id}`} passHref>
+              <BreadcrumbButton icon={<DecksIcons />}>
+                {nodes.deck?.title}
               </BreadcrumbButton>
             </Link>
           </BreadcrumbItem>
           <BreadcrumbDivider />
           <BreadcrumbItem>
-            <BreadcrumbButton>{card.title}</BreadcrumbButton>
+            <BreadcrumbButton>{nodes.card.title}</BreadcrumbButton>
           </BreadcrumbItem>
         </>
-      )} */}
+      )}
     </Breadcrumb>
   );
 };

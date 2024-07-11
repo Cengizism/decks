@@ -1,11 +1,11 @@
-export type CardType = {
+export interface CardType {
   id: string;
   title: string;
   excerpt: string;
   coverImage: string;
   content: string;
   lastModified: Date;
-};
+}
 
 export interface DeckType {
   id: string;
@@ -27,4 +27,32 @@ export interface ContributorType {
   name: string;
   email: string;
   bio: string;
+}
+
+interface NavigationNode {
+  id: string;
+  title?: string;
+}
+
+interface NavigationCard {
+  id: string;
+  title: string;
+}
+
+interface NavigationDeck {
+  id: string;
+  title: string;
+  cards: NavigationCard[];
+}
+
+export interface NavigationPath {
+  id: string;
+  title: string;
+  decks: NavigationDeck[];
+}
+
+export interface NavigationTree {
+  path?: NavigationNode;
+  deck?: NavigationNode;
+  card?: NavigationNode;
 }

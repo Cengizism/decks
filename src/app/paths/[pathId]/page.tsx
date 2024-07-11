@@ -1,13 +1,14 @@
-// import BreadCrumps from '@/components/bread-crumps';
+import BreadCrumps from '@/components/bread-crumps';
 import Decks from '@/components/decks';
 import Header from '@/components/header';
 import {
-  // getAllPaths,
   getDecksByPathId,
+  getNavigationTree,
   getPathById,
   indexPathIds,
 } from '@/lib/api';
 import { HOME_OG_IMAGE_URL, TITLE } from '@/lib/constants';
+import { get } from 'http';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import path from 'path';
@@ -28,9 +29,11 @@ export default function PathPage({ params }: Params) {
 
   const decks = getDecksByPathId(path.id);
 
+  const nodes = getNavigationTree(path);
+
   return (
     <>
-      {/* <BreadCrumps path={path} /> */}
+      <BreadCrumps nodes={nodes} />
       <Header title={path.title} subTitle={path.description} />
 
       {decks.length > 0 ? (

@@ -1,7 +1,12 @@
-// import BreadCrumps from '@/components/bread-crumps';
+import BreadCrumps from '@/components/bread-crumps';
 import CoverImage from '@/components/cover-image';
 import Header from '@/components/header';
-import { findDeckByCardId, getCardById, indexCardIds } from '@/lib/api';
+import {
+  findDeckByCardId,
+  getCardById,
+  getNavigationTree,
+  indexCardIds,
+} from '@/lib/api';
 import { TITLE } from '@/lib/constants';
 import markdownToHtml from '@/lib/markdown-to-html';
 import markdownStyles from '@/styles/markdown-styles.module.css';
@@ -25,9 +30,11 @@ export default async function CardPage({ params }: Params) {
   const deck = findDeckByCardId(cardId);
   const content = await markdownToHtml(card.content || '');
 
+  const nodes = getNavigationTree(card);
+
   return (
     <>
-      {/* <BreadCrumps card={card} /> */}
+      <BreadCrumps nodes={nodes} />
       <Header
         title={card.title}
         subTitle={card.excerpt}
@@ -35,9 +42,7 @@ export default async function CardPage({ params }: Params) {
       />
 
       <CoverImage
-        src={
-          deck ? `/api/content/${deck.id}/images/${card.coverImage}` : ''
-        }
+        src={deck ? `/api/content/${deck.id}/images/${card.coverImage}` : ''}
         title={card.title}
       />
 

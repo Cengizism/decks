@@ -1,4 +1,4 @@
-// import BreadCrumps from '@/components/bread-crumps';
+import BreadCrumps from '@/components/bread-crumps';
 import Decks from '@/components/decks';
 import Header from '@/components/header';
 import { DeckType } from '@/interfaces/types';
@@ -9,7 +9,7 @@ const DecksPage: React.FC = () => {
 
   return (
     <>
-      {/* <BreadCrumps /> */}
+      <BreadCrumps />
       <Header
         title='Decks'
         subTitle='Here you can find all the decks available in the platform.'
