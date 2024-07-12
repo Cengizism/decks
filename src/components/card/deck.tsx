@@ -1,5 +1,6 @@
 'use client';
 
+import { useDeckUtils } from '@/hooks/use-deck-utils';
 import { useNodes } from '@/hooks/use-nodes';
 import { DeckType } from '@/interfaces/types';
 import {
@@ -83,7 +84,8 @@ interface DeckComponentProps {
 
 const DeckComponent: React.FC<DeckComponentProps> = ({ deck }) => {
   const styles = useStyles();
-  const { getParent, getCardCount, getContributorById } = useNodes();
+  const { getParent } = useNodes();
+  const { getCardCount, getContributorById } = useDeckUtils();
 
   const path = getParent(deck);
   const contributor = getContributorById(deck.contributorId);

@@ -10,6 +10,8 @@ import {
   BranchFork20Regular,
   Info20Filled,
   Info20Regular,
+  Person20Filled,
+  Person20Regular,
   bundleIcon,
 } from '@fluentui/react-icons';
 import {
@@ -30,6 +32,7 @@ const DashboardIcons = bundleIcon(Board20Filled, Board20Regular);
 const AboutIcons = bundleIcon(Info20Filled, Info20Regular);
 const PathsIcons = bundleIcon(BranchFork20Filled, BranchFork20Regular);
 const DecksIcons = bundleIcon(BookStar20Filled, BookStar20Regular);
+const ContributorsIcons = bundleIcon(Person20Filled, Person20Regular);
 
 const useStyles = makeStyles({
   root: {
@@ -106,6 +109,11 @@ const Navigation: React.FC<NavigationProps> = ({
         <NavSectionHeader>Content</NavSectionHeader>
         <MenuItem path='/paths' icon={<PathsIcons />} text='Paths' />
         <MenuItem path='/decks' icon={<DecksIcons />} text='Decks' />
+        <MenuItem
+          path='/contributors'
+          icon={<ContributorsIcons />}
+          text='Contributors'
+        />
       </NavDrawerBody>
     </NavDrawer>
   );

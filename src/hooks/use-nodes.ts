@@ -8,7 +8,6 @@ import {
   NodesTreeType,
   PathNode,
   PathType,
-  ContributorType,
 } from '@/interfaces/types';
 import { useStateContext } from '@/providers/state-provider';
 import { useMemo } from 'react';
@@ -74,39 +73,10 @@ export const useNodes = () => {
     };
   }, [state.nodes, getNodeType]);
 
-  const getCardCount = useMemo(() => {
-    return (deck: DeckType): number => {
-      const deckNode = state.nodes.paths
-        .flatMap((path: PathNode) => path.decks)
-        .find((d: DeckNode) => d.id === deck.id);
-      return deckNode ? deckNode.cards.length : 0;
-    };
-  }, [state.nodes]);
-
-  const getDeckCount = useMemo(() => {
-    return (path: PathType): number => {
-      const pathNode = state.nodes.paths.find(
-        (p: PathNode) => p.id === path.id
-      );
-      return pathNode ? pathNode.decks.length : 0;
-    };
-  }, [state.nodes]);
-
-  const getContributorById = useMemo(() => {
-    return (contributorId: string): ContributorType | undefined => {
-      return state.contributors.find(
-        (contributor: ContributorType) => contributor.id === contributorId
-      );
-    };
-  }, [state.contributors]);
-
   return {
     findNode: (nodeId: string, nodeType: 'path' | 'deck' | 'card') =>
       findNode(state.nodes, nodeId, nodeType),
     getNodeType,
     getParent,
-    getCardCount,
-    getDeckCount,
-    getContributorById,
   };
 };

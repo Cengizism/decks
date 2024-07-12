@@ -1,7 +1,7 @@
 'use client';
 
 import { useDeckUtils } from '@/hooks/use-deck-utils';
-import { PathType } from '@/interfaces/types';
+import { ContributorType } from '@/interfaces/types';
 import {
   Body1,
   Button,
@@ -42,36 +42,39 @@ const useStyles = makeStyles({
   },
 });
 
-interface PathComponentProps {
-  path: PathType;
+interface ContributorComponentProps {
+  contributor: ContributorType;
 }
 
-const PathComponent: React.FC<PathComponentProps> = ({ path }) => {
+const ContributorComponent: React.FC<ContributorComponentProps> = ({
+  contributor,
+}) => {
   const styles = useStyles();
-  const { getDeckCount } = useDeckUtils();
+  const { getDeckCountByContributorId } = useDeckUtils();
 
-  const deckCount = getDeckCount(path);
+  const deckCount = getDeckCountByContributorId(contributor.id);
 
   return (
     <Card className={styles.card}>
       <CardHeader
         header={
-          <Link className={styles.link} href={`/paths/${path.id}`}>
-            <Title3 truncate>{path.title}</Title3>
+          <Link
+            className={styles.link}
+            href={`/contributors/${contributor.id}`}
+          >
+            <Title3 truncate>{contributor.name}</Title3>
           </Link>
         }
       />
 
       <Body1 truncate wrap={false} className={styles.text}>
-        {path.description}
+        {contributor.bio}
       </Body1>
 
       <CardFooter className={styles.footer}>
-        {deckCount > 0 ? (
-          <Link href={`/paths/${path.id}`}>
-            <Button>View decks</Button>
-          </Link>
-        ) : null}
+        <Link href={`/contributors/${contributor.id}`}>
+          <Button>Open profile</Button>
+        </Link>
         <Text>
           {deckCount > 0 ? (
             <>
@@ -86,4 +89,4 @@ const PathComponent: React.FC<PathComponentProps> = ({ path }) => {
   );
 };
 
-export default PathComponent;
+export default ContributorComponent;

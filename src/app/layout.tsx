@@ -1,6 +1,6 @@
 import Main from '@/components/main';
-import { ContributorType, NodesTreeType } from '@/interfaces/types';
-import { getAllContributors, getNodeTree } from '@/libraries/api';
+import { ContributorType, DeckType, NodesTreeType } from '@/interfaces/types';
+import { getAllContributors, getAllDecks, getNodeTree } from '@/libraries/api';
 import { DESCRIPTION, HOME_OG_IMAGE_URL, TITLE } from '@/libraries/constants';
 import { FluentProviders } from '@/providers/fluent-providers';
 import { StateProvider } from '@/providers/state-provider';
@@ -27,10 +27,12 @@ interface RootLayoutProps {
 
 const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
   const nodes: NodesTreeType = getNodeTree();
+  const decks: DeckType[] = getAllDecks();
   const contributors: ContributorType[] = getAllContributors();
 
   const state = {
     nodes,
+    decks,
     contributors,
   };
 
