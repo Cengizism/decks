@@ -1,6 +1,6 @@
-import BreadCrumps from '@/components/navigation/bread-crumps';
-import CoverImage from '@/components/cover-image';
+import CoverImage from '@/components/card/cover-image';
 import Header from '@/components/header';
+import BreadCrumps from '@/components/navigation/bread-crumps';
 import { findDeckByCardId, getCardById, indexCardIds } from '@/lib/api';
 import { TITLE } from '@/lib/constants';
 import markdownToHtml from '@/lib/markdown-to-html';

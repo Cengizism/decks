@@ -1,6 +1,6 @@
-import BreadCrumps from '@/components/navigation/bread-crumps';
-import Deck from '@/components/deck';
+import Deck from '@/components/card/deck';
 import Header from '@/components/header';
+import BreadCrumps from '@/components/navigation/bread-crumps';
 import { DeckType } from '@/interfaces/types';
 import { getAllDecks } from '@/lib/api';
 

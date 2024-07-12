@@ -1,6 +1,6 @@
-import BreadCrumps from '@/components/navigation/bread-crumps';
-import Deck from '@/components/deck';
+import Deck from '@/components/card/deck';
 import Header from '@/components/header';
+import BreadCrumps from '@/components/navigation/bread-crumps';
 import { getDecksByPathId, getPathById, indexPathIds } from '@/lib/api';
 import { HOME_OG_IMAGE_URL, TITLE } from '@/lib/constants';
 import { Metadata } from 'next';
