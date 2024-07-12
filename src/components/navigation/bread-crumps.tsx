@@ -1,13 +1,7 @@
 'use client';
 
-import {
-  CardType,
-  DeckType,
-  NodeType,
-  NodesTreeType,
-  PathType,
-} from '@/interfaces/types';
-import { useStateContext } from '@/providers/state-provider';
+import { useNodes } from '@/hooks/use-nodes';
+import { CardType, DeckType, PathType } from '@/interfaces/types';
 import {
   Breadcrumb,
   BreadcrumbButton,
@@ -25,7 +19,7 @@ import {
 } from '@fluentui/react-icons';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import React, { useMemo } from 'react';
+import React from 'react';
 
 const DashboardIcons = bundleIcon(Board20Filled, Board20Regular);
 const DecksIcons = bundleIcon(BookStar20Filled, BookStar20Regular);
@@ -37,53 +31,10 @@ interface BreadCrumpsProps {
 
 const BreadCrumps: React.FC<BreadCrumpsProps> = ({ node }) => {
   const pathname = usePathname();
-  const { state } = useStateContext();
-
-  const findNode = useMemo(() => {
-    return (
-      tree: NodesTreeType,
-      nodeId: string,
-      nodeType: 'path' | 'deck' | 'card'
-    ): { path?: NodeType; deck?: NodeType; card?: NodeType } | null => {
-      for (const path of tree.paths) {
-        if (nodeType === 'path' && path.id === nodeId) {
-          return { path };
-        }
-        for (const deck of path.decks) {
-          if (nodeType === 'deck' && deck.id === nodeId) {
-            return { path, deck };
-          }
-          for (const card of deck.cards) {
-            if (nodeType === 'card' && card.id === nodeId) {
-              return { path, deck, card };
-            }
-          }
-        }
-      }
-      return null;
-    };
-  }, []);
-
-  const getNodeType = useMemo(() => {
-    return (
-      node: PathType | DeckType | CardType
-    ): 'path' | 'deck' | 'card' | undefined => {
-      if ('description' in node && !('pathId' in node)) {
-        return 'path';
-      } else if ('pathId' in node) {
-        return 'deck';
-      } else if ('excerpt' in node) {
-        return 'card';
-      }
-      return undefined;
-    };
-  }, []);
+  const { findNode, getNodeType } = useNodes();
 
   const type = node && getNodeType(node);
-  const nodes = useMemo(
-    () => (type ? findNode(state.nodes, node.id, type) || {} : {}),
-    [type, node, findNode, state.nodes]
-  );
+  const nodes = type ? findNode(node.id, type) || {} : {};
 
   return (
     <Breadcrumb>
