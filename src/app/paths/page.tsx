@@ -1,8 +1,10 @@
 import BreadCrumps from '@/components/bread-crumps';
 import Header from '@/components/header';
-import Paths from '@/components/paths';
+import Path from '@/components/path';
 import { PathType } from '@/interfaces/types';
 import { getAllPaths } from '@/lib/api';
+
+import styles from '../../styles/page.module.css';
 
 const PathsPage: React.FC = () => {
   const paths: PathType[] = getAllPaths();
@@ -17,7 +19,11 @@ const PathsPage: React.FC = () => {
       />
 
       {paths.length > 0 ? (
-        <Paths paths={paths} />
+        <div className={styles.grid}>
+          {paths.map((path) => (
+            <Path key={path.id} path={path} />
+          ))}
+        </div>
       ) : (
         <div>No paths available.</div>
       )}

@@ -1,3 +1,5 @@
+'use client';
+
 import { PathType } from '@/interfaces/types';
 import {
   Body1,

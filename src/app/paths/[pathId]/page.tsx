@@ -1,11 +1,13 @@
 import BreadCrumps from '@/components/bread-crumps';
-import Decks from '@/components/decks';
+import Deck from '@/components/deck';
 import Header from '@/components/header';
 import { getDecksByPathId, getPathById, indexPathIds } from '@/lib/api';
 import { HOME_OG_IMAGE_URL, TITLE } from '@/lib/constants';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import path from 'path';
+
+import styles from '../../../styles/page.module.css';
 
 interface Params {
   params: {
@@ -30,7 +32,11 @@ export default function PathPage({ params }: Params) {
       <Header title={path.title} subTitle={path.description} />
 
       {decks.length > 0 ? (
-        <Decks decks={decks} />
+        <div className={styles.grid}>
+          {decks.map((deck) => (
+            <Deck key={deck.id} deck={deck} />
+          ))}
+        </div>
       ) : (
         <div>No decks found for this path.</div>
       )}

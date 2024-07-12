@@ -1,8 +1,10 @@
 import BreadCrumps from '@/components/bread-crumps';
-import Decks from '@/components/decks';
+import Deck from '@/components/deck';
 import Header from '@/components/header';
 import { DeckType } from '@/interfaces/types';
 import { getAllDecks } from '@/lib/api';
+
+import styles from '../../styles/page.module.css';
 
 const DecksPage: React.FC = () => {
   const decks: DeckType[] = getAllDecks();
@@ -17,7 +19,11 @@ const DecksPage: React.FC = () => {
       />
 
       {decks.length > 0 ? (
-        <Decks decks={decks} />
+        <div className={styles.grid}>
+          {decks.map((deck) => (
+            <Deck key={deck.id} deck={deck} />
+          ))}
+        </div>
       ) : (
         <div>No decks available.</div>
       )}
