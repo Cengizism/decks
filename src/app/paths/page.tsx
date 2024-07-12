@@ -2,7 +2,7 @@ import Path from '@/components/card/path';
 import Header from '@/components/header';
 import BreadCrumps from '@/components/navigation/bread-crumps';
 import { PathType } from '@/interfaces/types';
-import { getAllPaths } from '@/lib/api';
+import { getAllPaths } from '@/libraries/api';
 
 import styles from '../../styles/page.module.css';
 

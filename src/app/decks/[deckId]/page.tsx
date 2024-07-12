@@ -1,8 +1,8 @@
 import Card from '@/components/card/card';
 import Header from '@/components/header';
 import BreadCrumps from '@/components/navigation/bread-crumps';
-import { getCardsOfDeck, getDeckById, indexDeckIds } from '@/lib/api';
-import { HOME_OG_IMAGE_URL, TITLE } from '@/lib/constants';
+import { getCardsOfDeck, getDeckById, indexDeckIds } from '@/libraries/api';
+import { HOME_OG_IMAGE_URL, TITLE } from '@/libraries/constants';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 

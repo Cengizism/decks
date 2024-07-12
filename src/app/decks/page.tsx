@@ -2,7 +2,7 @@ import Deck from '@/components/card/deck';
 import Header from '@/components/header';
 import BreadCrumps from '@/components/navigation/bread-crumps';
 import { DeckType } from '@/interfaces/types';
-import { getAllDecks } from '@/lib/api';
+import { getAllDecks } from '@/libraries/api';
 
 import styles from '../../styles/page.module.css';
 

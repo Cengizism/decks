@@ -1,6 +1,6 @@
 'use client';
 
-import { TITLE } from '@/lib/constants';
+import { TITLE } from '@/libraries/constants';
 import { Title1 } from '@fluentui/react-components';
 import { makeStyles } from '@fluentui/react-components';
 import Image from 'next/image';

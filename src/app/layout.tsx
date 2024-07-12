@@ -1,7 +1,7 @@
 import Main from '@/components/main';
 import { ContributorType, NodesTreeType } from '@/interfaces/types';
-import { getAllContributors, getNodeTree } from '@/lib/api';
-import { DESCRIPTION, HOME_OG_IMAGE_URL, TITLE } from '@/lib/constants';
+import { getAllContributors, getNodeTree } from '@/libraries/api';
+import { DESCRIPTION, HOME_OG_IMAGE_URL, TITLE } from '@/libraries/constants';
 import { FluentProviders } from '@/providers/fluent-providers';
 import { StateProvider } from '@/providers/state-provider';
 import '@/styles/globals.css';
