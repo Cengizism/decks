@@ -1,7 +1,13 @@
 'use client';
 
 import { useStateContext } from '@/components/state-provider';
-import { CompleteNavigationTree, NavigationNode } from '@/interfaces/types';
+import {
+  CardType,
+  CompleteNavigationTree,
+  DeckType,
+  NavigationNode,
+  PathType,
+} from '@/interfaces/types';
 import {
   Breadcrumb,
   BreadcrumbButton,
@@ -26,11 +32,10 @@ const DecksIcons = bundleIcon(BookStar20Filled, BookStar20Regular);
 const PathsIcons = bundleIcon(BranchFork20Filled, BranchFork20Regular);
 
 interface BreadCrumpsProps {
-  nodeId?: string;
-  nodeType?: 'path' | 'deck' | 'card';
+  node?: PathType | DeckType | CardType;
 }
 
-const BreadCrumps: React.FC<BreadCrumpsProps> = ({ nodeId, nodeType }) => {
+const BreadCrumps: React.FC<BreadCrumpsProps> = ({ node }) => {
   const pathname = usePathname();
   const { state } = useStateContext();
 
@@ -61,8 +66,24 @@ const BreadCrumps: React.FC<BreadCrumpsProps> = ({ nodeId, nodeType }) => {
     return null;
   }
 
-  const nodes =
-    (nodeId && nodeType && findNode(state.tree, nodeId, nodeType)) || {};
+  function getNodeType(
+    node: PathType | DeckType | CardType
+  ): 'path' | 'deck' | 'card' | undefined {
+    if (
+      (node as PathType).description !== undefined &&
+      !(node as DeckType).pathId
+    ) {
+      return 'path';
+    } else if ((node as DeckType).pathId !== undefined) {
+      return 'deck';
+    } else if ((node as CardType).excerpt !== undefined) {
+      return 'card';
+    }
+    return undefined;
+  }
+
+  const type = node && getNodeType(node);
+  const nodes = type ? findNode(state.tree, node.id, type) || {} : {};
 
   return (
     <Breadcrumb>

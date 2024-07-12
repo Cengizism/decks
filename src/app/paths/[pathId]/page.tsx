@@ -25,7 +25,7 @@ export default function PathPage({ params }: Params) {
 
   return (
     <>
-      <BreadCrumps nodeId={pathId} nodeType='path' />
+      <BreadCrumps node={path} />
 
       <Header title={path.title} subTitle={path.description} />
 

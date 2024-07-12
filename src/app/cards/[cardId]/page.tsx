@@ -27,7 +27,7 @@ export default async function CardPage({ params }: Params) {
 
   return (
     <>
-      <BreadCrumps nodeId={cardId} nodeType='card' />
+      <BreadCrumps node={card} />
 
       <Header
         title={card.title}

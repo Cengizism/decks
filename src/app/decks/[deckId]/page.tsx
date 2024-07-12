@@ -24,7 +24,7 @@ export default function DeckPage({ params }: Params) {
 
   return (
     <>
-      <BreadCrumps nodeId={deckId} nodeType='deck' />
+      <BreadCrumps node={deck} />
 
       <Header title={deck.title} subTitle={deck.description} />
 
