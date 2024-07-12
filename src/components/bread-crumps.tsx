@@ -18,19 +18,45 @@ import {
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React from 'react';
-
-import { NavigationTree } from '@/interfaces/types';
+import { CompleteNavigationTree, NavigationNode } from '@/interfaces/types';
 
 const DashboardIcons = bundleIcon(Board20Filled, Board20Regular);
 const DecksIcons = bundleIcon(BookStar20Filled, BookStar20Regular);
 const PathsIcons = bundleIcon(BranchFork20Filled, BranchFork20Regular);
 
 interface BreadCrumpsProps {
-  nodes?: NavigationTree;
+  tree: CompleteNavigationTree;
+  nodeId?: string;
+  nodeType?: 'path' | 'deck' | 'card';
 }
 
-const BreadCrumps: React.FC<BreadCrumpsProps> = ({ nodes }) => {
+const BreadCrumps: React.FC<BreadCrumpsProps> = ({ tree, nodeId, nodeType }) => {
   const pathname = usePathname();
+
+  function findNode(
+    tree: CompleteNavigationTree,
+    nodeId: string,
+    nodeType: 'path' | 'deck' | 'card'
+  ): { path?: NavigationNode; deck?: NavigationNode; card?: NavigationNode } | null {
+    for (const path of tree.paths) {
+      if (nodeType === 'path' && path.id === nodeId) {
+        return { path };
+      }
+      for (const deck of path.decks) {
+        if (nodeType === 'deck' && deck.id === nodeId) {
+          return { path, deck };
+        }
+        for (const card of deck.cards) {
+          if (nodeType === 'card' && card.id === nodeId) {
+            return { path, deck, card };
+          }
+        }
+      }
+    }
+    return null;
+  }
+
+  const nodes = (nodeId && nodeType && findNode(tree, nodeId, nodeType)) || {};
 
   return (
     <Breadcrumb>
@@ -60,7 +86,7 @@ const BreadCrumps: React.FC<BreadCrumpsProps> = ({ nodes }) => {
         </>
       )}
 
-      {nodes?.path && (
+      {nodes.path && (
         <>
           <BreadcrumbDivider />
           <BreadcrumbItem>
@@ -73,7 +99,7 @@ const BreadCrumps: React.FC<BreadCrumpsProps> = ({ nodes }) => {
         </>
       )}
 
-      {nodes?.deck && !nodes?.card && (
+      {nodes.deck && (
         <>
           <BreadcrumbDivider />
           <BreadcrumbItem>
@@ -86,20 +112,8 @@ const BreadCrumps: React.FC<BreadCrumpsProps> = ({ nodes }) => {
         </>
       )}
 
-      {nodes?.card && (
+      {nodes.card && (
         <>
-          {nodes.deck && (
-            <>
-              <BreadcrumbDivider />
-              <BreadcrumbItem>
-                <Link href={`/decks/${nodes.deck.id}`} passHref>
-                  <BreadcrumbButton icon={<DecksIcons />}>
-                    {nodes.deck.title}
-                  </BreadcrumbButton>
-                </Link>
-              </BreadcrumbItem>
-            </>
-          )}
           <BreadcrumbDivider />
           <BreadcrumbItem>
             <BreadcrumbButton>{nodes.card.title}</BreadcrumbButton>

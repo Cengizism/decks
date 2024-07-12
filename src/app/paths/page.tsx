@@ -1,15 +1,18 @@
 import BreadCrumps from '@/components/bread-crumps';
 import Header from '@/components/header';
 import Paths from '@/components/paths';
-import { PathType } from '@/interfaces/types';
-import { getAllPaths } from '@/lib/api';
+import { CompleteNavigationTree, PathType } from '@/interfaces/types';
+import { getAllPaths, getCompleteNavigationTree } from '@/lib/api';
 
 const PathsPage: React.FC = () => {
   const paths: PathType[] = getAllPaths();
 
+  const tree: CompleteNavigationTree = getCompleteNavigationTree();
+
   return (
     <>
-      <BreadCrumps />
+      <BreadCrumps tree={tree} />
+
       <Header
         title='Paths'
         subTitle='Follow the paths to learn more about a specific topic.'

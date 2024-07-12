@@ -3,8 +3,9 @@ import {
   ContributorType,
   DeckType,
   PathType,
-  NavigationTree,
-  NavigationPath,
+  // NavigationTree,
+  // NavigationPath,
+  CompleteNavigationTree
 } from '@/interfaces/types';
 import fs from 'fs';
 import matter from 'gray-matter';
@@ -156,20 +157,70 @@ export function getContributorById(id: string): ContributorType | null {
 
 // ------------------------------------------------------------------------------------------
 // Navigation tree functions
-function isPathType(obj: any): obj is PathType {
-  return 'title' in obj && 'description' in obj && !('pathId' in obj);
-}
+// function isPathType(obj: any): obj is PathType {
+//   return 'title' in obj && 'description' in obj && !('pathId' in obj);
+// }
 
-function isDeckType(obj: any): obj is DeckType {
-  return 'pathId' in obj && 'contributorId' in obj;
-}
+// function isDeckType(obj: any): obj is DeckType {
+//   return 'pathId' in obj && 'contributorId' in obj;
+// }
 
-function isCardType(obj: any): obj is CardType {
-  return 'excerpt' in obj && 'coverImage' in obj;
-}
+// function isCardType(obj: any): obj is CardType {
+//   return 'excerpt' in obj && 'coverImage' in obj;
+// }
 
-export function getNavigationTree(node: PathType | DeckType | CardType): NavigationTree {
-  const tree = {
+// export function getNavigationTree(node: PathType | DeckType | CardType): NavigationTree {
+//   const tree = {
+//     paths: paths.map(path => ({
+//       id: path.id,
+//       title: path.title,
+//       decks: decks.filter(deck => deck.pathId === path.id).map(deck => ({
+//         id: deck.id,
+//         title: deck.title,
+//         cards: readCardFiles(deck.id).map(cardFile => ({
+//           id: cardFile.replace(/\.mdx$/, ''),
+//           title: getCardById(cardFile.replace(/\.mdx$/, ''))?.title || '',
+//         })),
+//       })),
+//     })),
+//   };
+
+//   function findNode(tree: { paths: NavigationPath[] }, nodeId: string, nodeType: 'path' | 'deck' | 'card'): NavigationTree | null {
+//     for (const path of tree.paths) {
+//       if (nodeType === 'path' && path.id === nodeId) {
+//         return { path };
+//       }
+//       for (const deck of path.decks) {
+//         if (nodeType === 'deck' && deck.id === nodeId) {
+//           return { path, deck };
+//         }
+//         for (const card of deck.cards) {
+//           if (nodeType === 'card' && card.id === nodeId) {
+//             return { path, deck, card };
+//           }
+//         }
+//       }
+//     }
+//     return null;
+//   }
+
+//   if (isPathType(node)) {
+//     const result = findNode(tree, node.id, 'path');
+//     return result ? { path: result.path } : {};
+//   } else if (isDeckType(node)) {
+//     const result = findNode(tree, node.id, 'deck');
+//     return result ? { path: result.path, deck: result.deck } : {};
+//   } else if (isCardType(node)) {
+//     const result = findNode(tree, node.id, 'card');
+//     return result ? { path: result.path, deck: result.deck, card: result.card } : {};
+//   } else {
+//     return {};
+//   }
+// }
+
+// Function to get the entire navigation tree
+export function getCompleteNavigationTree(): CompleteNavigationTree {
+  return {
     paths: paths.map(path => ({
       id: path.id,
       title: path.title,
@@ -183,36 +234,4 @@ export function getNavigationTree(node: PathType | DeckType | CardType): Navigat
       })),
     })),
   };
-
-  function findNode(tree: { paths: NavigationPath[] }, nodeId: string, nodeType: 'path' | 'deck' | 'card'): NavigationTree | null {
-    for (const path of tree.paths) {
-      if (nodeType === 'path' && path.id === nodeId) {
-        return { path };
-      }
-      for (const deck of path.decks) {
-        if (nodeType === 'deck' && deck.id === nodeId) {
-          return { path, deck };
-        }
-        for (const card of deck.cards) {
-          if (nodeType === 'card' && card.id === nodeId) {
-            return { path, deck, card };
-          }
-        }
-      }
-    }
-    return null;
-  }
-
-  if (isPathType(node)) {
-    const result = findNode(tree, node.id, 'path');
-    return result ? { path: result.path } : {};
-  } else if (isDeckType(node)) {
-    const result = findNode(tree, node.id, 'deck');
-    return result ? { path: result.path, deck: result.deck } : {};
-  } else if (isCardType(node)) {
-    const result = findNode(tree, node.id, 'card');
-    return result ? { path: result.path, deck: result.deck, card: result.card } : {};
-  } else {
-    return {};
-  }
 }
