@@ -34,18 +34,18 @@ export interface NodeType {
   title?: string;
 }
 
-interface CardNode {
+export interface CardNode {
   id: string;
   title: string;
 }
 
-interface DeckNode {
+export interface DeckNode {
   id: string;
   title: string;
   cards: CardNode[];
 }
 
-interface PathNode {
+export interface PathNode {
   id: string;
   title: string;
   decks: DeckNode[];

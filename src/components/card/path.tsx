@@ -1,5 +1,6 @@
 'use client';
 
+import { useNodes } from '@/hooks/use-nodes';
 import { PathType } from '@/interfaces/types';
 import {
   Body1,
@@ -47,8 +48,9 @@ interface PathComponentProps {
 
 const PathComponent: React.FC<PathComponentProps> = ({ path }) => {
   const styles = useStyles();
+  const { getDeckCount } = useNodes();
 
-  // const hasDecks = path.deckCount && path.deckCount > 0;
+  const deckCount = getDeckCount(path);
 
   return (
     <Card className={styles.card}>
@@ -64,22 +66,22 @@ const PathComponent: React.FC<PathComponentProps> = ({ path }) => {
         {path.description}
       </Body1>
 
-      {/* <CardFooter className={styles.footer}>
-        {hasDecks ? (
+      <CardFooter className={styles.footer}>
+        {deckCount > 0 ? (
           <Link href={`/paths/${path.id}`}>
             <Button>View decks</Button>
           </Link>
         ) : null}
         <Text>
-          {hasDecks ? (
+          {deckCount > 0 ? (
             <>
-              <strong>Decks:</strong> {path.deckCount}
+              <strong>Decks:</strong> {deckCount}
             </>
           ) : (
             'No decks for this path'
           )}
         </Text>
-      </CardFooter> */}
+      </CardFooter>
     </Card>
   );
 };

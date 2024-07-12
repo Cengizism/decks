@@ -1,5 +1,6 @@
 'use client';
 
+import { useNodes } from '@/hooks/use-nodes';
 import { DeckType } from '@/interfaces/types';
 import {
   Body1,
@@ -83,9 +84,9 @@ interface DeckComponentProps {
 
 const DeckComponent: React.FC<DeckComponentProps> = ({ deck }) => {
   const styles = useStyles();
-  // const path = nodes?.path;
-  // console.log('nodes', nodes);
-  // const cardsCount = nodes?.deck?.cards?.length ?? 0;
+  const { getParent, getCardCount } = useNodes();
+
+  const path = getParent(deck);
 
   return (
     <Card className={styles.card}>
@@ -95,13 +96,13 @@ const DeckComponent: React.FC<DeckComponentProps> = ({ deck }) => {
             <Title3 truncate>{deck.title}</Title3>
           </Link>
         }
-        // description={
-        //   <Link className={styles.link} href={`/paths/${path?.id}`}>
-        //     <Caption1 truncate wrap={false} className={styles.caption}>
-        //       {path?.title ?? 'No path'}
-        //     </Caption1>
-        //   </Link>
-        // }
+        description={
+          <Link className={styles.link} href={`/paths/${path?.id}`}>
+            <Caption1 truncate wrap={false} className={styles.caption}>
+              {path?.title ?? 'No path'}
+            </Caption1>
+          </Link>
+        }
         action={
           <Button
             appearance='transparent'
@@ -123,9 +124,9 @@ const DeckComponent: React.FC<DeckComponentProps> = ({ deck }) => {
         <Link href={`/decks/${deck.id}`}>
           <Button>Open deck</Button>
         </Link>
-        {/* <Text>
-          <strong>Cards:</strong> {cardsCount}
-        </Text> */}
+        <Text>
+          <strong>Cards:</strong> {getCardCount(deck)}
+        </Text>
       </CardFooter>
 
       {/* <DeckContributor contributor={deck.contributor} /> */}

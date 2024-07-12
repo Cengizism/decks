@@ -1,11 +1,11 @@
 'use client';
 
+import { useNodes } from '@/hooks/use-nodes';
 import { CardType } from '@/interfaces/types';
 import {
   Body1,
   Button,
   Caption1,
-  Text,
   Title3,
   makeStyles,
   tokens,
@@ -75,19 +75,18 @@ interface CardComponentProps {
 
 const CardComponent: React.FC<CardComponentProps> = ({ card }) => {
   const styles = useStyles();
+  const { getParent } = useNodes();
+
+  const deck = getParent(card);
 
   return (
     <Card className={styles.card}>
       <CardPreview className={styles.grayBackground}>
-        {/* <CoverImage
-          src={
-            card.deck?.id
-              ? `/api/content/${card.deck.id}/images/${card.coverImage}`
-              : ''
-          }
+        <CoverImage
+          src={deck ? `/api/content/${deck.id}/images/${card.coverImage}` : ''}
           title={card.title}
           slug={card.id}
-        /> */}
+        />
       </CardPreview>
 
       <CardHeader
@@ -96,13 +95,13 @@ const CardComponent: React.FC<CardComponentProps> = ({ card }) => {
             <Title3 truncate>{card.title}</Title3>
           </Link>
         }
-        // description={
-        //   <Link className={styles.link} href={`/decks/${card.deck?.id}`}>
-        //     <Caption1 truncate wrap={false} className={styles.caption}>
-        //       {card.deck?.title}
-        //     </Caption1>
-        //   </Link>
-        // }
+        description={
+          <Link className={styles.link} href={`/decks/${deck?.id}`}>
+            <Caption1 truncate wrap={false} className={styles.caption}>
+              {deck?.title}
+            </Caption1>
+          </Link>
+        }
         action={
           <Button
             appearance='transparent'

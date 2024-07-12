@@ -1,7 +1,15 @@
 'use client';
 
+import {
+  CardType,
+  DeckNode,
+  DeckType,
+  NodeType,
+  NodesTreeType,
+  PathNode,
+  PathType,
+} from '@/interfaces/types';
 import { useStateContext } from '@/providers/state-provider';
-import { CardType, DeckType, NodesTreeType, PathType, NodeType } from '@/interfaces/types';
 import { useMemo } from 'react';
 
 export const useNodes = () => {
@@ -47,13 +55,48 @@ export const useNodes = () => {
     };
   }, []);
 
-  const getImageUrl = (deck: DeckType, card: CardType): string => {
-    return `/api/content/${deck.id}/images/${card.coverImage}`;
-  };
+  const getParent = useMemo(() => {
+    return (
+      node: any
+    ): PathType | DeckType | undefined => {
+      const nodeType = getNodeType(node);
+      if (nodeType === 'card') {
+        const deck = state.nodes.paths
+          .flatMap((path: PathNode) => path.decks)
+          .find((deck: DeckNode) => deck.cards.some((c) => c.id === node.id));
+        return deck;
+      } else if (nodeType === 'deck') {
+        const path = state.nodes.paths.find((path: PathNode) =>
+          path.decks.some((d) => d.id === node.id)
+        );
+        return path;
+      }
+      return undefined;
+    };
+  }, [state.nodes, getNodeType]);
+
+  const getCardCount = useMemo(() => {
+    return (deck: DeckType): number => {
+      const deckNode = state.nodes.paths
+        .flatMap((path: PathNode) => path.decks)
+        .find((d: DeckNode) => d.id === deck.id);
+      return deckNode ? deckNode.cards.length : 0;
+    };
+  }, [state.nodes]);
+
+  const getDeckCount = useMemo(() => {
+    return (path: PathType): number => {
+      const pathNode = state.nodes.paths.find((p: PathNode) => p.id === path.id);
+      return pathNode ? pathNode.decks.length : 0;
+    };
+  }, [state.nodes]);
 
   return {
-    findNode: (nodeId: string, nodeType: 'path' | 'deck' | 'card') => findNode(state.nodes, nodeId, nodeType),
+    findNode: (nodeId: string, nodeType: 'path' | 'deck' | 'card') =>
+      findNode(state.nodes, nodeId, nodeType),
     getNodeType,
-    getImageUrl,
+    getParent,
+    getCardCount,
+    getDeckCount,
   };
 };
