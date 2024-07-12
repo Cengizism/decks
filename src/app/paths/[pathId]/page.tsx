@@ -1,4 +1,4 @@
-import BreadCrumps from '@/components/bread-crumps';
+import BreadCrumps from '@/components/navigation/bread-crumps';
 import Deck from '@/components/deck';
 import Header from '@/components/header';
 import { getDecksByPathId, getPathById, indexPathIds } from '@/lib/api';

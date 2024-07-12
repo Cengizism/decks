@@ -1,4 +1,4 @@
-import BreadCrumps from '@/components/bread-crumps';
+import BreadCrumps from '@/components/navigation/bread-crumps';
 import Deck from '@/components/deck';
 import Header from '@/components/header';
 import { DeckType } from '@/interfaces/types';

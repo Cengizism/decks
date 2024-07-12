@@ -1,4 +1,4 @@
-import BreadCrumps from '@/components/bread-crumps';
+import BreadCrumps from '@/components/navigation/bread-crumps';
 import Header from '@/components/header';
 import Path from '@/components/path';
 import { PathType } from '@/interfaces/types';

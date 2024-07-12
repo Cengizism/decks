@@ -4,8 +4,8 @@ import AltenLogo from '@/components/alten-logo';
 import { makeStyles, tokens } from '@fluentui/react-components';
 import React, { useCallback, useState } from 'react';
 
-import HamburgerMenu from './menu/hamburger-menu';
-import Navigation from './menu/navigation';
+import HamburgerMenu from './navigation/hamburger-menu';
+import Navigation from './navigation/navigation';
 
 const useStyles = makeStyles({
   root: {
