@@ -2,45 +2,12 @@
 
 import { useDeckUtils } from '@/hooks/use-deck-utils';
 import { ContributorType } from '@/interfaces/types';
-import {
-  Body1,
-  Button,
-  Text,
-  Title3,
-  makeStyles,
-} from '@fluentui/react-components';
+import { Body1, Button, Text, Title3 } from '@fluentui/react-components';
 import { Card, CardFooter, CardHeader } from '@fluentui/react-components';
 import Link from 'next/link';
 import React from 'react';
 
-const useStyles = makeStyles({
-  card: {
-    width: '360px',
-    maxWidth: '100%',
-    height: 'fit-content',
-  },
-  link: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'middle',
-    textDecoration: 'none',
-    color: 'inherit',
-
-    '&:hover': {
-      textDecoration: 'underline',
-      opacity: '0.8',
-    },
-  },
-  text: {
-    margin: '0',
-  },
-  footer: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    gap: '8px',
-    verticalAlign: 'middle',
-  },
-});
+import classes from './card.module.css';
 
 interface ContributorComponentProps {
   contributor: ContributorType;
@@ -49,17 +16,16 @@ interface ContributorComponentProps {
 const ContributorComponent: React.FC<ContributorComponentProps> = ({
   contributor,
 }) => {
-  const styles = useStyles();
   const { getDeckCountByContributorId } = useDeckUtils();
 
   const deckCount = getDeckCountByContributorId(contributor.id);
 
   return (
-    <Card className={styles.card}>
+    <Card className={classes.card}>
       <CardHeader
         header={
           <Link
-            className={styles.link}
+            className={classes.link}
             href={`/contributors/${contributor.id}`}
           >
             <Title3 truncate>{contributor.name}</Title3>
@@ -67,11 +33,11 @@ const ContributorComponent: React.FC<ContributorComponentProps> = ({
         }
       />
 
-      <Body1 truncate wrap={false} className={styles.text}>
+      <Body1 truncate wrap={false} className={classes.text}>
         {contributor.bio}
       </Body1>
 
-      <CardFooter className={styles.footer}>
+      <CardFooter className={classes.footer}>
         <Link href={`/contributors/${contributor.id}`}>
           <Button>Open profile</Button>
         </Link>

@@ -2,71 +2,37 @@
 
 import { useDeckUtils } from '@/hooks/use-deck-utils';
 import { PathType } from '@/interfaces/types';
-import {
-  Body1,
-  Button,
-  Text,
-  Title3,
-  makeStyles,
-} from '@fluentui/react-components';
+import { Body1, Button, Text, Title3 } from '@fluentui/react-components';
 import { Card, CardFooter, CardHeader } from '@fluentui/react-components';
 import Link from 'next/link';
 import React from 'react';
 
-const useStyles = makeStyles({
-  card: {
-    width: '360px',
-    maxWidth: '100%',
-    height: 'fit-content',
-  },
-  link: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'middle',
-    textDecoration: 'none',
-    color: 'inherit',
-
-    '&:hover': {
-      textDecoration: 'underline',
-      opacity: '0.8',
-    },
-  },
-  text: {
-    margin: '0',
-  },
-  footer: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    gap: '8px',
-    verticalAlign: 'middle',
-  },
-});
+import classes from './card.module.css';
 
 interface PathComponentProps {
   path: PathType;
 }
 
 const PathComponent: React.FC<PathComponentProps> = ({ path }) => {
-  const styles = useStyles();
   const { getDeckCount } = useDeckUtils();
 
   const deckCount = getDeckCount(path);
 
   return (
-    <Card className={styles.card}>
+    <Card className={classes.card}>
       <CardHeader
         header={
-          <Link className={styles.link} href={`/paths/${path.id}`}>
+          <Link className={classes.link} href={`/paths/${path.id}`}>
             <Title3 truncate>{path.title}</Title3>
           </Link>
         }
       />
 
-      <Body1 truncate wrap={false} className={styles.text}>
+      <Body1 truncate wrap={false} className={classes.text}>
         {path.description}
       </Body1>
 
-      <CardFooter className={styles.footer}>
+      <CardFooter className={classes.footer}>
         {deckCount > 0 ? (
           <Link href={`/paths/${path.id}`}>
             <Button>View decks</Button>

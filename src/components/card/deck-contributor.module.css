@@ -1,0 +1,31 @@
+.link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+}
+
+.link:hover {
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.caption {
+  width: 290px;
+  display: block;
+  overflow: hidden;
+}
+
+.avatar {
+  position: relative;
+  width: 32px;
+  height: 32px;
+}
+
+.avatar img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+}

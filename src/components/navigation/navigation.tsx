@@ -2,7 +2,6 @@
 
 import { PathNode } from '@/interfaces/types';
 import { useStateContext } from '@/providers/state-provider';
-import { makeStyles } from '@fluentui/react-components';
 import {
   Board20Filled,
   Board20Regular,
@@ -33,32 +32,13 @@ import { usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
 import HamburgerMenu from './hamburger-menu';
+import classes from './navigation.module.css';
 
 const DashboardIcons = bundleIcon(Board20Filled, Board20Regular);
 const AboutIcons = bundleIcon(Info20Filled, Info20Regular);
 const PathsIcons = bundleIcon(BranchFork20Filled, BranchFork20Regular);
 const DecksIcons = bundleIcon(BookStar20Filled, BookStar20Regular);
 const ContributorsIcons = bundleIcon(Person20Filled, Person20Regular);
-
-const useStyles = makeStyles({
-  root: {
-    paddingTop: '18px',
-  },
-  hamburger: {
-    paddingLeft: '14px',
-  },
-  navigation: {
-    '& a': {
-      textDecoration: 'none',
-      color: 'inherit',
-    },
-    '& a button': {
-      ':hover': {
-        cursor: 'pointer',
-      },
-    },
-  },
-});
 
 interface NavigationProps {
   isOpen: boolean;
@@ -71,7 +51,6 @@ const Navigation: React.FC<NavigationProps> = ({
   isOpen,
   toggleHamburgerMenu,
 }) => {
-  const styles = useStyles();
   const pathname = usePathname();
   const { state } = useStateContext();
 
@@ -109,14 +88,14 @@ const Navigation: React.FC<NavigationProps> = ({
     <NavDrawer
       open={isOpen}
       type='inline'
-      className={styles.root}
+      className={classes.root}
       selectedValue={selectedValue}
     >
-      <NavDrawerHeader className={styles.hamburger}>
+      <NavDrawerHeader className={classes.hamburger}>
         <HamburgerMenu toggleHamburgerMenu={toggleHamburgerMenu} />
       </NavDrawerHeader>
 
-      <NavDrawerBody className={styles.navigation}>
+      <NavDrawerBody className={classes.navigation}>
         <MenuItem path='/' icon={<DashboardIcons />} text='Dashboard' />
         <MenuItem path='/about' icon={<AboutIcons />} text='About' />
 

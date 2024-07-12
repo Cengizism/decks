@@ -1,0 +1,38 @@
+.card {
+  width: 360px;
+  max-width: 100%;
+  height: fit-content;
+}
+
+.link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.link:hover {
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.caption {
+  width: 290px;
+  display: block;
+  overflow: hidden;
+}
+
+.text {
+  margin: 0;
+}
+
+.bookmark {
+  position: absolute;
+  top: 10px;
+  right: 5px;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  vertical-align: middle;
+}

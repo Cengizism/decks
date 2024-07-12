@@ -6,40 +6,17 @@ import {
   Divider,
   Link,
   makeStyles,
+  mergeClasses,
   tokens,
 } from '@fluentui/react-components';
 import { PersonCircle32Filled } from '@fluentui/react-icons';
 import React from 'react';
 
-const useStyles = makeStyles({
-  link: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'middle',
-    textDecoration: 'none',
-    color: 'inherit',
+import classes from './deck-contributor.module.css';
 
-    '&:hover': {
-      textDecoration: 'underline',
-      opacity: '0.8',
-    },
-  },
-  caption: {
+const useStyles = makeStyles({
+  captionColor: {
     color: tokens.colorNeutralForeground3,
-    width: '290px',
-    display: 'block',
-    overflow: 'hidden',
-  },
-  avatar: {
-    position: 'relative',
-    width: '32px',
-    height: '32px',
-    '& img': {
-      position: 'absolute',
-      top: '0',
-      left: '0',
-      borderRadius: '50%',
-    },
   },
   subtle: {
     color: tokens.colorNeutralForeground4,
@@ -66,10 +43,12 @@ const DeckContributor: React.FC<DeckContributorProps> = ({ contributor }) => {
         description={
           contributor ? (
             <Link
-              className={styles.link}
+              className={classes.link}
               href={`/contributors/${contributor?.id}`}
             >
-              <Caption1 className={styles.caption}>
+              <Caption1
+                className={mergeClasses(classes.caption, styles.captionColor)}
+              >
                 All decks of contributor
               </Caption1>
             </Link>

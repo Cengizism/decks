@@ -10,6 +10,7 @@ import {
   Text,
   Title3,
   makeStyles,
+  mergeClasses,
   tokens,
 } from '@fluentui/react-components';
 import {
@@ -27,6 +28,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React from 'react';
 
+import classes from './card.module.css';
 import CoverImage from './cover-image';
 import DeckContributor from './deck-contributor';
 
@@ -36,46 +38,14 @@ const BookmarkMultipleIcons = bundleIcon(
 );
 
 const useStyles = makeStyles({
-  card: {
-    width: '360px',
-    maxWidth: '100%',
-    height: 'fit-content',
-  },
-  link: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'middle',
-    textDecoration: 'none',
-    color: 'inherit',
-
-    '&:hover': {
-      textDecoration: 'underline',
-      opacity: '0.8',
-    },
-  },
-  caption: {
+  captionColor: {
     color: tokens.colorNeutralForeground3,
-    width: '290px',
-    display: 'block',
-    overflow: 'hidden',
-  },
-  text: {
-    margin: '0',
   },
   grayBackground: {
     backgroundColor: tokens.colorNeutralBackground3,
   },
-  bookmark: {
-    position: 'absolute',
-    top: '10px',
-    right: '5px',
-    // color: tokens.colorNeutralBackground1,
-  },
-  footer: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    gap: '8px',
-    verticalAlign: 'middle',
+  bookmarkColor: {
+    color: tokens.colorNeutralBackground1,
   },
 });
 
@@ -93,16 +63,20 @@ const DeckComponent: React.FC<DeckComponentProps> = ({ deck }) => {
   const contributor = getContributorById(deck.contributorId);
 
   return (
-    <Card className={styles.card}>
+    <Card className={classes.card}>
       <CardHeader
         header={
-          <Link className={styles.link} href={`/decks/${deck.id}`}>
+          <Link className={classes.link} href={`/decks/${deck.id}`}>
             <Title3 truncate>{deck.title}</Title3>
           </Link>
         }
         description={
-          <Link className={styles.link} href={`/paths/${path?.id}`}>
-            <Caption1 truncate wrap={false} className={styles.caption}>
+          <Link className={classes.link} href={`/paths/${path?.id}`}>
+            <Caption1
+              truncate
+              wrap={false}
+              className={mergeClasses(classes.caption, styles.captionColor)}
+            >
               {path?.title ?? 'No path'}
             </Caption1>
           </Link>
@@ -110,7 +84,7 @@ const DeckComponent: React.FC<DeckComponentProps> = ({ deck }) => {
         action={
           <Button
             appearance='transparent'
-            className={styles.bookmark}
+            className={mergeClasses(classes.bookmark, styles.bookmarkColor)}
             icon={<BookmarkMultipleIcons />}
           />
         }
@@ -120,11 +94,11 @@ const DeckComponent: React.FC<DeckComponentProps> = ({ deck }) => {
         <CoverImage src={`/${deck.coverImage}`} title={deck.title} />
       </CardPreview>
 
-      <Body1 truncate wrap={false} className={styles.text}>
+      <Body1 truncate wrap={false} className={classes.text}>
         {deck.description}
       </Body1>
 
-      <CardFooter className={styles.footer}>
+      <CardFooter className={classes.footer}>
         <Link href={`/decks/${deck.id}`}>
           <Button>Open deck</Button>
         </Link>
