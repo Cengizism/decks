@@ -1,4 +1,4 @@
-'use client';;
+'use client';
 
 import React, { createContext, useContext } from 'react';
 
@@ -16,10 +16,11 @@ export const useStateContext = () => {
   return context;
 };
 
-export const StateProvider: React.FC<{ state: any; children: React.ReactNode }> = ({ state, children }) => {
+export const StateProvider: React.FC<{
+  state: any;
+  children: React.ReactNode;
+}> = ({ state, children }) => {
   return (
-    <StateContext.Provider value={{ state }}>
-      {children}
-    </StateContext.Provider>
+    <StateContext.Provider value={{ state }}>{children}</StateContext.Provider>
   );
 };

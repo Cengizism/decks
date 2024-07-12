@@ -10,7 +10,7 @@ const DecksPage: React.FC = () => {
   return (
     <>
       <BreadCrumps />
-      
+
       <Header
         title='Decks'
         subTitle='Here you can find all the decks available in the platform.'

@@ -1,4 +1,4 @@
-import { DeckType, NavigationTree } from '@/interfaces/types';
+import { DeckType } from '@/interfaces/types';
 import {
   Body1,
   Button,
@@ -23,6 +23,7 @@ import Link from 'next/link';
 import React from 'react';
 
 import CoverImage from './cover-image';
+
 // import DeckContributor from './deck-contributor';
 
 const BookmarkMultipleIcons = bundleIcon(
@@ -76,16 +77,13 @@ const useStyles = makeStyles({
 
 interface DeckComponentProps {
   deck: DeckType;
-  nodes?: NavigationTree;
 }
 
-const DeckComponent: React.FC<DeckComponentProps> = ({ deck, nodes }) => {
+const DeckComponent: React.FC<DeckComponentProps> = ({ deck }) => {
   const styles = useStyles();
-  const path = nodes?.path;
-
-  console.log('nodes', nodes);
-
-  const cardsCount = nodes?.deck?.cards?.length ?? 0;
+  // const path = nodes?.path;
+  // console.log('nodes', nodes);
+  // const cardsCount = nodes?.deck?.cards?.length ?? 0;
 
   return (
     <Card className={styles.card}>
@@ -95,13 +93,13 @@ const DeckComponent: React.FC<DeckComponentProps> = ({ deck, nodes }) => {
             <Title3 truncate>{deck.title}</Title3>
           </Link>
         }
-        description={
-          <Link className={styles.link} href={`/paths/${path?.id}`}>
-            <Caption1 truncate wrap={false} className={styles.caption}>
-              {path?.title ?? 'No path'}
-            </Caption1>
-          </Link>
-        }
+        // description={
+        //   <Link className={styles.link} href={`/paths/${path?.id}`}>
+        //     <Caption1 truncate wrap={false} className={styles.caption}>
+        //       {path?.title ?? 'No path'}
+        //     </Caption1>
+        //   </Link>
+        // }
         action={
           <Button
             appearance='transparent'
@@ -123,9 +121,9 @@ const DeckComponent: React.FC<DeckComponentProps> = ({ deck, nodes }) => {
         <Link href={`/decks/${deck.id}`}>
           <Button>Open deck</Button>
         </Link>
-        <Text>
+        {/* <Text>
           <strong>Cards:</strong> {cardsCount}
-        </Text>
+        </Text> */}
       </CardFooter>
 
       {/* <DeckContributor contributor={deck.contributor} /> */}

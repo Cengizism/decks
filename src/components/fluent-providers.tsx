@@ -9,13 +9,13 @@ import {
   teamsLightTheme,
 } from '@fluentui/react-components';
 import { useServerInsertedHTML } from 'next/navigation';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
-interface ProvidersProps {
+interface FluentProvidersProps {
   children: React.ReactNode;
 }
 
-export function Providers({ children }: ProvidersProps) {
+export function FluentProviders({ children }: FluentProvidersProps) {
   const [renderer] = useState(() => createDOMRenderer());
   const didRenderRef = useRef(false);
 

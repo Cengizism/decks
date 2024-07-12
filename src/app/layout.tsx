@@ -1,5 +1,5 @@
+import { FluentProviders } from '@/components/fluent-providers';
 import Main from '@/components/main';
-import { Providers } from '@/components/providers';
 import { StateProvider } from '@/components/state-provider';
 import { CompleteNavigationTree } from '@/interfaces/types';
 import { getCompleteNavigationTree } from '@/lib/api';
@@ -68,11 +68,11 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
       </head>
 
       <body>
-        <Providers>
+        <FluentProviders>
           <StateProvider state={state}>
             <Main>{children}</Main>
           </StateProvider>
-        </Providers>
+        </FluentProviders>
       </body>
     </html>
   );
