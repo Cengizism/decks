@@ -1,5 +1,7 @@
 'use client';
 
+import { PathNode } from '@/interfaces/types';
+import { useStateContext } from '@/providers/state-provider';
 import { makeStyles } from '@fluentui/react-components';
 import {
   Board20Filled,
@@ -15,12 +17,16 @@ import {
   bundleIcon,
 } from '@fluentui/react-icons';
 import {
+  NavCategory,
+  NavCategoryItem,
   NavDivider,
   NavDrawer,
   NavDrawerBody,
   NavDrawerHeader,
   NavItem,
   NavSectionHeader,
+  NavSubItem,
+  NavSubItemGroup,
 } from '@fluentui/react-nav-preview';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -67,6 +73,7 @@ const Navigation: React.FC<NavigationProps> = ({
 }) => {
   const styles = useStyles();
   const pathname = usePathname();
+  const { state } = useStateContext();
 
   const [selectedValue, setSelectedValue] = useState(pathname);
 
@@ -114,7 +121,7 @@ const Navigation: React.FC<NavigationProps> = ({
         <MenuItem path='/about' icon={<AboutIcons />} text='About' />
 
         <NavDivider />
-        <NavSectionHeader>Content</NavSectionHeader>
+        <NavSectionHeader>Overview</NavSectionHeader>
         <MenuItem path='/paths' icon={<PathsIcons />} text='Paths' />
         <MenuItem path='/decks' icon={<DecksIcons />} text='Decks' />
         <MenuItem
@@ -122,6 +129,34 @@ const Navigation: React.FC<NavigationProps> = ({
           icon={<ContributorsIcons />}
           text='Contributors'
         />
+
+        <NavDivider />
+        <NavSectionHeader>Paths</NavSectionHeader>
+        {state.nodes.paths
+          .filter((path: PathNode) => path.decks.length > 0)
+          .map((path: PathNode) => (
+            <NavCategory key={path.id} value={path.id}>
+              <NavCategoryItem icon={<PathsIcons />}>
+                {path.title}
+              </NavCategoryItem>
+              <NavSubItemGroup>
+                {path.decks.map((deck) => (
+                  <NavCategory key={deck.id} value={deck.id}>
+                    <NavCategoryItem icon={<DecksIcons />}>
+                      {deck.title}
+                    </NavCategoryItem>
+                    <NavSubItemGroup>
+                      {deck.cards.map((card) => (
+                        <Link key={card.id} href={`/cards/${card.id}`} passHref>
+                          <NavSubItem value={card.id}>{card.title}</NavSubItem>
+                        </Link>
+                      ))}
+                    </NavSubItemGroup>
+                  </NavCategory>
+                ))}
+              </NavSubItemGroup>
+            </NavCategory>
+          ))}
       </NavDrawerBody>
     </NavDrawer>
   );
