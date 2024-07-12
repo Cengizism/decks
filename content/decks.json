@@ -16,7 +16,7 @@
     "contributorId": "jane-smit"
   },
   {
-    "folder": "unit-testing",
+    "id": "unit-testing",
     "title": "Unit Testing",
     "description": "This deck explains different topics related to unit testing.",
     "pathId": "testing",

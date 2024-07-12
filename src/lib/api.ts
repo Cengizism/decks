@@ -23,13 +23,26 @@ const paths: PathType[] = JSON.parse(
 
 // File system functions
 function readCardFiles(folder: string): string[] {
+  if (!folder) {
+    console.error('Invalid folder name:', folder);
+    return [];
+  }
   const deckPath = join(contentDirectory, folder);
-  return fs.readdirSync(deckPath).filter((file) => file.endsWith('.mdx'));
+  try {
+    return fs.readdirSync(deckPath).filter((file) => file.endsWith('.mdx'));
+  } catch (error) {
+    console.error(`Error reading directory at path ${deckPath}:`, error);
+    return [];
+  }
 }
 
 // Indexing functions
 export function indexCardIds(): { cardId: string }[] {
   return decks.flatMap(({ id: folder }) => {
+    if (!folder) {
+      console.error('Invalid deck ID:', folder);
+      return [];
+    }
     const cardFiles = readCardFiles(folder);
     return cardFiles.map((cardId) => ({
       cardId: cardId.replace(/\.mdx$/, ''),
@@ -63,14 +76,17 @@ export function getNodeTree(): NodesTreeType {
       title: path.title,
       decks: decks
         .filter((deck) => deck.pathId === path.id)
-        .map((deck) => ({
-          id: deck.id,
-          title: deck.title,
-          cards: readCardFiles(deck.id).map((cardFile) => ({
+        .map((deck) => {
+          const cards = readCardFiles(deck.id).map((cardFile) => ({
             id: cardFile.replace(/\.mdx$/, ''),
             title: getCardById(cardFile.replace(/\.mdx$/, ''))?.title || '',
-          })),
-        })),
+          }));
+          return {
+            id: deck.id,
+            title: deck.title,
+            cards,
+          };
+        }),
     })),
   };
 }
@@ -109,14 +125,14 @@ export function getCardsOfDeck(deck: DeckType): CardType[] {
 // Card functions
 export function getCardById(cardId: string): CardType | null {
   if (!cardId) {
-    console.error('Invalid slug parameter:', { slug: cardId });
+    console.error('Invalid cardId parameter:', cardId);
     return null;
   }
 
   const cardIdWithoutExtension = cardId.replace(/\.mdx$/, '');
   const deck = findDeckByCardId(cardIdWithoutExtension);
   if (!deck) {
-    console.error('Deck not found for slug:', { slug: cardId });
+    console.error('Deck not found for cardId:', cardId);
     return null;
   }
 
