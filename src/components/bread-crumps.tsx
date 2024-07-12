@@ -1,6 +1,5 @@
 'use client';
 
-import { useStateContext } from '@/components/state-provider';
 import {
   CardType,
   DeckType,
@@ -8,6 +7,7 @@ import {
   NodesTreeType,
   PathType,
 } from '@/interfaces/types';
+import { useStateContext } from '@/providers/state-provider';
 import {
   Breadcrumb,
   BreadcrumbButton,
