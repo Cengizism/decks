@@ -1,6 +1,6 @@
 import React from 'react';
 
-import styles from '../styles/loading.module.css';
+import styles from './loading.module.css';
 
 interface LoadingProps {
   children?: React.ReactNode;
