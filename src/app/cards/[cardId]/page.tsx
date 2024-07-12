@@ -1,13 +1,7 @@
 import BreadCrumps from '@/components/bread-crumps';
 import CoverImage from '@/components/cover-image';
 import Header from '@/components/header';
-import { CompleteNavigationTree } from '@/interfaces/types';
-import {
-  findDeckByCardId,
-  getCardById,
-  getCompleteNavigationTree,
-  indexCardIds,
-} from '@/lib/api';
+import { findDeckByCardId, getCardById, indexCardIds } from '@/lib/api';
 import { TITLE } from '@/lib/constants';
 import markdownToHtml from '@/lib/markdown-to-html';
 import markdownStyles from '@/styles/markdown-styles.module.css';
@@ -31,11 +25,9 @@ export default async function CardPage({ params }: Params) {
   const deck = findDeckByCardId(cardId);
   const content = await markdownToHtml(card.content || '');
 
-  const tree: CompleteNavigationTree = getCompleteNavigationTree();
-
   return (
     <>
-      <BreadCrumps tree={tree} nodeId={cardId} nodeType='card' />
+      <BreadCrumps nodeId={cardId} nodeType='card' />
 
       <Header
         title={card.title}

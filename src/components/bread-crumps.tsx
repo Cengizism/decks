@@ -1,5 +1,7 @@
 'use client';
 
+import { useStateContext } from '@/components/state-provider';
+import { CompleteNavigationTree, NavigationNode } from '@/interfaces/types';
 import {
   Breadcrumb,
   BreadcrumbButton,
@@ -18,26 +20,29 @@ import {
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React from 'react';
-import { CompleteNavigationTree, NavigationNode } from '@/interfaces/types';
 
 const DashboardIcons = bundleIcon(Board20Filled, Board20Regular);
 const DecksIcons = bundleIcon(BookStar20Filled, BookStar20Regular);
 const PathsIcons = bundleIcon(BranchFork20Filled, BranchFork20Regular);
 
 interface BreadCrumpsProps {
-  tree: CompleteNavigationTree;
   nodeId?: string;
   nodeType?: 'path' | 'deck' | 'card';
 }
 
-const BreadCrumps: React.FC<BreadCrumpsProps> = ({ tree, nodeId, nodeType }) => {
+const BreadCrumps: React.FC<BreadCrumpsProps> = ({ nodeId, nodeType }) => {
   const pathname = usePathname();
+  const { state } = useStateContext();
 
   function findNode(
     tree: CompleteNavigationTree,
     nodeId: string,
     nodeType: 'path' | 'deck' | 'card'
-  ): { path?: NavigationNode; deck?: NavigationNode; card?: NavigationNode } | null {
+  ): {
+    path?: NavigationNode;
+    deck?: NavigationNode;
+    card?: NavigationNode;
+  } | null {
     for (const path of tree.paths) {
       if (nodeType === 'path' && path.id === nodeId) {
         return { path };
@@ -56,7 +61,8 @@ const BreadCrumps: React.FC<BreadCrumpsProps> = ({ tree, nodeId, nodeType }) => 
     return null;
   }
 
-  const nodes = (nodeId && nodeType && findNode(tree, nodeId, nodeType)) || {};
+  const nodes =
+    (nodeId && nodeType && findNode(state.tree, nodeId, nodeType)) || {};
 
   return (
     <Breadcrumb>

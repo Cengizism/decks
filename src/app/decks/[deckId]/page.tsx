@@ -1,8 +1,7 @@
 import BreadCrumps from '@/components/bread-crumps';
 import Cards from '@/components/cards';
 import Header from '@/components/header';
-import { CompleteNavigationTree } from '@/interfaces/types';
-import { getCardsOfDeck, getCompleteNavigationTree, getDeckById, indexDeckIds } from '@/lib/api';
+import { getCardsOfDeck, getDeckById, indexDeckIds } from '@/lib/api';
 import { HOME_OG_IMAGE_URL, TITLE } from '@/lib/constants';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
@@ -23,11 +22,9 @@ export default function DeckPage({ params }: Params) {
 
   const cards = getCardsOfDeck(deck);
 
-  const tree: CompleteNavigationTree = getCompleteNavigationTree();
-
   return (
     <>
-      <BreadCrumps tree={tree} nodeId={deckId} nodeType='deck' />
+      <BreadCrumps nodeId={deckId} nodeType='deck' />
 
       <Header title={deck.title} subTitle={deck.description} />
 

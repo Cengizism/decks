@@ -1,5 +1,8 @@
 import Main from '@/components/main';
 import { Providers } from '@/components/providers';
+import { StateProvider } from '@/components/state-provider';
+import { CompleteNavigationTree } from '@/interfaces/types';
+import { getCompleteNavigationTree } from '@/lib/api';
 import { DESCRIPTION, HOME_OG_IMAGE_URL, TITLE } from '@/lib/constants';
 import '@/styles/globals.css';
 import type { Metadata } from 'next';
@@ -23,6 +26,12 @@ interface RootLayoutProps {
 }
 
 const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
+  const tree: CompleteNavigationTree = getCompleteNavigationTree();
+
+  const state = {
+    tree,
+  };
+
   return (
     <html lang='en'>
       <head>
@@ -60,7 +69,9 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
 
       <body>
         <Providers>
-          <Main>{children}</Main>
+          <StateProvider state={state}>
+            <Main>{children}</Main>
+          </StateProvider>
         </Providers>
       </body>
     </html>
