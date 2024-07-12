@@ -59,6 +59,8 @@ interface NavigationProps {
   toggleHamburgerMenu: () => void;
 }
 
+const paths = ['/contributors', '/decks', '/paths', '/about', '/'];
+
 const Navigation: React.FC<NavigationProps> = ({
   isOpen,
   toggleHamburgerMenu,
@@ -69,7 +71,14 @@ const Navigation: React.FC<NavigationProps> = ({
   const [selectedValue, setSelectedValue] = useState(pathname);
 
   useEffect(() => {
-    setSelectedValue(pathname);
+    if (pathname?.startsWith('/cards')) {
+      setSelectedValue('/decks');
+    } else {
+      const matchedPath = paths.find((path) => pathname?.startsWith(path));
+      if (matchedPath) {
+        setSelectedValue(matchedPath);
+      }
+    }
   }, [pathname]);
 
   const MenuItem: React.FC<{
@@ -94,7 +103,6 @@ const Navigation: React.FC<NavigationProps> = ({
       open={isOpen}
       type='inline'
       className={styles.root}
-      defaultValue={selectedValue ?? ''}
       selectedValue={selectedValue}
     >
       <NavDrawerHeader className={styles.hamburger}>

@@ -2,6 +2,7 @@
 
 import {
   CardType,
+  ContributorType,
   DeckNode,
   DeckType,
   NodeType,
@@ -19,8 +20,12 @@ export const useNodes = () => {
     return (
       tree: NodesTreeType,
       nodeId: string,
-      nodeType: 'path' | 'deck' | 'card'
-    ): { path?: NodeType; deck?: NodeType; card?: NodeType } | null => {
+      nodeType: 'path' | 'deck' | 'card' | 'contributor'
+    ): { path?: NodeType; deck?: NodeType; card?: NodeType; contributor?: ContributorType } | null => {
+      if (nodeType === 'contributor') {
+        const contributor = state.contributors.find((contributor: ContributorType) => contributor.id === nodeId);
+        return contributor ? { contributor } : null;
+      }
       for (const path of tree.paths) {
         if (nodeType === 'path' && path.id === nodeId) {
           return { path };
@@ -38,18 +43,20 @@ export const useNodes = () => {
       }
       return null;
     };
-  }, []);
+  }, [state.contributors]);
 
   const getNodeType = useMemo(() => {
     return (
-      node: PathType | DeckType | CardType
-    ): 'path' | 'deck' | 'card' | undefined => {
-      if ('description' in node && !('pathId' in node)) {
+      node: PathType | DeckType | CardType | ContributorType
+    ): 'path' | 'deck' | 'card' | 'contributor' | undefined => {
+      if ('description' in node && !('pathId' in node) && !('contributorId' in node)) {
         return 'path';
       } else if ('pathId' in node) {
         return 'deck';
       } else if ('excerpt' in node) {
         return 'card';
+      } else if ('bio' in node) {
+        return 'contributor';
       }
       return undefined;
     };
@@ -68,13 +75,18 @@ export const useNodes = () => {
           path.decks.some((d) => d.id === node.id)
         );
         return path;
+      } else if (nodeType === 'contributor') {
+        const deck = state.decks.find((deck: DeckType) => deck.contributorId === node.id);
+        if (deck) {
+          return state.nodes.paths.find((path: PathNode) => path.decks.some((d) => d.id === deck.id));
+        }
       }
       return undefined;
     };
-  }, [state.nodes, getNodeType]);
+  }, [state.nodes, state.decks, getNodeType]);
 
   return {
-    findNode: (nodeId: string, nodeType: 'path' | 'deck' | 'card') =>
+    findNode: (nodeId: string, nodeType: 'path' | 'deck' | 'card' | 'contributor') =>
       findNode(state.nodes, nodeId, nodeType),
     getNodeType,
     getParent,

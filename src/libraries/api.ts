@@ -114,6 +114,10 @@ export function getDecksByPathId(pathId: string): DeckType[] {
   return decks.filter((deck) => deck.pathId === pathId);
 }
 
+export function getDecksByContributorId(contributorId: string): DeckType[] {
+  return decks.filter((deck) => deck.contributorId === contributorId);
+}
+
 export function getCardsOfDeck(deck: DeckType): CardType[] {
   const { id: deckFolder } = deck;
   const cardFiles = readCardFiles(deckFolder);

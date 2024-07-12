@@ -24,6 +24,7 @@ import {
   bundleIcon,
 } from '@fluentui/react-icons';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import React from 'react';
 
 import CoverImage from './cover-image';
@@ -86,6 +87,7 @@ const DeckComponent: React.FC<DeckComponentProps> = ({ deck }) => {
   const styles = useStyles();
   const { getParent } = useNodes();
   const { getCardCount, getContributorById } = useDeckUtils();
+  const pathname = usePathname();
 
   const path = getParent(deck);
   const contributor = getContributorById(deck.contributorId);
@@ -131,7 +133,9 @@ const DeckComponent: React.FC<DeckComponentProps> = ({ deck }) => {
         </Text>
       </CardFooter>
 
-      <DeckContributor contributor={contributor} />
+      {pathname?.startsWith('/contributors') || (
+        <DeckContributor contributor={contributor} />
+      )}
     </Card>
   );
 };

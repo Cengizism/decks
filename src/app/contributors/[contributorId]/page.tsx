@@ -1,35 +1,38 @@
 import Deck from '@/components/card/deck';
 import Header from '@/components/header';
 import BreadCrumps from '@/components/navigation/bread-crumps';
-import { getDecksByPathId, getPathById, indexPathIds } from '@/libraries/api';
+import {
+  getContributorById,
+  getDecksByContributorId,
+  indexContributorIds,
+} from '@/libraries/api';
 import { HOME_OG_IMAGE_URL, TITLE } from '@/libraries/constants';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import path from 'path';
 
 import styles from '../../../styles/page.module.css';
 
 interface Params {
   params: {
-    pathId: string;
+    contributorId: string;
   };
 }
 
-export default function PathPage({ params }: Params) {
-  const { pathId } = params;
-  const path = getPathById(pathId);
+export default function ContributorPage({ params }: Params) {
+  const { contributorId } = params;
+  const contributor = getContributorById(contributorId);
 
-  if (!path) {
+  if (!contributor) {
     return notFound();
   }
 
-  const decks = getDecksByPathId(path.id);
+  const decks = getDecksByContributorId(contributor.id);
 
   return (
     <>
-      <BreadCrumps node={path} />
+      <BreadCrumps node={contributor} />
 
-      <Header title={path.title} subTitle={path.description} />
+      <Header title={contributor.name} subTitle={contributor.bio} />
 
       {decks.length > 0 ? (
         <div className={styles.grid}>
@@ -45,14 +48,14 @@ export default function PathPage({ params }: Params) {
 }
 
 export function generateMetadata({ params }: Params): Metadata {
-  const { pathId } = params;
-  const path = getPathById(pathId);
+  const { contributorId } = params;
+  const contributor = getContributorById(contributorId);
 
-  if (!path) {
+  if (!contributor) {
     return notFound();
   }
 
-  const title = `${path.title} | ${TITLE}`;
+  const title = `${contributor.name} | ${TITLE}`;
 
   return {
     title,
@@ -64,9 +67,9 @@ export function generateMetadata({ params }: Params): Metadata {
 }
 
 export function generateStaticParams() {
-  const pathIds = indexPathIds();
+  const contributorIds = indexContributorIds();
 
-  return pathIds.map(({ pathId }) => ({
-    pathId,
+  return contributorIds.map(({ contributorId }) => ({
+    contributorId,
   }));
 }

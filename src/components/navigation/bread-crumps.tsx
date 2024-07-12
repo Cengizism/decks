@@ -1,7 +1,12 @@
 'use client';
 
 import { useNodes } from '@/hooks/use-nodes';
-import { CardType, DeckType, PathType } from '@/interfaces/types';
+import {
+  CardType,
+  ContributorType,
+  DeckType,
+  PathType,
+} from '@/interfaces/types';
 import {
   Breadcrumb,
   BreadcrumbButton,
@@ -15,6 +20,8 @@ import {
   BookStar20Regular,
   BranchFork20Filled,
   BranchFork20Regular,
+  Person20Filled,
+  Person20Regular,
   bundleIcon,
 } from '@fluentui/react-icons';
 import Link from 'next/link';
@@ -24,9 +31,10 @@ import React from 'react';
 const DashboardIcons = bundleIcon(Board20Filled, Board20Regular);
 const DecksIcons = bundleIcon(BookStar20Filled, BookStar20Regular);
 const PathsIcons = bundleIcon(BranchFork20Filled, BranchFork20Regular);
+const ContributorsIcons = bundleIcon(Person20Filled, Person20Regular);
 
 interface BreadCrumpsProps {
-  node?: PathType | DeckType | CardType;
+  node?: PathType | DeckType | CardType | ContributorType;
 }
 
 const BreadCrumps: React.FC<BreadCrumpsProps> = ({ node }) => {
@@ -46,21 +54,38 @@ const BreadCrumps: React.FC<BreadCrumpsProps> = ({ node }) => {
         </Link>
       </BreadcrumbItem>
 
-      <BreadcrumbDivider />
-      <BreadcrumbItem>
-        <Link href='/paths' passHref>
-          <BreadcrumbButton icon={<PathsIcons />}>Paths</BreadcrumbButton>
-        </Link>
-      </BreadcrumbItem>
-
-      {pathname === '/decks' && (
+      {pathname?.startsWith('/contributors') ? (
         <>
           <BreadcrumbDivider />
           <BreadcrumbItem>
-            <Link href='/decks' passHref>
-              <BreadcrumbButton icon={<DecksIcons />}>Decks</BreadcrumbButton>
+            <Link href='/contributors' passHref>
+              <BreadcrumbButton icon={<ContributorsIcons />}>
+                Contributors
+              </BreadcrumbButton>
             </Link>
           </BreadcrumbItem>
+        </>
+      ) : (
+        <>
+          <BreadcrumbDivider />
+          <BreadcrumbItem>
+            <Link href='/paths' passHref>
+              <BreadcrumbButton icon={<PathsIcons />}>Paths</BreadcrumbButton>
+            </Link>
+          </BreadcrumbItem>
+
+          {pathname === '/decks' && (
+            <>
+              <BreadcrumbDivider />
+              <BreadcrumbItem>
+                <Link href='/decks' passHref>
+                  <BreadcrumbButton icon={<DecksIcons />}>
+                    Decks
+                  </BreadcrumbButton>
+                </Link>
+              </BreadcrumbItem>
+            </>
+          )}
         </>
       )}
 
@@ -95,6 +120,17 @@ const BreadCrumps: React.FC<BreadCrumpsProps> = ({ node }) => {
           <BreadcrumbDivider />
           <BreadcrumbItem>
             <BreadcrumbButton>{nodes.card.title}</BreadcrumbButton>
+          </BreadcrumbItem>
+        </>
+      )}
+
+      {nodes.contributor && (
+        <>
+          <BreadcrumbDivider />
+          <BreadcrumbItem>
+            <BreadcrumbButton>
+              {(node as ContributorType)?.name}
+            </BreadcrumbButton>
           </BreadcrumbItem>
         </>
       )}
