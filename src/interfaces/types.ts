@@ -29,34 +29,28 @@ export interface ContributorType {
   bio: string;
 }
 
-export interface NavigationNode {
+export interface NodeType {
   id: string;
   title?: string;
 }
 
-interface NavigationCard {
+interface CardNode {
   id: string;
   title: string;
 }
 
-interface NavigationDeck {
+interface DeckNode {
   id: string;
   title: string;
-  cards: NavigationCard[];
+  cards: CardNode[];
 }
 
-export interface NavigationPath {
+interface PathNode {
   id: string;
   title: string;
-  decks: NavigationDeck[];
+  decks: DeckNode[];
 }
 
-export interface PartialNavigationTree {
-  path?: NavigationNode;
-  deck?: NavigationNode;
-  card?: NavigationNode;
-}
-
-export interface CompleteNavigationTree {
-  paths: NavigationPath[];
+export interface NodesTreeType {
+  paths: PathNode[];
 }

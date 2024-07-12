@@ -3,9 +3,9 @@
 import { useStateContext } from '@/components/state-provider';
 import {
   CardType,
-  CompleteNavigationTree,
   DeckType,
-  NavigationNode,
+  NodeType,
+  NodesTreeType,
   PathType,
 } from '@/interfaces/types';
 import {
@@ -25,7 +25,7 @@ import {
 } from '@fluentui/react-icons';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import React from 'react';
+import React, { useMemo } from 'react';
 
 const DashboardIcons = bundleIcon(Board20Filled, Board20Regular);
 const DecksIcons = bundleIcon(BookStar20Filled, BookStar20Regular);
@@ -39,51 +39,51 @@ const BreadCrumps: React.FC<BreadCrumpsProps> = ({ node }) => {
   const pathname = usePathname();
   const { state } = useStateContext();
 
-  function findNode(
-    tree: CompleteNavigationTree,
-    nodeId: string,
-    nodeType: 'path' | 'deck' | 'card'
-  ): {
-    path?: NavigationNode;
-    deck?: NavigationNode;
-    card?: NavigationNode;
-  } | null {
-    for (const path of tree.paths) {
-      if (nodeType === 'path' && path.id === nodeId) {
-        return { path };
-      }
-      for (const deck of path.decks) {
-        if (nodeType === 'deck' && deck.id === nodeId) {
-          return { path, deck };
+  const findNode = useMemo(() => {
+    return (
+      tree: NodesTreeType,
+      nodeId: string,
+      nodeType: 'path' | 'deck' | 'card'
+    ): { path?: NodeType; deck?: NodeType; card?: NodeType } | null => {
+      for (const path of tree.paths) {
+        if (nodeType === 'path' && path.id === nodeId) {
+          return { path };
         }
-        for (const card of deck.cards) {
-          if (nodeType === 'card' && card.id === nodeId) {
-            return { path, deck, card };
+        for (const deck of path.decks) {
+          if (nodeType === 'deck' && deck.id === nodeId) {
+            return { path, deck };
+          }
+          for (const card of deck.cards) {
+            if (nodeType === 'card' && card.id === nodeId) {
+              return { path, deck, card };
+            }
           }
         }
       }
-    }
-    return null;
-  }
+      return null;
+    };
+  }, []);
 
-  function getNodeType(
-    node: PathType | DeckType | CardType
-  ): 'path' | 'deck' | 'card' | undefined {
-    if (
-      (node as PathType).description !== undefined &&
-      !(node as DeckType).pathId
-    ) {
-      return 'path';
-    } else if ((node as DeckType).pathId !== undefined) {
-      return 'deck';
-    } else if ((node as CardType).excerpt !== undefined) {
-      return 'card';
-    }
-    return undefined;
-  }
+  const getNodeType = useMemo(() => {
+    return (
+      node: PathType | DeckType | CardType
+    ): 'path' | 'deck' | 'card' | undefined => {
+      if ('description' in node && !('pathId' in node)) {
+        return 'path';
+      } else if ('pathId' in node) {
+        return 'deck';
+      } else if ('excerpt' in node) {
+        return 'card';
+      }
+      return undefined;
+    };
+  }, []);
 
   const type = node && getNodeType(node);
-  const nodes = type ? findNode(state.tree, node.id, type) || {} : {};
+  const nodes = useMemo(
+    () => (type ? findNode(state.nodes, node.id, type) || {} : {}),
+    [type, node, findNode, state.nodes]
+  );
 
   return (
     <Breadcrumb>

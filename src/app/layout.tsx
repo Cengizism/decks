@@ -1,8 +1,8 @@
 import { FluentProviders } from '@/components/fluent-providers';
 import Main from '@/components/main';
 import { StateProvider } from '@/components/state-provider';
-import { CompleteNavigationTree } from '@/interfaces/types';
-import { getCompleteNavigationTree } from '@/lib/api';
+import { NodesTreeType } from '@/interfaces/types';
+import { getNodeTree } from '@/lib/api';
 import { DESCRIPTION, HOME_OG_IMAGE_URL, TITLE } from '@/lib/constants';
 import '@/styles/globals.css';
 import type { Metadata } from 'next';
@@ -26,10 +26,10 @@ interface RootLayoutProps {
 }
 
 const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
-  const tree: CompleteNavigationTree = getCompleteNavigationTree();
+  const nodes: NodesTreeType = getNodeTree();
 
   const state = {
-    tree,
+    nodes,
   };
 
   return (
