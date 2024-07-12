@@ -56,9 +56,7 @@ export const useNodes = () => {
   }, []);
 
   const getParent = useMemo(() => {
-    return (
-      node: any
-    ): PathType | DeckType | undefined => {
+    return (node: any): PathType | DeckType | undefined => {
       const nodeType = getNodeType(node);
       if (nodeType === 'card') {
         const deck = state.nodes.paths
@@ -86,7 +84,9 @@ export const useNodes = () => {
 
   const getDeckCount = useMemo(() => {
     return (path: PathType): number => {
-      const pathNode = state.nodes.paths.find((p: PathNode) => p.id === path.id);
+      const pathNode = state.nodes.paths.find(
+        (p: PathNode) => p.id === path.id
+      );
       return pathNode ? pathNode.decks.length : 0;
     };
   }, [state.nodes]);

@@ -21,12 +21,12 @@ const paths: PathType[] = JSON.parse(
   fs.readFileSync(join(contentDirectory, 'paths.json'), 'utf8')
 );
 
+// File system functions
 function readCardFiles(folder: string): string[] {
   const deckPath = join(contentDirectory, folder);
   return fs.readdirSync(deckPath).filter((file) => file.endsWith('.mdx'));
 }
 
-// ------------------------------------------------------------------------------------------
 // Indexing functions
 export function indexCardIds(): { cardId: string }[] {
   return decks.flatMap(({ id: folder }) => {
@@ -55,6 +55,7 @@ export function indexContributorIds(): { contributorId: string }[] {
   }));
 }
 
+// Navigation tree functions
 export function getNodeTree(): NodesTreeType {
   return {
     paths: paths.map((path) => ({
@@ -74,7 +75,6 @@ export function getNodeTree(): NodesTreeType {
   };
 }
 
-// ------------------------------------------------------------------------------------------
 // Deck functions
 export function findDeckByCardId(cardId: string): DeckType | undefined {
   for (const deck of decks) {
@@ -98,7 +98,14 @@ export function getDecksByPathId(pathId: string): DeckType[] {
   return decks.filter((deck) => deck.pathId === pathId);
 }
 
-// ------------------------------------------------------------------------------------------
+export function getCardsOfDeck(deck: DeckType): CardType[] {
+  const { id: deckFolder } = deck;
+  const cardFiles = readCardFiles(deckFolder);
+  return cardFiles
+    .map((cardFileName) => getCardById(cardFileName.replace(/\.mdx$/, '')))
+    .filter((card) => card !== null) as CardType[];
+}
+
 // Card functions
 export function getCardById(cardId: string): CardType | null {
   if (!cardId) {
@@ -141,15 +148,6 @@ export function getCardById(cardId: string): CardType | null {
   }
 }
 
-export function getCardsOfDeck(deck: DeckType): CardType[] {
-  const { id: deckFolder } = deck;
-  const cardFiles = readCardFiles(deckFolder);
-  return cardFiles
-    .map((cardFileName) => getCardById(cardFileName.replace(/\.mdx$/, '')))
-    .filter((card) => card !== null) as CardType[];
-}
-
-// ------------------------------------------------------------------------------------------
 // Path functions
 export function getAllPaths(): PathType[] {
   return paths;
@@ -167,7 +165,6 @@ export function getPathOfDeck(deckId: string): PathType | null {
   return null;
 }
 
-// ------------------------------------------------------------------------------------------
 // Contributor functions
 export function getAllContributors(): ContributorType[] {
   return contributors.map((contributor) => ({
