@@ -14,5 +14,13 @@
     "pathId": "user-experience",
     "image": "user-experience.png",
     "contributorId": "jane-smit"
+  },
+  {
+    "folder": "unit-testing",
+    "title": "Unit Testing",
+    "description": "This deck explains different topics related to unit testing.",
+    "pathId": "testing",
+    "image": "",
+    "contributorId": "boris-blokland"
   }
 ]
