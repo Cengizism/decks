@@ -73,5 +73,10 @@
     "id": "virtual-reality",
     "title": "Virtual Reality",
     "description": "Virtual reality (VR) is a simulated experience that can be similar to or completely different from the real world. Applications of virtual reality include entertainment (e.g. video games) and education (e.g. medical or military training)."
+  },
+  {
+    "id": "testing",
+    "title": "Testing",
+    "description": "Software testing is an investigation conducted to provide stakeholders with information about the quality of the software product or service under test."
   }
 ]
