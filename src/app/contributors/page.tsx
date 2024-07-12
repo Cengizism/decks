@@ -4,7 +4,7 @@ import BreadCrumps from '@/components/navigation/bread-crumps';
 import { ContributorType } from '@/interfaces/types';
 import { getAllContributors } from '@/libraries/api';
 
-import styles from '../../styles/page.module.css';
+import styles from '../page.module.css';
 
 const ContributorsPage: React.FC = () => {
   const contributors: ContributorType[] = getAllContributors();

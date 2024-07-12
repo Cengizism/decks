@@ -4,7 +4,7 @@ import BreadCrumps from '@/components/navigation/bread-crumps';
 import { PathType } from '@/interfaces/types';
 import { getAllPaths } from '@/libraries/api';
 
-import styles from '../../styles/page.module.css';
+import styles from '../page.module.css';
 
 const PathsPage: React.FC = () => {
   const paths: PathType[] = getAllPaths();

@@ -1,12 +1,13 @@
 import CoverImage from '@/components/card/cover-image';
 import Header from '@/components/header';
 import BreadCrumps from '@/components/navigation/bread-crumps';
+import { TITLE } from '@/constants';
 import { findDeckByCardId, getCardById, indexCardIds } from '@/libraries/api';
-import { TITLE } from '@/libraries/constants';
 import markdownToHtml from '@/libraries/markdown-to-html';
-import markdownStyles from '@/styles/markdown-styles.module.css';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+
+import markdownStyles from './page.module.css';
 
 interface Params {
   params: {

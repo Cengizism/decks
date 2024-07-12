@@ -1,16 +1,16 @@
 import Deck from '@/components/card/deck';
 import Header from '@/components/header';
 import BreadCrumps from '@/components/navigation/bread-crumps';
+import { HOME_OG_IMAGE_URL, TITLE } from '@/constants';
 import {
   getContributorById,
   getDecksByContributorId,
   indexContributorIds,
 } from '@/libraries/api';
-import { HOME_OG_IMAGE_URL, TITLE } from '@/libraries/constants';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
-import styles from '../../../styles/page.module.css';
+import styles from '../../page.module.css';
 
 interface Params {
   params: {

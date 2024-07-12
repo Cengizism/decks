@@ -1,5 +1,5 @@
 import Header from '@/components/header';
-import { DESCRIPTION } from '@/libraries/constants';
+import { DESCRIPTION } from '@/constants';
 import * as React from 'react';
 
 const Index: React.FC = () => {

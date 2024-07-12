@@ -1,12 +1,13 @@
 import Main from '@/components/main';
+import { DESCRIPTION, HOME_OG_IMAGE_URL, TITLE } from '@/constants';
 import { ContributorType, DeckType, NodesTreeType } from '@/interfaces/types';
 import { getAllContributors, getAllDecks, getNodeTree } from '@/libraries/api';
-import { DESCRIPTION, HOME_OG_IMAGE_URL, TITLE } from '@/libraries/constants';
 import { FluentProviders } from '@/providers/fluent-providers';
 import { StateProvider } from '@/providers/state-provider';
-import '@/styles/globals.css';
 import type { Metadata } from 'next';
 import * as React from 'react';
+
+import './globals.css';
 
 export const metadata: Metadata = {
   // TODO: "metadataBase" needs to be updated with env variables

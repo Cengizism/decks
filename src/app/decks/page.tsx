@@ -4,7 +4,7 @@ import BreadCrumps from '@/components/navigation/bread-crumps';
 import { DeckType } from '@/interfaces/types';
 import { getAllDecks } from '@/libraries/api';
 
-import styles from '../../styles/page.module.css';
+import styles from '../page.module.css';
 
 const DecksPage: React.FC = () => {
   const decks: DeckType[] = getAllDecks();
