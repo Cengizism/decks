@@ -19,8 +19,8 @@
     "id": "unit-testing",
     "title": "Unit Testing",
     "description": "This deck explains different topics related to unit testing.",
+    "coverImage": "testing.jpg",
     "pathId": "testing",
-    "image": "",
     "contributorId": "boris-blokland"
   }
 ]

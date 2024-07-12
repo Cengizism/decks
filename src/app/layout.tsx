@@ -1,6 +1,6 @@
 import Main from '@/components/main';
-import { NodesTreeType } from '@/interfaces/types';
-import { getNodeTree } from '@/lib/api';
+import { ContributorType, NodesTreeType } from '@/interfaces/types';
+import { getAllContributors, getNodeTree } from '@/lib/api';
 import { DESCRIPTION, HOME_OG_IMAGE_URL, TITLE } from '@/lib/constants';
 import { FluentProviders } from '@/providers/fluent-providers';
 import { StateProvider } from '@/providers/state-provider';
@@ -27,9 +27,11 @@ interface RootLayoutProps {
 
 const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
   const nodes: NodesTreeType = getNodeTree();
+  const contributors: ContributorType[] = getAllContributors();
 
   const state = {
     nodes,
+    contributors,
   };
 
   return (

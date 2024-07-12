@@ -8,6 +8,7 @@ import {
   NodesTreeType,
   PathNode,
   PathType,
+  ContributorType,
 } from '@/interfaces/types';
 import { useStateContext } from '@/providers/state-provider';
 import { useMemo } from 'react';
@@ -91,6 +92,14 @@ export const useNodes = () => {
     };
   }, [state.nodes]);
 
+  const getContributorById = useMemo(() => {
+    return (contributorId: string): ContributorType | undefined => {
+      return state.contributors.find(
+        (contributor: ContributorType) => contributor.id === contributorId
+      );
+    };
+  }, [state.contributors]);
+
   return {
     findNode: (nodeId: string, nodeType: 'path' | 'deck' | 'card') =>
       findNode(state.nodes, nodeId, nodeType),
@@ -98,5 +107,6 @@ export const useNodes = () => {
     getParent,
     getCardCount,
     getDeckCount,
+    getContributorById,
   };
 };

@@ -26,8 +26,7 @@ import Link from 'next/link';
 import React from 'react';
 
 import CoverImage from './cover-image';
-
-// import DeckContributor from './deck-contributor';
+import DeckContributor from './deck-contributor';
 
 const BookmarkMultipleIcons = bundleIcon(
   BookmarkMultiple24Filled,
@@ -84,9 +83,10 @@ interface DeckComponentProps {
 
 const DeckComponent: React.FC<DeckComponentProps> = ({ deck }) => {
   const styles = useStyles();
-  const { getParent, getCardCount } = useNodes();
+  const { getParent, getCardCount, getContributorById } = useNodes();
 
   const path = getParent(deck);
+  const contributor = getContributorById(deck.contributorId);
 
   return (
     <Card className={styles.card}>
@@ -129,7 +129,7 @@ const DeckComponent: React.FC<DeckComponentProps> = ({ deck }) => {
         </Text>
       </CardFooter>
 
-      {/* <DeckContributor contributor={deck.contributor} /> */}
+      <DeckContributor contributor={contributor} />
     </Card>
   );
 };
