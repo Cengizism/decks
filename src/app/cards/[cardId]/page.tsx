@@ -1,5 +1,5 @@
 import CoverImage from '@/components/card/cover-image';
-import Header from '@/components/header';
+import PageHeader from '@/components/page-header/page-header';
 import BreadCrumps from '@/components/navigation/bread-crumps';
 import { TITLE } from '@/constants';
 import { findDeckByCardId, getCardById, indexCardIds } from '@/libraries/api';
@@ -30,7 +30,7 @@ export default async function CardPage({ params }: Params) {
     <>
       <BreadCrumps node={card} />
 
-      <Header
+      <PageHeader
         title={card.title}
         subTitle={card.excerpt}
         date={card.lastModified}

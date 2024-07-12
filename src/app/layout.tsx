@@ -1,4 +1,4 @@
-import Main from '@/components/main';
+import Main from '@/components/main/main';
 import { DESCRIPTION, HOME_OG_IMAGE_URL, TITLE } from '@/constants';
 import { ContributorType, DeckType, NodesTreeType } from '@/interfaces/types';
 import { getAllContributors, getAllDecks, getNodeTree } from '@/libraries/api';

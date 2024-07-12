@@ -1,0 +1,18 @@
+.errorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  height: 100vh;
+  text-align: center;
+}
+
+.errorIcon {
+  font-size: 50px;
+  margin-bottom: 1rem;
+}
+
+.resetButton {
+  margin-top: 0.5rem;
+}

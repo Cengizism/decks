@@ -1,5 +1,5 @@
 import Card from '@/components/card/card';
-import Header from '@/components/header';
+import PageHeader from '@/components/page-header/page-header';
 import BreadCrumps from '@/components/navigation/bread-crumps';
 import { HOME_OG_IMAGE_URL, TITLE } from '@/constants';
 import { getCardsOfDeck, getDeckById, indexDeckIds } from '@/libraries/api';
@@ -28,7 +28,7 @@ export default function DeckPage({ params }: Params) {
     <>
       <BreadCrumps node={deck} />
 
-      <Header title={deck.title} subTitle={deck.description} />
+      <PageHeader title={deck.title} subTitle={deck.description} />
 
       {cards.length > 0 ? (
         <div className={styles.grid}>

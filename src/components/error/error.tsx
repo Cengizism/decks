@@ -1,25 +1,13 @@
 'use client';
 
-import { Button, makeStyles } from '@fluentui/react-components';
+import { Button, makeStyles, mergeClasses } from '@fluentui/react-components';
 import React, { useEffect } from 'react';
 
+import classes from './error.module.css';
+
 const useStyles = makeStyles({
-  errorContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: '.75rem',
-    height: '100vh',
-    textAlign: 'center',
+  errorContainerFontColor: {
     color: '#d9534f', // TODO: Get it from tokens
-  },
-  errorIcon: {
-    fontSize: '50px',
-    marginBottom: '1rem',
-  },
-  resetButton: {
-    marginTop: '.5rem',
   },
 });
 
@@ -45,11 +33,16 @@ const Error: React.FC<ErrorProps> = ({ error, reset, message, children }) => {
   );
 
   return (
-    <div className={styles.errorContainer}>
-      <div className={styles.errorIcon}>⚠️</div>
+    <div
+      className={mergeClasses(
+        classes.errorContainer,
+        styles.errorContainerFontColor
+      )}
+    >
+      <div className={classes.errorIcon}>⚠️</div>
       <p>{errorMessage}</p>
       {children && <div>{children}</div>}
-      <Button className={styles.resetButton} onClick={reset}>
+      <Button className={classes.resetButton} onClick={reset}>
         Try again
       </Button>
     </div>

@@ -1,5 +1,5 @@
 import Contributor from '@/components/card/contributor';
-import Header from '@/components/header';
+import PageHeader from '@/components/page-header/page-header';
 import BreadCrumps from '@/components/navigation/bread-crumps';
 import { ContributorType } from '@/interfaces/types';
 import { getAllContributors } from '@/libraries/api';
@@ -13,7 +13,7 @@ const ContributorsPage: React.FC = () => {
     <>
       <BreadCrumps />
 
-      <Header
+      <PageHeader
         title='Contributors'
         subTitle='Here you can find all the contributors available in the platform.'
       />

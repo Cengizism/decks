@@ -1,5 +1,5 @@
 import Deck from '@/components/card/deck';
-import Header from '@/components/header';
+import PageHeader from '@/components/page-header/page-header';
 import BreadCrumps from '@/components/navigation/bread-crumps';
 import { HOME_OG_IMAGE_URL, TITLE } from '@/constants';
 import {
@@ -32,7 +32,7 @@ export default function ContributorPage({ params }: Params) {
     <>
       <BreadCrumps node={contributor} />
 
-      <Header title={contributor.name} subTitle={contributor.bio} />
+      <PageHeader title={contributor.name} subTitle={contributor.bio} />
 
       {decks.length > 0 ? (
         <div className={styles.grid}>

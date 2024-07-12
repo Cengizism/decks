@@ -1,10 +1,10 @@
-import Header from '@/components/header';
+import PageHeader from '@/components/page-header/page-header';
 import React from 'react';
 
 const About: React.FC = () => {
   return (
     <>
-      <Header
+      <PageHeader
         title='About'
         subTitle='A community based knowledge sharing platform'
       />

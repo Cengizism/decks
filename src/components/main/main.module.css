@@ -1,0 +1,47 @@
+.root {
+  overflow: hidden;
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+}
+
+.body {
+  flex: 1;
+  display: grid;
+  flex-grow: 1;
+  justify-content: flex-start;
+  align-items: flex-start;
+  height: 100vh;
+}
+
+.header {
+  display: flex;
+  justify-content: left;
+  gap: 20px;
+  padding: 16px;
+  align-items: center;
+  border-bottom: 1px solid;
+}
+
+.header > button {
+  margin-top: 4px;
+}
+
+.header hgroup {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  padding: 16px 16px 90px 16px;
+  height: 100vh;
+  width: 100vw !important;
+  overflow: auto;
+}
+
+.narrowed {
+  width: calc(100vw - 260px) !important;
+}

@@ -1,5 +1,5 @@
 import Path from '@/components/card/path';
-import Header from '@/components/header';
+import PageHeader from '@/components/page-header/page-header';
 import BreadCrumps from '@/components/navigation/bread-crumps';
 import { PathType } from '@/interfaces/types';
 import { getAllPaths } from '@/libraries/api';
@@ -13,7 +13,7 @@ const PathsPage: React.FC = () => {
     <>
       <BreadCrumps />
 
-      <Header
+      <PageHeader
         title='Paths'
         subTitle='Follow the paths to learn more about a specific topic.'
       />

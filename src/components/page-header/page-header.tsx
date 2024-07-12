@@ -5,31 +5,27 @@ import { makeStyles, tokens } from '@fluentui/react-components';
 import { format } from 'date-fns';
 import React from 'react';
 
+import classes from './page-header.module.css';
+
 const useStyles = makeStyles({
-  header: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '2px',
-    margin: '36px 6px',
-  },
   subTitle: {
     color: tokens.colorNeutralForeground4,
   },
 });
 
-interface HeaderProps {
+interface PageHeaderProps {
   title: string;
   subTitle?: string;
   date?: Date;
 }
 
-const Header: React.FC<HeaderProps> = ({ title, subTitle, date }) => {
+const PageHeader: React.FC<PageHeaderProps> = ({ title, subTitle, date }) => {
   const styles = useStyles();
 
   const formattedDate = date ? format(date, 'EEEE, d MMMM yyyy') : null;
 
   return (
-    <header className={styles.header}>
+    <header className={classes.header}>
       <LargeTitle block>{title}</LargeTitle>
       {subTitle && <Body2 className={styles.subTitle}>{subTitle}</Body2>}
       {formattedDate && (
@@ -42,4 +38,4 @@ const Header: React.FC<HeaderProps> = ({ title, subTitle, date }) => {
   );
 };
 
-export default Header;
+export default PageHeader;

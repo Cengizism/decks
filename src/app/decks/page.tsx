@@ -1,5 +1,5 @@
 import Deck from '@/components/card/deck';
-import Header from '@/components/header';
+import PageHeader from '@/components/page-header/page-header';
 import BreadCrumps from '@/components/navigation/bread-crumps';
 import { DeckType } from '@/interfaces/types';
 import { getAllDecks } from '@/libraries/api';
@@ -13,7 +13,7 @@ const DecksPage: React.FC = () => {
     <>
       <BreadCrumps />
 
-      <Header
+      <PageHeader
         title='Decks'
         subTitle='Here you can find all the decks available in the platform.'
       />
