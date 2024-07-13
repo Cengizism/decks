@@ -11,7 +11,6 @@ import {
   CardFooter,
   CardHeader,
   CardPreview,
-  Divider,
   Title3,
   makeStyles,
   mergeClasses,
@@ -67,6 +66,10 @@ const DeckComponent: React.FC<DeckComponentProps> = ({ deck }) => {
 
   return (
     <Card className={styles.card}>
+      {pathname?.startsWith('/contributors') || (
+        <DeckContributor contributor={contributor} />
+      )}
+
       <CardHeader
         header={
           <Link className={styles.link} href={`/decks/${deck.id}`}>
@@ -106,12 +109,6 @@ const DeckComponent: React.FC<DeckComponentProps> = ({ deck }) => {
           <Button>Open deck</Button>
         </Link>
       </CardFooter>
-
-      {pathname?.startsWith('/contributors') || (
-        <DeckContributor contributor={contributor} />
-      )}
-
-      <Divider />
 
       <footer className={mergeClasses(styles.flex, styles.stats)}>
         <div className={styles.flex}>

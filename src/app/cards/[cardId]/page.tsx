@@ -2,7 +2,7 @@ import CoverImage from '@/components/card/cover-image';
 import BreadCrumps from '@/components/navigation/bread-crumps';
 import PageHeader from '@/components/page-header/page-header';
 import { TITLE } from '@/constants';
-import { findDeckByCardId, getCardById, indexCardIds } from '@/libraries/api';
+import { findDeckByCardId, getCardById, indexCardIds } from '@/libraries/';
 import markdownToHtml from '@/libraries/markdown-to-html';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';

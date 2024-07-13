@@ -2,7 +2,7 @@ import Deck from '@/components/card/deck';
 import BreadCrumps from '@/components/navigation/bread-crumps';
 import PageHeader from '@/components/page-header/page-header';
 import { HOME_OG_IMAGE_URL, TITLE } from '@/constants';
-import { getDecksByPathId, getPathById, indexPathIds } from '@/libraries/api';
+import { getDecksByPathId, getPathById, indexPathIds } from '@/libraries/';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import path from 'path';

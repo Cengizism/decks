@@ -2,7 +2,7 @@ import Card from '@/components/card/card';
 import BreadCrumps from '@/components/navigation/bread-crumps';
 import PageHeader from '@/components/page-header/page-header';
 import { HOME_OG_IMAGE_URL, TITLE } from '@/constants';
-import { getCardsOfDeck, getDeckById, indexDeckIds } from '@/libraries/api';
+import { getCardsOfDeck, getDeckById, indexDeckIds } from '@/libraries/';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 

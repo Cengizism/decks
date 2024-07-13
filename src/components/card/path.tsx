@@ -8,7 +8,6 @@ import {
   Card,
   CardFooter,
   CardHeader,
-  Divider,
   Title3,
   mergeClasses,
 } from '@fluentui/react-components';
@@ -48,8 +47,6 @@ const PathComponent: React.FC<PathComponentProps> = ({ path }) => {
           </Link>
         )}
       </CardFooter>
-
-      <Divider />
 
       <footer className={mergeClasses(styles.flex, styles.stats)}>
         <div className={styles.flex}>

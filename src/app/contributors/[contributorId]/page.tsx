@@ -6,7 +6,7 @@ import {
   getContributorById,
   getDecksByContributorId,
   indexContributorIds,
-} from '@/libraries/api';
+} from '@/libraries/';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 

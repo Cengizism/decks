@@ -8,7 +8,6 @@ import {
   Card,
   CardFooter,
   CardHeader,
-  Divider,
   Title3,
   mergeClasses,
 } from '@fluentui/react-components';
@@ -54,8 +53,6 @@ const ContributorComponent: React.FC<ContributorComponentProps> = ({
           <Button>Open profile</Button>
         </Link>
       </CardFooter>
-
-      <Divider />
 
       <footer className={mergeClasses(styles.flex, styles.stats)}>
         <div className={styles.flex}>
