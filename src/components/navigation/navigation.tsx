@@ -100,7 +100,12 @@ const Navigation: React.FC<NavigationProps> = ({
                 <NavSubItemGroup>
                   {deck.cards.map((card) => (
                     <Link key={card.id} href={`/cards/${card.id}`} passHref>
-                      <NavSubItem value={`/cards/${card.id}`} className={styles.left}>{card.title}</NavSubItem>
+                      <NavSubItem
+                        value={`/cards/${card.id}`}
+                        className={styles.left}
+                      >
+                        {card.title}
+                      </NavSubItem>
                     </Link>
                   ))}
                 </NavSubItemGroup>
