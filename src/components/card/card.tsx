@@ -59,7 +59,7 @@ const CardComponent: React.FC<CardComponentProps> = ({ card }) => {
         <Cover
           src={deck ? `/api/content/${deck.id}/images/${card.coverImage}` : ''}
           title={card.title}
-          slug={card.id}
+          id={card.id}
         />
       </CardPreview>
 

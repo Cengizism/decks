@@ -97,7 +97,7 @@ const DeckComponent: React.FC<DeckComponentProps> = ({ deck }) => {
       />
 
       <CardPreview className={inlineStyles.grayBackground}>
-        <Cover src={`/${deck.coverImage}`} title={deck.title} />
+        <Cover src={`/${deck.coverImage}`} title={deck.title} variant='small' />
       </CardPreview>
 
       <Body1 truncate wrap={false} className={styles.text}>

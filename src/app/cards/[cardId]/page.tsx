@@ -39,6 +39,7 @@ export default async function CardPage({ params }: Params) {
       <Cover
         src={deck ? `/api/content/${deck.id}/images/${card.coverImage}` : ''}
         title={card.title}
+        variant='full'
       />
 
       <article>
