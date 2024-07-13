@@ -9,17 +9,11 @@ import fs from 'fs';
 import matter from 'gray-matter';
 import { join } from 'path';
 
-const contentDirectory = join(process.cwd(), 'content');
+import contributors from '../../content/contributors.json';
+import decks from '../../content/decks.json';
+import paths from '../../content/paths.json';
 
-const contributors: ContributorType[] = JSON.parse(
-  fs.readFileSync(join(contentDirectory, 'contributors.json'), 'utf8')
-);
-const decks: DeckType[] = JSON.parse(
-  fs.readFileSync(join(contentDirectory, 'decks.json'), 'utf8')
-);
-const paths: PathType[] = JSON.parse(
-  fs.readFileSync(join(contentDirectory, 'paths.json'), 'utf8')
-);
+const contentDirectory = join(process.cwd(), 'content');
 
 // File system functions
 function readCardFiles(folder: string): string[] {
@@ -39,10 +33,6 @@ function readCardFiles(folder: string): string[] {
 // Indexing functions
 export function indexCardIds(): { cardId: string }[] {
   return decks.flatMap(({ id: folder }) => {
-    if (!folder) {
-      console.error('Invalid deck ID:', folder);
-      return [];
-    }
     const cardFiles = readCardFiles(folder);
     return cardFiles.map((cardId) => ({
       cardId: cardId.replace(/\.mdx$/, ''),
@@ -51,21 +41,15 @@ export function indexCardIds(): { cardId: string }[] {
 }
 
 export function indexDeckIds(): { deckId: string }[] {
-  return decks.map((deck) => ({
-    deckId: deck.id,
-  }));
+  return decks.map(({ id }) => ({ deckId: id }));
 }
 
 export function indexPathIds(): { pathId: string }[] {
-  return paths.map((path) => ({
-    pathId: path.id,
-  }));
+  return paths.map(({ id }) => ({ pathId: id }));
 }
 
 export function indexContributorIds(): { contributorId: string }[] {
-  return contributors.map((contributor) => ({
-    contributorId: contributor.id,
-  }));
+  return contributors.map(({ id }) => ({ contributorId: id }));
 }
 
 // Navigation tree functions
@@ -76,30 +60,26 @@ export function getNodeTree(): NodesTreeType {
       title: path.title,
       decks: decks
         .filter((deck) => deck.pathId === path.id)
-        .map((deck) => {
-          const cards = readCardFiles(deck.id).map((cardFile) => ({
-            id: cardFile.replace(/\.mdx$/, ''),
-            title: getCardById(cardFile.replace(/\.mdx$/, ''))?.title || '',
-          }));
-          return {
-            id: deck.id,
-            title: deck.title,
-            cards,
-          };
-        }),
+        .map((deck) => ({
+          id: deck.id,
+          title: deck.title,
+          cards: readCardFiles(deck.id).map((cardFile) => {
+            const cardId = cardFile.replace(/\.mdx$/, '');
+            return {
+              id: cardId,
+              title: getCardById(cardId)?.title || '',
+            };
+          }),
+        })),
     })),
   };
 }
 
 // Deck functions
 export function findDeckByCardId(cardId: string): DeckType | undefined {
-  for (const deck of decks) {
-    const cardFiles = readCardFiles(deck.id);
-    if (cardFiles.includes(cardId + '.mdx')) {
-      return deck;
-    }
-  }
-  return undefined;
+  return decks.find((deck) =>
+    readCardFiles(deck.id).includes(`${cardId}.mdx`)
+  );
 }
 
 export function getAllDecks(): DeckType[] {
@@ -119,11 +99,9 @@ export function getDecksByContributorId(contributorId: string): DeckType[] {
 }
 
 export function getCardsOfDeck(deck: DeckType): CardType[] {
-  const { id: deckFolder } = deck;
-  const cardFiles = readCardFiles(deckFolder);
-  return cardFiles
-    .map((cardFileName) => getCardById(cardFileName.replace(/\.mdx$/, '')))
-    .filter((card) => card !== null) as CardType[];
+  return readCardFiles(deck.id)
+    .map((cardFile) => getCardById(cardFile.replace(/\.mdx$/, '')))
+    .filter((card): card is CardType => card !== null);
 }
 
 // Card functions
@@ -178,21 +156,13 @@ export function getPathById(id: string): PathType | null {
 }
 
 export function getPathOfDeck(deckId: string): PathType | null {
-  const deck = decks.find((deck) => deck.id === deckId) || null;
-  if (deck) {
-    return paths.find((path) => path.id === deck.pathId) || null;
-  }
-  return null;
+  const deck = decks.find((deck) => deck.id === deckId);
+  return deck ? paths.find((path) => path.id === deck.pathId) || null : null;
 }
 
 // Contributor functions
 export function getAllContributors(): ContributorType[] {
-  return contributors.map((contributor) => ({
-    id: contributor.id,
-    name: contributor.name,
-    email: contributor.email,
-    bio: contributor.bio,
-  }));
+  return contributors;
 }
 
 export function getContributorById(id: string): ContributorType | null {

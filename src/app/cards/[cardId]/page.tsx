@@ -7,7 +7,7 @@ import markdownToHtml from '@/libraries/markdown-to-html';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
-import markdownStyles from './page.module.css';
+import styles from './page.module.css';
 
 interface Params {
   params: {
@@ -43,7 +43,7 @@ export default async function CardPage({ params }: Params) {
 
       <article>
         <div
-          className={markdownStyles.markdown}
+          className={styles.markdown}
           dangerouslySetInnerHTML={{ __html: content }}
         />
       </article>

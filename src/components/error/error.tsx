@@ -3,10 +3,10 @@
 import { Button, makeStyles, mergeClasses } from '@fluentui/react-components';
 import React, { useEffect } from 'react';
 
-import classes from './error.module.css';
+import styles from './error.module.css';
 
-const useStyles = makeStyles({
-  errorContainerFontColor: {
+const useInlineStyles = makeStyles({
+  errorContainer: {
     color: '#d9534f', // TODO: Get it from tokens
   },
 });
@@ -19,7 +19,7 @@ interface ErrorProps {
 }
 
 const Error: React.FC<ErrorProps> = ({ error, reset, message, children }) => {
-  const styles = useStyles();
+  const inlineStyles = useInlineStyles();
 
   useEffect(() => {
     console.error(error);
@@ -35,14 +35,14 @@ const Error: React.FC<ErrorProps> = ({ error, reset, message, children }) => {
   return (
     <div
       className={mergeClasses(
-        classes.errorContainer,
-        styles.errorContainerFontColor
+        styles.errorContainer,
+        inlineStyles.errorContainer
       )}
     >
-      <div className={classes.errorIcon}>⚠️</div>
+      <div className={styles.errorIcon}>⚠️</div>
       <p>{errorMessage}</p>
       {children && <div>{children}</div>}
-      <Button className={classes.resetButton} onClick={reset}>
+      <Button className={styles.resetButton} onClick={reset}>
         Try again
       </Button>
     </div>

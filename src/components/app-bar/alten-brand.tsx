@@ -7,13 +7,13 @@ import Link from 'next/link';
 import Logo from 'public/alten-logo.svg';
 import React from 'react';
 
-import classes from './alten-brand.module.css';
+import styles from './alten-brand.module.css';
 
 const AltenBrand: React.FC = () => {
   return (
     <hgroup>
       <Image src={Logo} alt='Alten' priority />
-      <Link className={classes.logo} href='/'>
+      <Link className={styles.brand} href='/'>
         <Title1>{TITLE}</Title1>
       </Link>
     </hgroup>

@@ -11,13 +11,13 @@ import {
 import { PersonCircle32Filled } from '@fluentui/react-icons';
 import React, { useMemo } from 'react';
 
-import classes from './deck-contributor.module.css';
+import styles from './deck-contributor.module.css';
 
-const useStyles = makeStyles({
-  captionColor: {
+const useInlineStyles = makeStyles({
+  caption: {
     color: tokens.colorNeutralForeground3,
   },
-  subtle: {
+  subtleColor: {
     color: tokens.colorNeutralForeground4,
   },
 });
@@ -27,7 +27,7 @@ interface DeckContributorProps {
 }
 
 const DeckContributor: React.FC<DeckContributorProps> = ({ contributor }) => {
-  const styles = useStyles();
+  const inlineStyles = useInlineStyles();
 
   const contributorName = useMemo(
     () => contributor?.name || 'Anonymous',
@@ -36,20 +36,20 @@ const DeckContributor: React.FC<DeckContributorProps> = ({ contributor }) => {
   const contributorLink = useMemo(
     () =>
       contributor ? (
-        <Link className={classes.link} href={`/contributors/${contributor.id}`}>
+        <Link className={styles.link} href={`/contributors/${contributor.id}`}>
           <Caption1
-            className={mergeClasses(classes.caption, styles.captionColor)}
+            className={mergeClasses(styles.caption, inlineStyles.caption)}
           >
             All decks of contributor
           </Caption1>
         </Link>
       ) : null,
-    [contributor, styles.captionColor]
+    [contributor, inlineStyles.caption]
   );
 
   return (
     <CardHeader
-      image={<PersonCircle32Filled className={styles.subtle} />}
+      image={<PersonCircle32Filled className={inlineStyles.subtleColor} />}
       header={
         <Body1>
           <b>{contributorName}</b>

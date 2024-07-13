@@ -3,11 +3,11 @@
 import { Body2, Caption1, LargeTitle } from '@fluentui/react-components';
 import { makeStyles, tokens } from '@fluentui/react-components';
 import { format } from 'date-fns';
-import React from 'react';
+import React, { useMemo } from 'react';
 
-import classes from './page-header.module.css';
+import styles from './page-header.module.css';
 
-const useStyles = makeStyles({
+const useInlineStyles = makeStyles({
   subTitle: {
     color: tokens.colorNeutralForeground4,
   },
@@ -20,14 +20,16 @@ interface PageHeaderProps {
 }
 
 const PageHeader: React.FC<PageHeaderProps> = ({ title, subTitle, date }) => {
-  const styles = useStyles();
+  const inlineStyles = useInlineStyles();
 
-  const formattedDate = date ? format(date, 'EEEE, d MMMM yyyy') : null;
+  const formattedDate = useMemo(() => {
+    return date ? format(date, 'EEEE, d MMMM yyyy') : null;
+  }, [date]);
 
   return (
-    <header className={classes.header}>
+    <header className={styles.header}>
       <LargeTitle block>{title}</LargeTitle>
-      {subTitle && <Body2 className={styles.subTitle}>{subTitle}</Body2>}
+      {subTitle && <Body2 className={inlineStyles.subTitle}>{subTitle}</Body2>}
       {formattedDate && (
         <Caption1>
           <strong>Last modified:</strong>{' '}
@@ -38,4 +40,4 @@ const PageHeader: React.FC<PageHeaderProps> = ({ title, subTitle, date }) => {
   );
 };
 
-export default PageHeader;
+export default React.memo(PageHeader);

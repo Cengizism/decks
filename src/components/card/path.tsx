@@ -16,7 +16,7 @@ import { BookStar20Regular } from '@fluentui/react-icons';
 import Link from 'next/link';
 import React, { useMemo } from 'react';
 
-import classes from './card.module.css';
+import styles from './card.module.css';
 
 interface PathComponentProps {
   path: PathType;
@@ -28,16 +28,16 @@ const PathComponent: React.FC<PathComponentProps> = ({ path }) => {
   const deckCount = useMemo(() => getDeckCount(path), [path, getDeckCount]);
 
   return (
-    <Card className={classes.card}>
+    <Card className={styles.card}>
       <CardHeader
         header={
-          <Link className={classes.link} href={`/paths/${path.id}`}>
+          <Link className={styles.link} href={`/paths/${path.id}`}>
             <Title3 truncate>{path.title}</Title3>
           </Link>
         }
       />
 
-      <Body1 truncate wrap={false} className={classes.text}>
+      <Body1 truncate wrap={false} className={styles.text}>
         {path.description}
       </Body1>
 
@@ -51,8 +51,8 @@ const PathComponent: React.FC<PathComponentProps> = ({ path }) => {
 
       <Divider />
 
-      <footer className={mergeClasses(classes.flex, classes.stats)}>
-        <div className={classes.flex}>
+      <footer className={mergeClasses(styles.flex, styles.stats)}>
+        <div className={styles.flex}>
           {deckCount > 0 ? (
             <>
               <BookStar20Regular />

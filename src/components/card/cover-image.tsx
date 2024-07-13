@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
-import classes from './cover-image.module.css';
+import styles from './cover-image.module.css';
 
 interface CoverImageProps {
   title: string;
@@ -15,7 +15,7 @@ interface CoverImageProps {
 
 const IMAGE_HEIGHT = 400;
 
-const useStyles = makeStyles({
+const useInlineStyles = makeStyles({
   cover: {
     height: `${IMAGE_HEIGHT}px !important`,
     minHeight: `${IMAGE_HEIGHT}px`,
@@ -23,10 +23,10 @@ const useStyles = makeStyles({
 });
 
 const CoverImage: React.FC<CoverImageProps> = ({ title, src, slug }) => {
-  const styles = useStyles();
+  const inlineStyles = useInlineStyles();
 
   const image = (
-    <div className={mergeClasses(classes.cover, styles.cover)}>
+    <div className={mergeClasses(styles.cover, inlineStyles.cover)}>
       <Image
         src={src}
         alt={`Cover Image for ${title}`}

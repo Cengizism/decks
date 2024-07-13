@@ -16,7 +16,7 @@ import { BookStar20Regular } from '@fluentui/react-icons';
 import Link from 'next/link';
 import React, { useMemo } from 'react';
 
-import classes from './card.module.css';
+import styles from './card.module.css';
 
 interface ContributorComponentProps {
   contributor: ContributorType;
@@ -33,11 +33,11 @@ const ContributorComponent: React.FC<ContributorComponentProps> = ({
   );
 
   return (
-    <Card className={classes.card}>
+    <Card className={styles.card}>
       <CardHeader
         header={
           <Link
-            className={classes.link}
+            className={styles.link}
             href={`/contributors/${contributor.id}`}
           >
             <Title3 truncate>{contributor.name}</Title3>
@@ -45,7 +45,7 @@ const ContributorComponent: React.FC<ContributorComponentProps> = ({
         }
       />
 
-      <Body1 truncate wrap={false} className={classes.text}>
+      <Body1 truncate wrap={false} className={styles.text}>
         {contributor.bio}
       </Body1>
 
@@ -57,8 +57,8 @@ const ContributorComponent: React.FC<ContributorComponentProps> = ({
 
       <Divider />
 
-      <footer className={mergeClasses(classes.flex, classes.stats)}>
-        <div className={classes.flex}>
+      <footer className={mergeClasses(styles.flex, styles.stats)}>
+        <div className={styles.flex}>
           {deckCount > 0 ? (
             <>
               <BookStar20Regular />

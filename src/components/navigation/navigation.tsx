@@ -29,7 +29,7 @@ import {
 } from '@fluentui/react-nav-preview';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import HamburgerMenu from './hamburger-menu';
 import classes from './navigation.module.css';
@@ -69,12 +69,12 @@ const Navigation: React.FC<NavigationProps> = ({
 
   const MenuItem: React.FC<{
     path: string;
-    icon?: React.ReactNode;
+    icon?: React.ReactElement;
     text: string;
   }> = ({ path, icon, text }) => (
     <Link href={path} passHref>
       <NavItem
-        icon={<>{icon}</>}
+        icon={icon}
         value={path}
         onClick={() => setSelectedValue(path)}
         aria-selected={selectedValue === path}
@@ -83,6 +83,32 @@ const Navigation: React.FC<NavigationProps> = ({
       </NavItem>
     </Link>
   );
+
+  const pathNodes = useMemo(() => {
+    return state.nodes.paths
+      .filter((path: PathNode) => path.decks.length > 0)
+      .map((path: PathNode) => (
+        <NavCategory key={path.id} value={path.id}>
+          <NavCategoryItem icon={<PathsIcons />}>{path.title}</NavCategoryItem>
+          <NavSubItemGroup>
+            {path.decks.map((deck) => (
+              <NavCategory key={deck.id} value={deck.id}>
+                <NavCategoryItem icon={<DecksIcons />}>
+                  {deck.title}
+                </NavCategoryItem>
+                <NavSubItemGroup>
+                  {deck.cards.map((card) => (
+                    <Link key={card.id} href={`/cards/${card.id}`} passHref>
+                      <NavSubItem value={card.id}>{card.title}</NavSubItem>
+                    </Link>
+                  ))}
+                </NavSubItemGroup>
+              </NavCategory>
+            ))}
+          </NavSubItemGroup>
+        </NavCategory>
+      ));
+  }, [state.nodes.paths]);
 
   return (
     <NavDrawer
@@ -111,34 +137,10 @@ const Navigation: React.FC<NavigationProps> = ({
 
         <NavDivider />
         <NavSectionHeader>Paths</NavSectionHeader>
-        {state.nodes.paths
-          .filter((path: PathNode) => path.decks.length > 0)
-          .map((path: PathNode) => (
-            <NavCategory key={path.id} value={path.id}>
-              <NavCategoryItem icon={<PathsIcons />}>
-                {path.title}
-              </NavCategoryItem>
-              <NavSubItemGroup>
-                {path.decks.map((deck) => (
-                  <NavCategory key={deck.id} value={deck.id}>
-                    <NavCategoryItem icon={<DecksIcons />}>
-                      {deck.title}
-                    </NavCategoryItem>
-                    <NavSubItemGroup>
-                      {deck.cards.map((card) => (
-                        <Link key={card.id} href={`/cards/${card.id}`} passHref>
-                          <NavSubItem value={card.id}>{card.title}</NavSubItem>
-                        </Link>
-                      ))}
-                    </NavSubItemGroup>
-                  </NavCategory>
-                ))}
-              </NavSubItemGroup>
-            </NavCategory>
-          ))}
+        {pathNodes}
       </NavDrawerBody>
     </NavDrawer>
   );
 };
 
-export default Navigation;
+export default React.memo(Navigation);

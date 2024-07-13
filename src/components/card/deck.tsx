@@ -27,7 +27,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { useMemo } from 'react';
 
-import classes from './card.module.css';
+import styles from './card.module.css';
 import CoverImage from './cover-image';
 import DeckContributor from './deck-contributor';
 
@@ -36,14 +36,14 @@ const BookmarkMultipleIcons = bundleIcon(
   BookmarkMultiple24Regular
 );
 
-const useStyles = makeStyles({
-  captionColor: {
+const useInlineStyles = makeStyles({
+  caption: {
     color: tokens.colorNeutralForeground3,
   },
   grayBackground: {
     backgroundColor: tokens.colorNeutralBackground3,
   },
-  bookmarkColor: {
+  bookmark: {
     color: tokens.colorNeutralBackground1,
   },
 });
@@ -53,7 +53,7 @@ interface DeckComponentProps {
 }
 
 const DeckComponent: React.FC<DeckComponentProps> = ({ deck }) => {
-  const styles = useStyles();
+  const inlineStyles = useInlineStyles();
   const { getParent } = useNodes();
   const { getCardCount, getContributorById } = useDeckUtils();
   const pathname = usePathname();
@@ -66,19 +66,19 @@ const DeckComponent: React.FC<DeckComponentProps> = ({ deck }) => {
   const cardCount = useMemo(() => getCardCount(deck), [deck, getCardCount]);
 
   return (
-    <Card className={classes.card}>
+    <Card className={styles.card}>
       <CardHeader
         header={
-          <Link className={classes.link} href={`/decks/${deck.id}`}>
+          <Link className={styles.link} href={`/decks/${deck.id}`}>
             <Title3 truncate>{deck.title}</Title3>
           </Link>
         }
         description={
-          <Link className={classes.link} href={`/paths/${path?.id}`}>
+          <Link className={styles.link} href={`/paths/${path?.id}`}>
             <Caption1
               truncate
               wrap={false}
-              className={mergeClasses(classes.caption, styles.captionColor)}
+              className={mergeClasses(styles.caption, inlineStyles.caption)}
             >
               {path?.title ?? 'No path'}
             </Caption1>
@@ -87,17 +87,17 @@ const DeckComponent: React.FC<DeckComponentProps> = ({ deck }) => {
         action={
           <Button
             appearance='transparent'
-            className={mergeClasses(classes.bookmark, styles.bookmarkColor)}
+            className={mergeClasses(styles.bookmark, inlineStyles.bookmark)}
             icon={<BookmarkMultipleIcons />}
           />
         }
       />
 
-      <CardPreview className={styles.grayBackground}>
+      <CardPreview className={inlineStyles.grayBackground}>
         <CoverImage src={`/${deck.coverImage}`} title={deck.title} />
       </CardPreview>
 
-      <Body1 truncate wrap={false} className={classes.text}>
+      <Body1 truncate wrap={false} className={styles.text}>
         {deck.description}
       </Body1>
 
@@ -113,8 +113,8 @@ const DeckComponent: React.FC<DeckComponentProps> = ({ deck }) => {
 
       <Divider />
 
-      <footer className={mergeClasses(classes.flex, classes.stats)}>
-        <div className={classes.flex}>
+      <footer className={mergeClasses(styles.flex, styles.stats)}>
+        <div className={styles.flex}>
           {cardCount > 0 ? (
             <>
               <BookStar20Regular />
