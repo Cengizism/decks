@@ -1,18 +1,18 @@
 import { PathType } from '@/interfaces/types';
 
-import { decksData, pathsData } from './data';
+import { decks, paths } from './data';
 
 export function getAllPaths(): PathType[] {
-  return pathsData;
+  return paths;
 }
 
 export function getPathById(id: string): PathType | null {
-  return pathsData.find((path) => path.id === id) || null;
+  return paths.find((path) => path.id === id) || null;
 }
 
 export function getPathOfDeck(deckId: string): PathType | null {
-  const deck = decksData.find((deck) => deck.id === deckId);
+  const deck = decks.find((deck) => deck.id === deckId);
   return deck
-    ? pathsData.find((path) => path.id === deck.pathId) || null
+    ? paths.find((path) => path.id === deck.pathId) || null
     : null;
 }

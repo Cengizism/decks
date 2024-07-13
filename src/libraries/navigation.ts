@@ -1,15 +1,15 @@
 import { NodesTreeType } from '@/interfaces/types';
 
 import { getCardById } from './cards';
-import { decksData, pathsData } from './data';
+import { decks, paths } from './data';
 import { readCardFiles } from './file-system';
 
 export function getNodeTree(): NodesTreeType {
   return {
-    paths: pathsData.map((path) => ({
+    paths: paths.map((path) => ({
       id: path.id,
       title: path.title,
-      decks: decksData
+      decks: decks
         .filter((deck) => deck.pathId === path.id)
         .map((deck) => ({
           id: deck.id,

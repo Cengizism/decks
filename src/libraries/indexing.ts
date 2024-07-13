@@ -1,8 +1,8 @@
-import { contributorsData, decksData, pathsData } from './data';
+import { contributors, decks, paths } from './data';
 import { readCardFiles } from './file-system';
 
 export function indexCardIds(): { cardId: string }[] {
-  return decksData.flatMap(({ id: folder }) => {
+  return decks.flatMap(({ id: folder }) => {
     const cardFiles = readCardFiles(folder);
     return cardFiles.map((cardId) => ({
       cardId: cardId.replace(/\.mdx$/, ''),
@@ -11,13 +11,13 @@ export function indexCardIds(): { cardId: string }[] {
 }
 
 export function indexDeckIds(): { deckId: string }[] {
-  return decksData.map(({ id }) => ({ deckId: id }));
+  return decks.map(({ id }) => ({ deckId: id }));
 }
 
 export function indexPathIds(): { pathId: string }[] {
-  return pathsData.map(({ id }) => ({ pathId: id }));
+  return paths.map(({ id }) => ({ pathId: id }));
 }
 
 export function indexContributorIds(): { contributorId: string }[] {
-  return contributorsData.map(({ id }) => ({ contributorId: id }));
+  return contributors.map(({ id }) => ({ contributorId: id }));
 }

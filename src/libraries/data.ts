@@ -1,9 +1,9 @@
 import { ContributorType, DeckType, PathType } from '@/interfaces/types';
 
-import contributors from '../../content/contributors.json';
-import decks from '../../content/decks.json';
-import paths from '../../content/paths.json';
+import contributorsData from '../../content/contributors.json';
+import decksData from '../../content/decks.json';
+import pathsData from '../../content/paths.json';
 
-export const contributorsData: ContributorType[] = contributors;
-export const decksData: DeckType[] = decks;
-export const pathsData: PathType[] = paths;
+export const contributors: ContributorType[] = contributorsData;
+export const decks: DeckType[] = decksData;
+export const paths: PathType[] = pathsData;
