@@ -5,14 +5,16 @@ import { PathType } from '@/interfaces/types';
 import {
   Body1,
   Button,
+  Card,
+  CardFooter,
+  CardHeader,
   Divider,
   Title3,
   mergeClasses,
 } from '@fluentui/react-components';
-import { Card, CardFooter, CardHeader } from '@fluentui/react-components';
 import { BookStar20Regular } from '@fluentui/react-icons';
 import Link from 'next/link';
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import classes from './card.module.css';
 
@@ -23,7 +25,7 @@ interface PathComponentProps {
 const PathComponent: React.FC<PathComponentProps> = ({ path }) => {
   const { getDeckCount } = useDeckUtils();
 
-  const deckCount = getDeckCount(path);
+  const deckCount = useMemo(() => getDeckCount(path), [path, getDeckCount]);
 
   return (
     <Card className={classes.card}>
@@ -65,4 +67,4 @@ const PathComponent: React.FC<PathComponentProps> = ({ path }) => {
   );
 };
 
-export default PathComponent;
+export default React.memo(PathComponent);

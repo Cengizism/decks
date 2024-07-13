@@ -6,16 +6,14 @@ import {
   Body1,
   Button,
   Caption1,
-  Title3,
-  makeStyles,
-  mergeClasses,
-  tokens,
-} from '@fluentui/react-components';
-import {
   Card,
   CardFooter,
   CardHeader,
   CardPreview,
+  Title3,
+  makeStyles,
+  mergeClasses,
+  tokens,
 } from '@fluentui/react-components';
 import {
   Bookmark24Filled,
@@ -23,7 +21,7 @@ import {
   bundleIcon,
 } from '@fluentui/react-icons';
 import Link from 'next/link';
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import classes from './card.module.css';
 import CoverImage from './cover-image';
@@ -50,7 +48,7 @@ const CardComponent: React.FC<CardComponentProps> = ({ card }) => {
   const styles = useStyles();
   const { getParent } = useNodes();
 
-  const deck = getParent(card);
+  const deck = useMemo(() => getParent(card), [card, getParent]);
 
   return (
     <Card className={classes.card}>
@@ -101,4 +99,4 @@ const CardComponent: React.FC<CardComponentProps> = ({ card }) => {
   );
 };
 
-export default CardComponent;
+export default React.memo(CardComponent);

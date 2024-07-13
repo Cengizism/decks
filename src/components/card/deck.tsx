@@ -7,17 +7,15 @@ import {
   Body1,
   Button,
   Caption1,
+  Card,
+  CardFooter,
+  CardHeader,
+  CardPreview,
   Divider,
   Title3,
   makeStyles,
   mergeClasses,
   tokens,
-} from '@fluentui/react-components';
-import {
-  Card,
-  CardFooter,
-  CardHeader,
-  CardPreview,
 } from '@fluentui/react-components';
 import {
   BookStar20Regular,
@@ -27,7 +25,7 @@ import {
 } from '@fluentui/react-icons';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import classes from './card.module.css';
 import CoverImage from './cover-image';
@@ -60,10 +58,12 @@ const DeckComponent: React.FC<DeckComponentProps> = ({ deck }) => {
   const { getCardCount, getContributorById } = useDeckUtils();
   const pathname = usePathname();
 
-  const path = getParent(deck);
-  const contributor = getContributorById(deck.contributorId);
-
-  const cardCount = getCardCount(deck);
+  const path = useMemo(() => getParent(deck), [deck, getParent]);
+  const contributor = useMemo(
+    () => getContributorById(deck.contributorId),
+    [deck.contributorId, getContributorById]
+  );
+  const cardCount = useMemo(() => getCardCount(deck), [deck, getCardCount]);
 
   return (
     <Card className={classes.card}>
@@ -129,4 +129,4 @@ const DeckComponent: React.FC<DeckComponentProps> = ({ deck }) => {
   );
 };
 
-export default DeckComponent;
+export default React.memo(DeckComponent);

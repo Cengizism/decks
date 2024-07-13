@@ -5,14 +5,16 @@ import { ContributorType } from '@/interfaces/types';
 import {
   Body1,
   Button,
+  Card,
+  CardFooter,
+  CardHeader,
   Divider,
   Title3,
   mergeClasses,
 } from '@fluentui/react-components';
-import { Card, CardFooter, CardHeader } from '@fluentui/react-components';
 import { BookStar20Regular } from '@fluentui/react-icons';
 import Link from 'next/link';
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import classes from './card.module.css';
 
@@ -25,7 +27,10 @@ const ContributorComponent: React.FC<ContributorComponentProps> = ({
 }) => {
   const { getDeckCountByContributorId } = useDeckUtils();
 
-  const deckCount = getDeckCountByContributorId(contributor.id);
+  const deckCount = useMemo(
+    () => getDeckCountByContributorId(contributor.id),
+    [contributor.id, getDeckCountByContributorId]
+  );
 
   return (
     <Card className={classes.card}>
@@ -68,4 +73,4 @@ const ContributorComponent: React.FC<ContributorComponentProps> = ({
   );
 };
 
-export default ContributorComponent;
+export default React.memo(ContributorComponent);
