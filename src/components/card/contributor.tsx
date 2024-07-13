@@ -2,8 +2,15 @@
 
 import { useDeckUtils } from '@/hooks/use-deck-utils';
 import { ContributorType } from '@/interfaces/types';
-import { Body1, Button, Text, Title3 } from '@fluentui/react-components';
+import {
+  Body1,
+  Button,
+  Divider,
+  Title3,
+  mergeClasses,
+} from '@fluentui/react-components';
 import { Card, CardFooter, CardHeader } from '@fluentui/react-components';
+import { BookStar20Regular } from '@fluentui/react-icons';
 import Link from 'next/link';
 import React from 'react';
 
@@ -37,20 +44,26 @@ const ContributorComponent: React.FC<ContributorComponentProps> = ({
         {contributor.bio}
       </Body1>
 
-      <CardFooter className={classes.footer}>
+      <CardFooter>
         <Link href={`/contributors/${contributor.id}`}>
           <Button>Open profile</Button>
         </Link>
-        <Text>
+      </CardFooter>
+
+      <Divider />
+
+      <footer className={mergeClasses(classes.flex, classes.stats)}>
+        <div className={classes.flex}>
           {deckCount > 0 ? (
             <>
-              <strong>Decks:</strong> {deckCount}
+              <BookStar20Regular />
+              <Body1>{deckCount} deck(s)</Body1>
             </>
           ) : (
-            'No decks for this path'
+            <Body1 italic>No decks available</Body1>
           )}
-        </Text>
-      </CardFooter>
+        </div>
+      </footer>
     </Card>
   );
 };

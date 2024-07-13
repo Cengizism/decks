@@ -7,7 +7,7 @@ import {
   Body1,
   Button,
   Caption1,
-  Text,
+  Divider,
   Title3,
   makeStyles,
   mergeClasses,
@@ -20,6 +20,7 @@ import {
   CardPreview,
 } from '@fluentui/react-components';
 import {
+  BookStar20Regular,
   BookmarkMultiple24Filled,
   BookmarkMultiple24Regular,
   bundleIcon,
@@ -62,6 +63,8 @@ const DeckComponent: React.FC<DeckComponentProps> = ({ deck }) => {
   const path = getParent(deck);
   const contributor = getContributorById(deck.contributorId);
 
+  const cardCount = getCardCount(deck);
+
   return (
     <Card className={classes.card}>
       <CardHeader
@@ -98,18 +101,30 @@ const DeckComponent: React.FC<DeckComponentProps> = ({ deck }) => {
         {deck.description}
       </Body1>
 
-      <CardFooter className={classes.footer}>
+      <CardFooter>
         <Link href={`/decks/${deck.id}`}>
           <Button>Open deck</Button>
         </Link>
-        <Text>
-          <strong>Cards:</strong> {getCardCount(deck)}
-        </Text>
       </CardFooter>
 
       {pathname?.startsWith('/contributors') || (
         <DeckContributor contributor={contributor} />
       )}
+
+      <Divider />
+
+      <footer className={mergeClasses(classes.flex, classes.stats)}>
+        <div className={classes.flex}>
+          {cardCount > 0 ? (
+            <>
+              <BookStar20Regular />
+              <Body1>{cardCount} card(s)</Body1>
+            </>
+          ) : (
+            <Body1 italic>No cards available</Body1>
+          )}
+        </div>
+      </footer>
     </Card>
   );
 };

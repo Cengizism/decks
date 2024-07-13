@@ -3,7 +3,6 @@ import {
   Body1,
   Caption1,
   CardHeader,
-  Divider,
   Link,
   makeStyles,
   mergeClasses,
@@ -31,31 +30,28 @@ const DeckContributor: React.FC<DeckContributorProps> = ({ contributor }) => {
   const styles = useStyles();
 
   return (
-    <>
-      <Divider />
-      <CardHeader
-        image={<PersonCircle32Filled className={styles.subtle} />}
-        header={
-          <Body1>
-            <b>{contributor ? contributor.name : 'Anonymous'}</b>
-          </Body1>
-        }
-        description={
-          contributor ? (
-            <Link
-              className={classes.link}
-              href={`/contributors/${contributor?.id}`}
+    <CardHeader
+      image={<PersonCircle32Filled className={styles.subtle} />}
+      header={
+        <Body1>
+          <b>{contributor ? contributor.name : 'Anonymous'}</b>
+        </Body1>
+      }
+      description={
+        contributor ? (
+          <Link
+            className={classes.link}
+            href={`/contributors/${contributor?.id}`}
+          >
+            <Caption1
+              className={mergeClasses(classes.caption, styles.captionColor)}
             >
-              <Caption1
-                className={mergeClasses(classes.caption, styles.captionColor)}
-              >
-                All decks of contributor
-              </Caption1>
-            </Link>
-          ) : null
-        }
-      />
-    </>
+              All decks of contributor
+            </Caption1>
+          </Link>
+        ) : null
+      }
+    />
   );
 };
 

@@ -92,7 +92,7 @@ const CardComponent: React.FC<CardComponentProps> = ({ card }) => {
         {card.excerpt}
       </Body1>
 
-      <CardFooter className={classes.footer}>
+      <CardFooter>
         <Link href={`/cards/${card.id}`}>
           <Button>Read more</Button>
         </Link>

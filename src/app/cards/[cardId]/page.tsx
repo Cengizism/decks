@@ -1,6 +1,6 @@
 import CoverImage from '@/components/card/cover-image';
-import PageHeader from '@/components/page-header/page-header';
 import BreadCrumps from '@/components/navigation/bread-crumps';
+import PageHeader from '@/components/page-header/page-header';
 import { TITLE } from '@/constants';
 import { findDeckByCardId, getCardById, indexCardIds } from '@/libraries/api';
 import markdownToHtml from '@/libraries/markdown-to-html';

@@ -2,8 +2,15 @@
 
 import { useDeckUtils } from '@/hooks/use-deck-utils';
 import { PathType } from '@/interfaces/types';
-import { Body1, Button, Text, Title3 } from '@fluentui/react-components';
+import {
+  Body1,
+  Button,
+  Divider,
+  Title3,
+  mergeClasses,
+} from '@fluentui/react-components';
 import { Card, CardFooter, CardHeader } from '@fluentui/react-components';
+import { BookStar20Regular } from '@fluentui/react-icons';
 import Link from 'next/link';
 import React from 'react';
 
@@ -32,22 +39,28 @@ const PathComponent: React.FC<PathComponentProps> = ({ path }) => {
         {path.description}
       </Body1>
 
-      <CardFooter className={classes.footer}>
-        {deckCount > 0 ? (
+      <CardFooter>
+        {deckCount > 0 && (
           <Link href={`/paths/${path.id}`}>
             <Button>View decks</Button>
           </Link>
-        ) : null}
-        <Text>
+        )}
+      </CardFooter>
+
+      <Divider />
+
+      <footer className={mergeClasses(classes.flex, classes.stats)}>
+        <div className={classes.flex}>
           {deckCount > 0 ? (
             <>
-              <strong>Decks:</strong> {deckCount}
+              <BookStar20Regular />
+              <Body1>{deckCount} deck(s)</Body1>
             </>
           ) : (
-            'No decks for this path'
+            <Body1 italic>No decks available</Body1>
           )}
-        </Text>
-      </CardFooter>
+        </div>
+      </footer>
     </Card>
   );
 };

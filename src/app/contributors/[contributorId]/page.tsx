@@ -1,6 +1,6 @@
 import Deck from '@/components/card/deck';
-import PageHeader from '@/components/page-header/page-header';
 import BreadCrumps from '@/components/navigation/bread-crumps';
+import PageHeader from '@/components/page-header/page-header';
 import { HOME_OG_IMAGE_URL, TITLE } from '@/constants';
 import {
   getContributorById,
