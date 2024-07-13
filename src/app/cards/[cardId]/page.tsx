@@ -1,5 +1,5 @@
-import CoverImage from '@/components/card/cover-image';
-import BreadCrumps from '@/components/navigation/bread-crumps';
+import Cover from '@/components/cover/cover-image';
+import BreadCrumps from '@/components/bread-crumps/bread-crumps';
 import PageHeader from '@/components/page-header/page-header';
 import { TITLE } from '@/constants';
 import { findDeckByCardId, getCardById, indexCardIds } from '@/libraries/';
@@ -36,7 +36,7 @@ export default async function CardPage({ params }: Params) {
         date={card.lastModified}
       />
 
-      <CoverImage
+      <Cover
         src={deck ? `/api/content/${deck.id}/images/${card.coverImage}` : ''}
         title={card.title}
       />

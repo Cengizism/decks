@@ -5,9 +5,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
-import styles from './cover-image.module.css';
+import styles from './cover.module.css';
 
-interface CoverImageProps {
+interface CoverProps {
   title: string;
   src: string;
   slug?: string;
@@ -22,7 +22,7 @@ const useInlineStyles = makeStyles({
   },
 });
 
-const CoverImage: React.FC<CoverImageProps> = ({ title, src, slug }) => {
+const Cover: React.FC<CoverProps> = ({ title, src, slug }) => {
   const inlineStyles = useInlineStyles();
 
   const image = (
@@ -41,4 +41,4 @@ const CoverImage: React.FC<CoverImageProps> = ({ title, src, slug }) => {
   return slug ? <Link href={`/cards/${slug}`}>{image}</Link> : image;
 };
 
-export default CoverImage;
+export default Cover;

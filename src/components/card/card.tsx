@@ -24,7 +24,7 @@ import Link from 'next/link';
 import React, { useMemo } from 'react';
 
 import styles from './card.module.css';
-import CoverImage from './cover-image';
+import Cover from '../cover/cover';
 
 const BookmarkIcons = bundleIcon(Bookmark24Filled, Bookmark24Regular);
 
@@ -53,7 +53,7 @@ const CardComponent: React.FC<CardComponentProps> = ({ card }) => {
   return (
     <Card className={styles.card}>
       <CardPreview className={inlineStyles.grayBackground}>
-        <CoverImage
+        <Cover
           src={deck ? `/api/content/${deck.id}/images/${card.coverImage}` : ''}
           title={card.title}
           slug={card.id}

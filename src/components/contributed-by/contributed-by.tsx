@@ -1,3 +1,4 @@
+import { useDeckUtils } from '@/hooks/use-deck-utils';
 import { ContributorType } from '@/interfaces/types';
 import {
   Body1,
@@ -11,7 +12,7 @@ import {
 import { PersonCircle32Filled } from '@fluentui/react-icons';
 import React, { useMemo } from 'react';
 
-import styles from './deck-contributor.module.css';
+import styles from './contributed-by.module.css';
 
 const useInlineStyles = makeStyles({
   caption: {
@@ -22,12 +23,17 @@ const useInlineStyles = makeStyles({
   },
 });
 
-interface DeckContributorProps {
+interface ContributedByProps {
   contributor: ContributorType | undefined;
 }
 
-const DeckContributor: React.FC<DeckContributorProps> = ({ contributor }) => {
+const ContributedBy: React.FC<ContributedByProps> = ({ contributor }) => {
   const inlineStyles = useInlineStyles();
+  const { getDeckCountByContributorId } = useDeckUtils();
+  const contributionCount = useMemo(
+    () => getDeckCountByContributorId(contributor?.id || ''),
+    [contributor, getDeckCountByContributorId]
+  );
 
   const contributorName = useMemo(
     () => contributor?.name || 'Anonymous',
@@ -36,13 +42,11 @@ const DeckContributor: React.FC<DeckContributorProps> = ({ contributor }) => {
   const contributorLink = useMemo(
     () =>
       contributor ? (
-        <Link className={styles.link} href={`/contributors/${contributor.id}`}>
-          <Caption1
-            className={mergeClasses(styles.caption, inlineStyles.caption)}
-          >
-            All decks of contributor
-          </Caption1>
-        </Link>
+        <Caption1
+          className={mergeClasses(styles.caption, inlineStyles.caption)}
+        >
+          {contributionCount} contribution(s)
+        </Caption1>
       ) : null,
     [contributor, inlineStyles.caption]
   );
@@ -51,13 +55,13 @@ const DeckContributor: React.FC<DeckContributorProps> = ({ contributor }) => {
     <CardHeader
       image={<PersonCircle32Filled className={inlineStyles.subtleColor} />}
       header={
-        <Body1>
-          <b>{contributorName}</b>
-        </Body1>
+        <Link href={`/contributors/${contributor?.id}`}>
+          <Body1>{contributorName}</Body1>
+        </Link>
       }
       description={contributorLink}
     />
   );
 };
 
-export default React.memo(DeckContributor);
+export default React.memo(ContributedBy);

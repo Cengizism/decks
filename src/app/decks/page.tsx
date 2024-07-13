@@ -1,5 +1,5 @@
 import Deck from '@/components/card/deck';
-import BreadCrumps from '@/components/navigation/bread-crumps';
+import BreadCrumps from '@/components/bread-crumps/bread-crumps';
 import PageHeader from '@/components/page-header/page-header';
 import { DeckType } from '@/interfaces/types';
 import { getAllDecks } from '@/libraries/';

@@ -27,8 +27,8 @@ import { usePathname } from 'next/navigation';
 import React, { useMemo } from 'react';
 
 import styles from './card.module.css';
-import CoverImage from './cover-image';
-import DeckContributor from './deck-contributor';
+import ContributedBy from '../contributed-by/contributed-by';
+import Cover from '../cover/cover';
 
 const BookmarkMultipleIcons = bundleIcon(
   BookmarkMultiple24Filled,
@@ -67,7 +67,7 @@ const DeckComponent: React.FC<DeckComponentProps> = ({ deck }) => {
   return (
     <Card className={styles.card}>
       {pathname?.startsWith('/contributors') || (
-        <DeckContributor contributor={contributor} />
+        <ContributedBy contributor={contributor} />
       )}
 
       <CardHeader
@@ -97,7 +97,7 @@ const DeckComponent: React.FC<DeckComponentProps> = ({ deck }) => {
       />
 
       <CardPreview className={inlineStyles.grayBackground}>
-        <CoverImage src={`/${deck.coverImage}`} title={deck.title} />
+        <Cover src={`/${deck.coverImage}`} title={deck.title} />
       </CardPreview>
 
       <Body1 truncate wrap={false} className={styles.text}>
