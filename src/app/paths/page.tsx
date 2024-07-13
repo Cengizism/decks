@@ -1,5 +1,5 @@
-import Path from '@/components/card/path';
 import BreadCrumps from '@/components/bread-crumps/bread-crumps';
+import Path from '@/components/card/path';
 import PageHeader from '@/components/page-header/page-header';
 import { PathType } from '@/interfaces/types';
 import { getAllPaths } from '@/libraries/';

@@ -48,7 +48,7 @@ const ContributedBy: React.FC<ContributedByProps> = ({ contributor }) => {
           {contributionCount} contribution(s)
         </Caption1>
       ) : null,
-    [contributor, inlineStyles.caption]
+    [contributor, contributionCount, inlineStyles.caption]
   );
 
   return (

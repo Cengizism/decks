@@ -16,17 +16,20 @@ import {
   tokens,
 } from '@fluentui/react-components';
 import {
-  Bookmark24Filled,
-  Bookmark24Regular,
+  BookmarkFilled,
+  BookmarkRegular,
+  HeartFilled,
+  HeartRegular,
   bundleIcon,
 } from '@fluentui/react-icons';
 import Link from 'next/link';
 import React, { useMemo } from 'react';
 
-import styles from './card.module.css';
 import Cover from '../cover/cover';
+import styles from './card.module.css';
 
-const BookmarkIcons = bundleIcon(Bookmark24Filled, Bookmark24Regular);
+const BookmarkIcons = bundleIcon(BookmarkFilled, BookmarkRegular);
+const HeartIcons = bundleIcon(HeartFilled, HeartRegular);
 
 const useInlineStyles = makeStyles({
   caption: {
@@ -35,7 +38,7 @@ const useInlineStyles = makeStyles({
   grayBackground: {
     backgroundColor: tokens.colorNeutralBackground3,
   },
-  bookmark: {
+  actionButton: {
     color: tokens.colorNeutralBackground1,
   },
 });
@@ -78,11 +81,20 @@ const CardComponent: React.FC<CardComponentProps> = ({ card }) => {
           </Link>
         }
         action={
-          <Button
-            appearance='transparent'
-            className={mergeClasses(styles.bookmark, inlineStyles.bookmark)}
-            icon={<BookmarkIcons />}
-          />
+          <div className={styles.action}>
+            <Button
+              appearance='transparent'
+              className={inlineStyles.actionButton}
+              size='large'
+              icon={<HeartIcons />}
+            />
+            <Button
+              appearance='transparent'
+              className={inlineStyles.actionButton}
+              size='large'
+              icon={<BookmarkIcons />}
+            />
+          </div>
         }
       />
 

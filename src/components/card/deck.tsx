@@ -26,9 +26,9 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { useMemo } from 'react';
 
-import styles from './card.module.css';
 import ContributedBy from '../contributed-by/contributed-by';
 import Cover from '../cover/cover';
+import styles from './card.module.css';
 
 const BookmarkMultipleIcons = bundleIcon(
   BookmarkMultiple24Filled,

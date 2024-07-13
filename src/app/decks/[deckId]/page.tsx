@@ -1,5 +1,5 @@
-import Card from '@/components/card/card';
 import BreadCrumps from '@/components/bread-crumps/bread-crumps';
+import Card from '@/components/card/card';
 import PageHeader from '@/components/page-header/page-header';
 import { HOME_OG_IMAGE_URL, TITLE } from '@/constants';
 import { getCardsOfDeck, getDeckById, indexDeckIds } from '@/libraries/';
