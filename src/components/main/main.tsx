@@ -20,7 +20,7 @@ interface MainProps {
 
 const Main: React.FC<MainProps> = ({ children }) => {
   const inlineStyles = useInlineStyles();
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   const toggleHamburgerMenu = useCallback(() => {
     setIsOpen((prev) => !prev);

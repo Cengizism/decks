@@ -32,7 +32,7 @@ import { usePathname } from 'next/navigation';
 import React, { useEffect, useMemo, useState } from 'react';
 
 import HamburgerMenu from './hamburger-menu';
-import classes from './navigation.module.css';
+import styles from './navigation.module.css';
 
 const DashboardIcons = bundleIcon(Board20Filled, Board20Regular);
 const AboutIcons = bundleIcon(Info20Filled, Info20Regular);
@@ -58,7 +58,8 @@ const Navigation: React.FC<NavigationProps> = ({
 
   useEffect(() => {
     if (pathname?.startsWith('/cards')) {
-      setSelectedValue('/decks');
+      setSelectedValue(pathname);
+      console.log(pathname);
     } else {
       const matchedPath = paths.find((path) => pathname?.startsWith(path));
       if (matchedPath) {
@@ -99,7 +100,7 @@ const Navigation: React.FC<NavigationProps> = ({
                 <NavSubItemGroup>
                   {deck.cards.map((card) => (
                     <Link key={card.id} href={`/cards/${card.id}`} passHref>
-                      <NavSubItem value={card.id}>{card.title}</NavSubItem>
+                      <NavSubItem value={`/cards/${card.id}`} className={styles.left}>{card.title}</NavSubItem>
                     </Link>
                   ))}
                 </NavSubItemGroup>
@@ -114,14 +115,14 @@ const Navigation: React.FC<NavigationProps> = ({
     <NavDrawer
       open={isOpen}
       type='inline'
-      className={classes.root}
+      className={styles.root}
       selectedValue={selectedValue}
     >
-      <NavDrawerHeader className={classes.hamburger}>
+      <NavDrawerHeader className={styles.hamburger}>
         <HamburgerMenu toggleHamburgerMenu={toggleHamburgerMenu} />
       </NavDrawerHeader>
 
-      <NavDrawerBody className={classes.navigation}>
+      <NavDrawerBody className={styles.navigation}>
         <MenuItem path='/' icon={<DashboardIcons />} text='Dashboard' />
         <MenuItem path='/about' icon={<AboutIcons />} text='About' />
 

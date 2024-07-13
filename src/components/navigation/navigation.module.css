@@ -14,3 +14,7 @@
 .navigation a button:hover {
   cursor: pointer;
 }
+
+.left {
+  text-align: left;
+}
