@@ -77,9 +77,7 @@ export function getNodeTree(): NodesTreeType {
 
 // Deck functions
 export function findDeckByCardId(cardId: string): DeckType | undefined {
-  return decks.find((deck) =>
-    readCardFiles(deck.id).includes(`${cardId}.mdx`)
-  );
+  return decks.find((deck) => readCardFiles(deck.id).includes(`${cardId}.mdx`));
 }
 
 export function getAllDecks(): DeckType[] {
