@@ -5,9 +5,7 @@ import { decks } from './data';
 import { readCardFiles } from './file-system';
 
 export function findDeckByCardId(cardId: string): DeckType | undefined {
-  return decks.find((deck) =>
-    readCardFiles(deck.id).includes(`${cardId}.mdx`)
-  );
+  return decks.find((deck) => readCardFiles(deck.id).includes(`${cardId}.mdx`));
 }
 
 export function getAllDecks(): DeckType[] {

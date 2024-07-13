@@ -12,7 +12,5 @@ export function getPathById(id: string): PathType | null {
 
 export function getPathOfDeck(deckId: string): PathType | null {
   const deck = decks.find((deck) => deck.id === deckId);
-  return deck
-    ? paths.find((path) => path.id === deck.pathId) || null
-    : null;
+  return deck ? paths.find((path) => path.id === deck.pathId) || null : null;
 }
