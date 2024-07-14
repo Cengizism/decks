@@ -1,16 +1,22 @@
 import { PathType } from '@/interfaces/types';
-
 import { decks, paths } from './data';
 
 export function getAllPaths(): PathType[] {
-  return paths;
+  const pathsWithDecks = paths.filter((path) =>
+    decks.some((deck) => deck.pathId === path.id)
+  );
+  return pathsWithDecks;
 }
 
 export function getPathById(id: string): PathType | null {
-  return paths.find((path) => path.id === id) || null;
+  const path = paths.find((path) => path.id === id);
+  return path && decks.some((deck) => deck.pathId === path.id) ? path : null;
 }
 
 export function getPathOfDeck(deckId: string): PathType | null {
   const deck = decks.find((deck) => deck.id === deckId);
-  return deck ? paths.find((path) => path.id === deck.pathId) || null : null;
+  if (deck) {
+    return paths.find((path) => path.id === deck.pathId) || null;
+  }
+  return null;
 }
