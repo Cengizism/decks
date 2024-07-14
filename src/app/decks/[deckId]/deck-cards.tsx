@@ -60,8 +60,8 @@ const DeckCards: React.FC<DeckCardsProps> = ({ cards }) => {
         <Card
           key={card.id}
           card={card}
-          actionForLikes={() => updateCardStatus(card.id, 'like')}
-          actionForBookmarks={() => updateCardStatus(card.id, 'bookmark')}
+          actionForLiking={() => updateCardStatus(card.id, 'like')}
+          actionForBookmarking={() => updateCardStatus(card.id, 'bookmark')}
         />
       ))}
     </div>

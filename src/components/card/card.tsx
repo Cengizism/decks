@@ -41,14 +41,14 @@ const useInlineStyles = makeStyles({
 
 interface CardComponentProps {
   card: CardType;
-  actionForLikes: () => void;
-  actionForBookmarks: () => void;
+  actionForLiking: () => void;
+  actionForBookmarking: () => void;
 }
 
 const CardComponent: React.FC<CardComponentProps> = ({
   card,
-  actionForLikes,
-  actionForBookmarks,
+  actionForLiking,
+  actionForBookmarking,
 }) => {
   const inlineStyles = useInlineStyles();
   const { getParent } = useNodes();
@@ -88,7 +88,7 @@ const CardComponent: React.FC<CardComponentProps> = ({
               className={inlineStyles.actionButton}
               size='large'
               icon={card.isLiked ? <HeartFilled /> : <HeartRegular />}
-              onClick={actionForLikes}
+              onClick={actionForLiking}
             />
             <Button
               appearance='transparent'
@@ -97,7 +97,7 @@ const CardComponent: React.FC<CardComponentProps> = ({
               icon={
                 card.isBookmarked ? <BookmarkFilled /> : <BookmarkRegular />
               }
-              onClick={actionForBookmarks}
+              onClick={actionForBookmarking}
             />
           </div>
         }
