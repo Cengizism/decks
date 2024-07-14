@@ -59,7 +59,6 @@ const Navigation: React.FC<NavigationProps> = ({
   useEffect(() => {
     if (pathname?.startsWith('/cards')) {
       setSelectedValue(pathname);
-      console.log(pathname);
     } else {
       const matchedPath = paths.find((path) => pathname?.startsWith(path));
       if (matchedPath) {
