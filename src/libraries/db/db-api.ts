@@ -1,52 +1,4 @@
-import sql from 'better-sqlite3';
-
-const db = new sql('data.db');
-
-function initDb() {
-  db.exec(`
-    CREATE TABLE IF NOT EXISTS users (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      email TEXT UNIQUE
-    )
-  `);
-
-  db.exec(`
-    CREATE TABLE IF NOT EXISTS cards (
-      id INTEGER PRIMARY KEY AUTOINCREMENT, 
-      card TEXT NOT NULL,
-      deck TEXT NOT NULL
-    )
-  `);
-
-  db.exec(`
-    CREATE TABLE IF NOT EXISTS likes (
-      user_id INTEGER, 
-      card_id INTEGER, 
-      PRIMARY KEY(user_id, card_id),
-      FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE, 
-      FOREIGN KEY(card_id) REFERENCES cards(id) ON DELETE CASCADE
-    )
-  `);
-
-  const stmt = db.prepare('SELECT COUNT(*) AS count FROM users');
-  const userCount = (stmt.get() as { count: number }).count;
-
-  if (userCount === 0) {
-    const insertStmt = db.prepare(`
-      INSERT INTO users (email)
-      VALUES (?)
-    `);
-
-    const transaction = db.transaction(() => {
-      insertStmt.run('john@example.com');
-      insertStmt.run('max@example.com');
-    });
-
-    transaction();
-  }
-}
-
-initDb();
+import { db } from './db';
 
 export function findCardIdInDb(card: string, deck: string): number | null {
   const stmt = db.prepare('SELECT id FROM cards WHERE card = ? AND deck = ?');
@@ -55,13 +7,17 @@ export function findCardIdInDb(card: string, deck: string): number | null {
 }
 
 export function getCardLikes(cardIdInDb: number): number {
-  const stmt = db.prepare('SELECT COUNT(*) AS count FROM likes WHERE card_id = ?');
+  const stmt = db.prepare(
+    'SELECT COUNT(*) AS count FROM likes WHERE card_id = ?'
+  );
   const result = stmt.get(cardIdInDb) as { count: number };
   return result.count;
 }
 
 export function isCardLikedByUser(cardIdInDb: number, userId: number): boolean {
-  const stmt = db.prepare('SELECT COUNT(*) AS count FROM likes WHERE card_id = ? AND user_id = ?');
+  const stmt = db.prepare(
+    'SELECT COUNT(*) AS count FROM likes WHERE card_id = ? AND user_id = ?'
+  );
   const result = stmt.get(cardIdInDb, userId) as { count: number };
   return result.count > 0;
 }
@@ -97,12 +53,17 @@ export function storeCard(card: string, deck: string): boolean {
 }
 
 export function cardExists(card: string, deck: string): boolean {
-  const stmt = db.prepare('SELECT COUNT(*) AS count FROM cards WHERE card = ? AND deck = ?');
+  const stmt = db.prepare(
+    'SELECT COUNT(*) AS count FROM cards WHERE card = ? AND deck = ?'
+  );
   const result = stmt.get(card, deck) as { count: number };
   return result.count > 0;
 }
 
-export async function updateCardLikeStatus(cardId: number, userId: number): Promise<boolean> {
+export async function updateCardLikeStatus(
+  cardId: number,
+  userId: number
+): Promise<boolean> {
   return new Promise((resolve, reject) => {
     try {
       const checkStmt = db.prepare(`
@@ -110,7 +71,8 @@ export async function updateCardLikeStatus(cardId: number, userId: number): Prom
         FROM likes
         WHERE user_id = ? AND card_id = ?
       `);
-      const isLiked = (checkStmt.get(userId, cardId) as { count: number }).count > 0;
+      const isLiked =
+        (checkStmt.get(userId, cardId) as { count: number }).count > 0;
 
       if (isLiked) {
         const deleteStmt = db.prepare(`
@@ -133,4 +95,3 @@ export async function updateCardLikeStatus(cardId: number, userId: number): Prom
     }
   });
 }
-

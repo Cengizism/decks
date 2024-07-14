@@ -3,8 +3,8 @@ import fs from 'fs';
 import matter from 'gray-matter';
 import { join } from 'path';
 
+import { findCardIdInDb, getCardLikes, isCardLikedByUser } from './db/';
 import { findDeckByCardId } from './decks';
-import { findCardIdInDb, getCardLikes, isCardLikedByUser } from './db';
 
 const contentDirectory = join(process.cwd(), 'content');
 

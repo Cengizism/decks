@@ -1,7 +1,7 @@
 'use server';
 
 import { findDeckByCardId } from '@/libraries';
-import { findCardIdInDb, updateCardLikeStatus } from '@/libraries/db';
+import { findCardIdInDb, updateCardLikeStatus } from '@/libraries/db/';
 import { revalidatePath } from 'next/cache';
 
 export async function toggleLikeStatusOfCard(cardId: string): Promise<void> {

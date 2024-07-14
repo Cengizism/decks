@@ -1,6 +1,7 @@
 import fs from 'fs';
 import { join } from 'path';
-import { storeCard, cardExists } from './db';
+
+import { cardExists, storeCard } from './db/';
 
 const contentDirectory = join(process.cwd(), 'content');
 
