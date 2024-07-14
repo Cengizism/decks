@@ -1,12 +1,11 @@
 import BreadCrumps from '@/components/bread-crumps/bread-crumps';
-import Card from '@/components/card/card';
 import PageHeader from '@/components/page-header/page-header';
 import { HOME_OG_IMAGE_URL, TITLE } from '@/constants';
 import { getCardsOfDeck, getDeckById, indexDeckIds } from '@/libraries/';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
-import styles from '../../page.module.css';
+import DeckCards from './deck-cards';
 
 interface Params {
   params: {
@@ -31,11 +30,7 @@ export default function DeckPage({ params }: Params) {
       <PageHeader title={deck.title} subTitle={deck.description} />
 
       {cards.length > 0 ? (
-        <div className={styles.grid}>
-          {cards.map((card) => (
-            <Card key={card.id} card={card} />
-          ))}
-        </div>
+        <DeckCards cards={cards} />
       ) : (
         <div>No cards found for this deck.</div>
       )}

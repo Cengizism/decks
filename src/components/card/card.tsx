@@ -29,7 +29,7 @@ import Cover from '../cover/cover';
 import styles from './card.module.css';
 
 const BookmarkIcons = bundleIcon(BookmarkFilled, BookmarkRegular);
-const HeartIcons = bundleIcon(HeartFilled, HeartRegular);
+// const HeartIcons = bundleIcon(HeartFilled, HeartRegular);
 
 const useInlineStyles = makeStyles({
   caption: {
@@ -45,9 +45,10 @@ const useInlineStyles = makeStyles({
 
 interface CardComponentProps {
   card: CardType;
+  action: (id: string) => void; // Assuming card.id is a string
 }
 
-const CardComponent: React.FC<CardComponentProps> = ({ card }) => {
+const CardComponent: React.FC<CardComponentProps> = ({ card, action }) => {
   const inlineStyles = useInlineStyles();
   const { getParent } = useNodes();
 
@@ -82,18 +83,24 @@ const CardComponent: React.FC<CardComponentProps> = ({ card }) => {
         }
         action={
           <div className={styles.action}>
-            <Button
+            {/* <Button
               appearance='transparent'
               className={inlineStyles.actionButton}
               size='large'
               icon={<HeartIcons />}
-            />
-            <Button
-              appearance='transparent'
-              className={inlineStyles.actionButton}
-              size='large'
-              icon={<BookmarkIcons />}
-            />
+            /> */}
+            <form
+              action={action.bind(null, card.id)}
+              // className={post.isLiked ? 'liked' : ''}
+            >
+              <Button
+                appearance='transparent'
+                className={inlineStyles.actionButton}
+                size='large'
+                icon={<BookmarkIcons />}
+                type='submit'
+              />
+            </form>
           </div>
         }
       />
