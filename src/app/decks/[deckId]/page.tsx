@@ -21,6 +21,7 @@ export default function DeckPage({ params }: Params) {
     return notFound();
   }
 
+  // Customize this to give meta data back only
   const cards = getCardsOfDeck(deck);
 
   return (

@@ -1,6 +1,6 @@
 'use client';
 
-import { togglePostLikeStatus } from '@/actions/card-actions';
+import { toggleLikeStatusOfCard } from '@/actions/card-actions';
 import Card from '@/components/card/card';
 import { CardType } from '@/interfaces/types';
 import React, { useOptimistic } from 'react';
@@ -12,41 +12,36 @@ interface DeckCardsProps {
 }
 
 const DeckCards: React.FC<DeckCardsProps> = ({ cards }) => {
-  const [optimisticPosts, updateOptimisticPosts] = useOptimistic(
+  const [optimisticCards, updateOptimisticCards] = useOptimistic(
     cards,
-    (prevPosts, updatedPostId) => {
-      const updatedPostIndex = prevPosts.findIndex(
-        (post: any) => post.id === updatedPostId
+    (prevCards, updatedCardId) => {
+      const updatedCardIndex = prevCards.findIndex(
+        (card: any) => card.id === updatedCardId
       );
 
-      if (updatedPostIndex === -1) {
-        return prevPosts;
+      if (updatedCardIndex === -1) {
+        return prevCards;
       }
 
-      const updatedPost = { ...prevPosts[updatedPostIndex] };
+      const updatedCard = { ...prevCards[updatedCardIndex] };
 
-      // updatedPost.likes = updatedPost.likes + (updatedPost.isLiked ? -1 : 1);
-      // updatedPost.isLiked = !updatedPost.isLiked;
+      updatedCard.likes = updatedCard.likes + (updatedCard.isLiked ? -1 : 1);
+      updatedCard.isLiked = !updatedCard.isLiked;
 
-      const newPosts = [...prevPosts];
-      newPosts[updatedPostIndex] = updatedPost;
+      const newCards = [...prevCards];
+      newCards[updatedCardIndex] = updatedCard;
 
-      console.log('newPosts', newPosts);
-      console.log('prevPosts', prevPosts);
-      console.log('updatedPostId', updatedPostId);
-      console.log('updatedPost', updatedPost);
-
-      return newPosts;
+      return newCards;
     }
   );
 
-  if (!optimisticPosts || optimisticPosts.length === 0) {
+  if (!optimisticCards || optimisticCards.length === 0) {
     return <p>There are no posts yet. Maybe start sharing some?</p>;
   }
 
   async function updatePost(cardId: any) {
-    updateOptimisticPosts(cardId);
-    await togglePostLikeStatus(cardId);
+    updateOptimisticCards(cardId);
+    await toggleLikeStatusOfCard(cardId);
   }
 
   return (

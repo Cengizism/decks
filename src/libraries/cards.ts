@@ -4,6 +4,7 @@ import matter from 'gray-matter';
 import { join } from 'path';
 
 import { findDeckByCardId } from './decks';
+import { findCardIdInDb, getCardLikes, isCardLikedByUser } from './db';
 
 const contentDirectory = join(process.cwd(), 'content');
 
@@ -37,10 +38,21 @@ export function getCardById(cardId: string): CardType | null {
       }
     );
 
+    const dbCardId = findCardIdInDb(cardIdWithoutExtension, deck.id);
+    if (dbCardId === null) {
+      console.error('Card not found in database for cardId:', cardId);
+      return null;
+    }
+
+    const likes = getCardLikes(dbCardId);
+    const isLiked = isCardLikedByUser(dbCardId, 2);
+
     return {
       ...data,
       id: cardIdWithoutExtension,
       content: processedContent,
+      likes,
+      isLiked,
     } as CardType;
   } catch (error) {
     console.error(`Error reading file at path ${fullPath}:`, error);

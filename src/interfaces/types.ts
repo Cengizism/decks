@@ -5,6 +5,8 @@ export interface CardType {
   coverImage: string;
   content: string;
   lastModified: Date;
+  likes?: number;
+  isLiked?: boolean;
 }
 
 export interface DeckType {

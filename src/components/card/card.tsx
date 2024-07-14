@@ -29,7 +29,6 @@ import Cover from '../cover/cover';
 import styles from './card.module.css';
 
 const BookmarkIcons = bundleIcon(BookmarkFilled, BookmarkRegular);
-// const HeartIcons = bundleIcon(HeartFilled, HeartRegular);
 
 const useInlineStyles = makeStyles({
   caption: {
@@ -45,7 +44,7 @@ const useInlineStyles = makeStyles({
 
 interface CardComponentProps {
   card: CardType;
-  action: (id: string) => void; // Assuming card.id is a string
+  action: (id: string) => void;
 }
 
 const CardComponent: React.FC<CardComponentProps> = ({ card, action }) => {
@@ -83,22 +82,19 @@ const CardComponent: React.FC<CardComponentProps> = ({ card, action }) => {
         }
         action={
           <div className={styles.action}>
-            {/* <Button
+            <Button
               appearance='transparent'
               className={inlineStyles.actionButton}
               size='large'
-              icon={<HeartIcons />}
-            /> */}
-            <form
-              action={action.bind(null, card.id)}
-              // className={post.isLiked ? 'liked' : ''}
-            >
+              icon={card.isLiked ? <HeartFilled /> : <HeartRegular />}
+              onClick={() => action(card.id)}
+            />
+            <form action={action.bind(null, card.id)}>
               <Button
                 appearance='transparent'
-                className={inlineStyles.actionButton}
+                className={mergeClasses(inlineStyles.actionButton)}
                 size='large'
                 icon={<BookmarkIcons />}
-                type='submit'
               />
             </form>
           </div>
@@ -114,6 +110,13 @@ const CardComponent: React.FC<CardComponentProps> = ({ card, action }) => {
           <Button>Read more</Button>
         </Link>
       </CardFooter>
+
+      <footer className={mergeClasses(styles.flex, styles.stats)}>
+        <div className={styles.flex}>
+          <HeartRegular />
+          <Body1>{card.likes}</Body1>
+        </div>
+      </footer>
     </Card>
   );
 };

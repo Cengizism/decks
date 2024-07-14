@@ -48,6 +48,24 @@ function initDb() {
 
 initDb();
 
+export function findCardIdInDb(card: string, deck: string): number | null {
+  const stmt = db.prepare('SELECT id FROM cards WHERE card = ? AND deck = ?');
+  const result = stmt.get(card, deck) as { id: number } | undefined;
+  return result ? result.id : null;
+}
+
+export function getCardLikes(cardIdInDb: number): number {
+  const stmt = db.prepare('SELECT COUNT(*) AS count FROM likes WHERE card_id = ?');
+  const result = stmt.get(cardIdInDb) as { count: number };
+  return result.count;
+}
+
+export function isCardLikedByUser(cardIdInDb: number, userId: number): boolean {
+  const stmt = db.prepare('SELECT COUNT(*) AS count FROM likes WHERE card_id = ? AND user_id = ?');
+  const result = stmt.get(cardIdInDb, userId) as { count: number };
+  return result.count > 0;
+}
+
 export function getCardsFromDb(maxNumber: number): any {
   const limitClause = maxNumber ? 'LIMIT ?' : '';
 
@@ -84,7 +102,7 @@ export function cardExists(card: string, deck: string): boolean {
   return result.count > 0;
 }
 
-export function updatePostLikeStatus(cardId: number, userId: number): any {
+export function updateCardLikeStatus(cardId: number, userId: number): any {
   try {
     const checkStmt = db.prepare(`
       SELECT COUNT(*) AS count
