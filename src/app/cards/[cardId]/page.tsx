@@ -3,7 +3,7 @@ import Cover from '@/components/cover/cover';
 import PageHeader from '@/components/page-header/page-header';
 import { TITLE } from '@/constants';
 import { findDeckByCardId, getCardById, indexCardIds } from '@/libraries/';
-import markdownToHtml from '@/libraries/markdown-to-html';
+import markdownToHtml from '@/libraries/utilities/markdown-to-html';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
