@@ -21,8 +21,8 @@ const Cover: React.FC<CoverProps> = ({ title, src, variant = 'large', id }) => {
       <Image
         src={src}
         alt={`Cover Image for ${title}`}
-        layout='fill'
-        objectFit='cover'
+        fill
+        sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
         quality={80}
         priority
       />

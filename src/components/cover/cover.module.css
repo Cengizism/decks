@@ -3,6 +3,10 @@
   width: 100%;
 }
 
+.cover img {
+  object-fit: cover;
+}
+
 .cover.small {
   height: 260px !important;
 }
