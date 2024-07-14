@@ -48,17 +48,15 @@ const PathComponent: React.FC<PathComponentProps> = ({ path }) => {
         )}
       </CardFooter>
 
-      <footer className={mergeClasses(styles.flex, styles.stats)}>
-        <div className={styles.flex}>
-          {deckCount > 0 ? (
-            <>
-              <BookStar20Regular />
-              <Body1>{deckCount} deck(s)</Body1>
-            </>
-          ) : (
-            <Body1 italic>No decks available</Body1>
-          )}
-        </div>
+      <footer className={styles.flex}>
+        {deckCount > 0 ? (
+          <>
+            <BookStar20Regular />
+            <Body1>{deckCount} deck(s)</Body1>
+          </>
+        ) : (
+          <Body1 italic>No decks available</Body1>
+        )}
       </footer>
     </Card>
   );

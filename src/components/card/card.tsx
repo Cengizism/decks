@@ -110,11 +110,9 @@ const CardComponent: React.FC<CardComponentProps> = ({ card, action }) => {
         </Link>
       </CardFooter>
 
-      <footer className={mergeClasses(styles.flex, styles.stats)}>
-        <div className={styles.flex}>
-          <HeartRegular />
-          <Body1>{card.likes}</Body1>
-        </div>
+      <footer className={styles.flex}>
+        <HeartRegular />
+        <Body1>{card.likes}</Body1>
       </footer>
     </Card>
   );

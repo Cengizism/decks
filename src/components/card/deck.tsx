@@ -110,17 +110,15 @@ const DeckComponent: React.FC<DeckComponentProps> = ({ deck }) => {
         </Link>
       </CardFooter>
 
-      <footer className={mergeClasses(styles.flex, styles.stats)}>
-        <div className={styles.flex}>
-          {cardCount > 0 ? (
-            <>
-              <BookStar20Regular />
-              <Body1>{cardCount} card(s)</Body1>
-            </>
-          ) : (
-            <Body1 italic>No cards available</Body1>
-          )}
-        </div>
+      <footer className={styles.flex}>
+        {cardCount > 0 ? (
+          <>
+            <BookStar20Regular />
+            <Body1>{cardCount} card(s)</Body1>
+          </>
+        ) : (
+          <Body1 italic>No cards available</Body1>
+        )}
       </footer>
     </Card>
   );
