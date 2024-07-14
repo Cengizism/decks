@@ -3,6 +3,7 @@
 import { toggleLikeStatusOfCard } from '@/actions/card-actions';
 import Card from '@/components/card/card';
 import { CardType } from '@/interfaces/types';
+import { startTransition } from 'react';
 import React, { useOptimistic } from 'react';
 
 import styles from '../../page.module.css';
@@ -41,7 +42,9 @@ const DeckCards: React.FC<DeckCardsProps> = ({ cards }) => {
   }
 
   async function updatePost(cardId: string) {
-    updateOptimisticCards(cardId);
+    startTransition(() => {
+      updateOptimisticCards(cardId);
+    });
     await toggleLikeStatusOfCard(cardId);
   }
 
