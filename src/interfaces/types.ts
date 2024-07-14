@@ -7,6 +7,7 @@ export interface CardType {
   lastModified: Date;
   likes?: number;
   isLiked?: boolean;
+  isBookmarked?: boolean;
 }
 
 export interface DeckType {

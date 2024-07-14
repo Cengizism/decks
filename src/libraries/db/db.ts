@@ -29,6 +29,16 @@ export function initDb() {
     )
   `);
 
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS bookmarks (
+      user_id INTEGER, 
+      card_id INTEGER, 
+      PRIMARY KEY(user_id, card_id),
+      FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE, 
+      FOREIGN KEY(card_id) REFERENCES cards(id) ON DELETE CASCADE
+    )
+  `);
+
   const stmt = db.prepare('SELECT COUNT(*) AS count FROM users');
   const userCount = (stmt.get() as { count: number }).count;
 

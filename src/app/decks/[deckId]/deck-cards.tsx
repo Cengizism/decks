@@ -1,6 +1,9 @@
 'use client';
 
-import { toggleLikeStatusOfCard } from '@/actions/card-actions';
+import {
+  toggleBookmarkStatusOfCard,
+  toggleLikeStatusOfCard,
+} from '@/actions/card-actions';
 import Card from '@/components/card/card';
 import { CardType } from '@/interfaces/types';
 import { startTransition } from 'react';
@@ -13,9 +16,8 @@ interface DeckCardsProps {
 }
 
 const DeckCards: React.FC<DeckCardsProps> = ({ cards }) => {
-  const [optimisticCards, updateOptimisticCards] = useOptimistic(
-    cards,
-    (prevCards, updatedCardId: string) => {
+  const [optimisticCardsForLikes, updateOptimisticCardsForLikes] =
+    useOptimistic(cards, (prevCards, updatedCardId: string) => {
       const updatedCardIndex = prevCards.findIndex(
         (card) => card.id === updatedCardId
       );
@@ -34,24 +36,62 @@ const DeckCards: React.FC<DeckCardsProps> = ({ cards }) => {
       newCards[updatedCardIndex] = updatedCard;
 
       return newCards;
-    }
-  );
+    });
 
-  if (!optimisticCards || optimisticCards.length === 0) {
-    return <p>There are no posts yet. Maybe start sharing some?</p>;
+  const [optimisticCardsForBookmarks, updateOptimisticCardsForBookmarks] =
+    useOptimistic(cards, (prevCards, updatedCardId: string) => {
+      const updatedCardIndex = prevCards.findIndex(
+        (card) => card.id === updatedCardId
+      );
+
+      if (updatedCardIndex === -1) {
+        return prevCards;
+      }
+
+      const updatedCard = { ...prevCards[updatedCardIndex] };
+
+      updatedCard.isBookmarked = !updatedCard.isBookmarked;
+
+      const newCards = [...prevCards];
+      newCards[updatedCardIndex] = updatedCard;
+
+      return newCards;
+    });
+
+  if (!optimisticCardsForLikes || optimisticCardsForLikes.length === 0) {
+    return <p>There are no cards yet. Maybe start sharing some?</p>;
   }
 
-  async function updatePost(cardId: string) {
+  if (
+    !optimisticCardsForBookmarks ||
+    optimisticCardsForBookmarks.length === 0
+  ) {
+    return <p>There are no cards yet. Maybe start sharing some?</p>;
+  }
+
+  async function updateCardForLikes(cardId: string) {
     startTransition(() => {
-      updateOptimisticCards(cardId);
+      updateOptimisticCardsForLikes(cardId);
     });
     await toggleLikeStatusOfCard(cardId);
   }
 
+  async function updateCardForBookmarks(cardId: string) {
+    startTransition(() => {
+      updateOptimisticCardsForBookmarks(cardId);
+    });
+    await toggleBookmarkStatusOfCard(cardId);
+  }
+
   return (
     <div className={styles.grid}>
-      {optimisticCards.map((card) => (
-        <Card key={card.id} card={card} action={updatePost} />
+      {optimisticCardsForLikes.map((card) => (
+        <Card
+          key={card.id}
+          card={card}
+          actionForLikes={updateCardForLikes}
+          actionForBookmarks={updateCardForBookmarks}
+        />
       ))}
     </div>
   );

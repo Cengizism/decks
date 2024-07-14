@@ -22,6 +22,14 @@ export function isCardLikedByUser(cardIdInDb: number, userId: number): boolean {
   return result.count > 0;
 }
 
+export function isCardBookmarkedByUser(cardIdInDb: number, userId: number): boolean {
+  const stmt = db.prepare(
+    'SELECT COUNT(*) AS count FROM bookmarks WHERE card_id = ? AND user_id = ?'
+  );
+  const result = stmt.get(cardIdInDb, userId) as { count: number };
+  return result.count > 0;
+}
+
 export function getCardsFromDb(maxNumber: number): any[] {
   const limitClause = maxNumber ? 'LIMIT ?' : '';
 
@@ -91,6 +99,43 @@ export async function updateCardLikeStatus(
       }
     } catch (error) {
       console.error('Error updating like status:', error);
+      reject(error);
+    }
+  });
+}
+
+
+export async function updateCardBookmarkStatus(
+  cardId: number,
+  userId: number
+): Promise<boolean> {
+  return new Promise((resolve, reject) => {
+    try {
+      const checkStmt = db.prepare(`
+        SELECT COUNT(*) AS count
+        FROM bookmarks
+        WHERE user_id = ? AND card_id = ?
+      `);
+      const isBookmarked =
+        (checkStmt.get(userId, cardId) as { count: number }).count > 0;
+
+      if (isBookmarked) {
+        const deleteStmt = db.prepare(`
+          DELETE FROM bookmarks
+          WHERE user_id = ? AND card_id = ?
+        `);
+        const result = deleteStmt.run(userId, cardId);
+        resolve(result.changes > 0);
+      } else {
+        const insertStmt = db.prepare(`
+          INSERT INTO bookmarks (user_id, card_id)
+          VALUES (?, ?)
+        `);
+        const result = insertStmt.run(userId, cardId);
+        resolve(result.changes > 0);
+      }
+    } catch (error) {
+      console.error('Error updating bookmark status:', error);
       reject(error);
     }
   });

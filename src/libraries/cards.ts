@@ -3,7 +3,7 @@ import fs from 'fs';
 import matter from 'gray-matter';
 import { join } from 'path';
 
-import { findCardIdInDb, getCardLikes, isCardLikedByUser } from './db/';
+import { findCardIdInDb, getCardLikes, isCardBookmarkedByUser, isCardLikedByUser } from './db/';
 import { findDeckByCardId } from './decks';
 
 const contentDirectory = join(process.cwd(), 'content');
@@ -46,6 +46,7 @@ export function getCardById(cardId: string): CardType | null {
 
     const likes = getCardLikes(dbCardId);
     const isLiked = isCardLikedByUser(dbCardId, 2);
+    const isBookmarked = isCardBookmarkedByUser(dbCardId, 2);
 
     return {
       ...data,
@@ -53,6 +54,7 @@ export function getCardById(cardId: string): CardType | null {
       content: processedContent,
       likes,
       isLiked,
+      isBookmarked
     } as CardType;
   } catch (error) {
     console.error(`Error reading file at path ${fullPath}:`, error);

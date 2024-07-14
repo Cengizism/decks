@@ -20,15 +20,12 @@ import {
   BookmarkRegular,
   HeartFilled,
   HeartRegular,
-  bundleIcon,
 } from '@fluentui/react-icons';
 import Link from 'next/link';
 import React, { useMemo } from 'react';
 
 import Cover from '../cover/cover';
 import styles from './card.module.css';
-
-const BookmarkIcons = bundleIcon(BookmarkFilled, BookmarkRegular);
 
 const useInlineStyles = makeStyles({
   caption: {
@@ -44,10 +41,15 @@ const useInlineStyles = makeStyles({
 
 interface CardComponentProps {
   card: CardType;
-  action: (id: string) => void;
+  actionForLikes: (id: string) => void;
+  actionForBookmarks: (id: string) => void;
 }
 
-const CardComponent: React.FC<CardComponentProps> = ({ card, action }) => {
+const CardComponent: React.FC<CardComponentProps> = ({
+  card,
+  actionForLikes,
+  actionForBookmarks,
+}) => {
   const inlineStyles = useInlineStyles();
   const { getParent } = useNodes();
 
@@ -87,14 +89,16 @@ const CardComponent: React.FC<CardComponentProps> = ({ card, action }) => {
               className={inlineStyles.actionButton}
               size='large'
               icon={card.isLiked ? <HeartFilled /> : <HeartRegular />}
-              onClick={() => action(card.id)}
+              onClick={() => actionForLikes(card.id)}
             />
             <Button
               appearance='transparent'
               className={mergeClasses(inlineStyles.actionButton)}
               size='large'
-              icon={<BookmarkIcons />}
-              onClick={() => action(card.id)} // Assuming same action for bookmark
+              icon={
+                card.isBookmarked ? <BookmarkFilled /> : <BookmarkRegular />
+              }
+              onClick={() => actionForBookmarks(card.id)}
             />
           </div>
         }
