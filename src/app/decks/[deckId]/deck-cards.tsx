@@ -16,81 +16,52 @@ interface DeckCardsProps {
 }
 
 const DeckCards: React.FC<DeckCardsProps> = ({ cards }) => {
-  const [optimisticCardsForLikes, updateOptimisticCardsForLikes] =
-    useOptimistic(cards, (prevCards, updatedCardId: string) => {
+  const [optimisticCards, updateOptimisticCards] = useOptimistic(
+    cards,
+    (prevCards, updatedCard: { id: string; type: 'like' | 'bookmark' }) => {
       const updatedCardIndex = prevCards.findIndex(
-        (card) => card.id === updatedCardId
+        (card) => card.id === updatedCard.id
       );
+      if (updatedCardIndex === -1) return prevCards;
 
-      if (updatedCardIndex === -1) {
-        return prevCards;
+      const updatedCardData = { ...prevCards[updatedCardIndex] };
+      if (updatedCard.type === 'like') {
+        updatedCardData.likes =
+          (updatedCardData.likes ?? 0) + (updatedCardData.isLiked ? -1 : 1);
+        updatedCardData.isLiked = !updatedCardData.isLiked;
+      } else {
+        updatedCardData.isBookmarked = !updatedCardData.isBookmarked;
       }
 
-      const updatedCard = { ...prevCards[updatedCardIndex] };
-
-      updatedCard.likes =
-        (updatedCard.likes ?? 0) + (updatedCard.isLiked ? -1 : 1);
-      updatedCard.isLiked = !updatedCard.isLiked;
-
       const newCards = [...prevCards];
-      newCards[updatedCardIndex] = updatedCard;
-
+      newCards[updatedCardIndex] = updatedCardData;
       return newCards;
-    });
+    }
+  );
 
-  const [optimisticCardsForBookmarks, updateOptimisticCardsForBookmarks] =
-    useOptimistic(cards, (prevCards, updatedCardId: string) => {
-      const updatedCardIndex = prevCards.findIndex(
-        (card) => card.id === updatedCardId
-      );
-
-      if (updatedCardIndex === -1) {
-        return prevCards;
-      }
-
-      const updatedCard = { ...prevCards[updatedCardIndex] };
-
-      updatedCard.isBookmarked = !updatedCard.isBookmarked;
-
-      const newCards = [...prevCards];
-      newCards[updatedCardIndex] = updatedCard;
-
-      return newCards;
-    });
-
-  if (!optimisticCardsForLikes || optimisticCardsForLikes.length === 0) {
+  if (!optimisticCards || optimisticCards.length === 0) {
     return <p>There are no cards yet. Maybe start sharing some?</p>;
   }
 
-  if (
-    !optimisticCardsForBookmarks ||
-    optimisticCardsForBookmarks.length === 0
-  ) {
-    return <p>There are no cards yet. Maybe start sharing some?</p>;
-  }
-
-  async function updateCardForLikes(cardId: string) {
+  async function updateCardStatus(cardId: string, type: 'like' | 'bookmark') {
     startTransition(() => {
-      updateOptimisticCardsForLikes(cardId);
+      updateOptimisticCards({ id: cardId, type });
     });
-    await toggleLikeStatusOfCard(cardId);
-  }
-
-  async function updateCardForBookmarks(cardId: string) {
-    startTransition(() => {
-      updateOptimisticCardsForBookmarks(cardId);
-    });
-    await toggleBookmarkStatusOfCard(cardId);
+    if (type === 'like') {
+      await toggleLikeStatusOfCard(cardId);
+    } else {
+      await toggleBookmarkStatusOfCard(cardId);
+    }
   }
 
   return (
     <div className={styles.grid}>
-      {optimisticCardsForLikes.map((card) => (
+      {optimisticCards.map((card) => (
         <Card
           key={card.id}
           card={card}
-          actionForLikes={updateCardForLikes}
-          actionForBookmarks={updateCardForBookmarks}
+          actionForLikes={() => updateCardStatus(card.id, 'like')}
+          actionForBookmarks={() => updateCardStatus(card.id, 'bookmark')}
         />
       ))}
     </div>

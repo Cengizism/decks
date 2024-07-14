@@ -1,6 +1,5 @@
 import sql from 'better-sqlite3';
 
-// Initialize the database connection
 export const db = new sql('data.db');
 
 export function initDb() {

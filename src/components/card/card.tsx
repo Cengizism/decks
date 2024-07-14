@@ -41,8 +41,8 @@ const useInlineStyles = makeStyles({
 
 interface CardComponentProps {
   card: CardType;
-  actionForLikes: (id: string) => void;
-  actionForBookmarks: (id: string) => void;
+  actionForLikes: () => void;
+  actionForBookmarks: () => void;
 }
 
 const CardComponent: React.FC<CardComponentProps> = ({
@@ -52,7 +52,6 @@ const CardComponent: React.FC<CardComponentProps> = ({
 }) => {
   const inlineStyles = useInlineStyles();
   const { getParent } = useNodes();
-
   const deck = useMemo(() => getParent(card), [card, getParent]);
 
   return (
@@ -89,7 +88,7 @@ const CardComponent: React.FC<CardComponentProps> = ({
               className={inlineStyles.actionButton}
               size='large'
               icon={card.isLiked ? <HeartFilled /> : <HeartRegular />}
-              onClick={() => actionForLikes(card.id)}
+              onClick={actionForLikes}
             />
             <Button
               appearance='transparent'
@@ -98,7 +97,7 @@ const CardComponent: React.FC<CardComponentProps> = ({
               icon={
                 card.isBookmarked ? <BookmarkFilled /> : <BookmarkRegular />
               }
-              onClick={() => actionForBookmarks(card.id)}
+              onClick={actionForBookmarks}
             />
           </div>
         }
