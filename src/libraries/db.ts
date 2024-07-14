@@ -66,7 +66,7 @@ export function isCardLikedByUser(cardIdInDb: number, userId: number): boolean {
   return result.count > 0;
 }
 
-export function getCardsFromDb(maxNumber: number): any {
+export function getCardsFromDb(maxNumber: number): any[] {
   const limitClause = maxNumber ? 'LIMIT ?' : '';
 
   const stmt = db.prepare(`
@@ -82,7 +82,7 @@ export function getCardsFromDb(maxNumber: number): any {
   return maxNumber ? stmt.all(maxNumber) : stmt.all();
 }
 
-export function storeCard(card: string, deck: string): any {
+export function storeCard(card: string, deck: string): boolean {
   try {
     const stmt = db.prepare(`
       INSERT INTO cards (card, deck)
@@ -102,32 +102,35 @@ export function cardExists(card: string, deck: string): boolean {
   return result.count > 0;
 }
 
-export function updateCardLikeStatus(cardId: number, userId: number): any {
-  try {
-    const checkStmt = db.prepare(`
-      SELECT COUNT(*) AS count
-      FROM likes
-      WHERE user_id = ? AND card_id = ?
-    `);
-    const isLiked = (checkStmt.get(userId, cardId) as { count: number }).count > 0;
-
-    if (isLiked) {
-      const deleteStmt = db.prepare(`
-        DELETE FROM likes
+export async function updateCardLikeStatus(cardId: number, userId: number): Promise<boolean> {
+  return new Promise((resolve, reject) => {
+    try {
+      const checkStmt = db.prepare(`
+        SELECT COUNT(*) AS count
+        FROM likes
         WHERE user_id = ? AND card_id = ?
       `);
-      const result = deleteStmt.run(userId, cardId);
-      return result.changes > 0;
-    } else {
-      const insertStmt = db.prepare(`
-        INSERT INTO likes (user_id, card_id)
-        VALUES (?, ?)
-      `);
-      const result = insertStmt.run(userId, cardId);
-      return result.changes > 0;
+      const isLiked = (checkStmt.get(userId, cardId) as { count: number }).count > 0;
+
+      if (isLiked) {
+        const deleteStmt = db.prepare(`
+          DELETE FROM likes
+          WHERE user_id = ? AND card_id = ?
+        `);
+        const result = deleteStmt.run(userId, cardId);
+        resolve(result.changes > 0);
+      } else {
+        const insertStmt = db.prepare(`
+          INSERT INTO likes (user_id, card_id)
+          VALUES (?, ?)
+        `);
+        const result = insertStmt.run(userId, cardId);
+        resolve(result.changes > 0);
+      }
+    } catch (error) {
+      console.error('Error updating like status:', error);
+      reject(error);
     }
-  } catch (error) {
-    console.error('Error updating like status:', error);
-    return false;
-  }
+  });
 }
+

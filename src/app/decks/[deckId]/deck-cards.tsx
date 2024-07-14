@@ -8,15 +8,15 @@ import React, { useOptimistic } from 'react';
 import styles from '../../page.module.css';
 
 interface DeckCardsProps {
-  cards: any;
+  cards: CardType[];
 }
 
 const DeckCards: React.FC<DeckCardsProps> = ({ cards }) => {
   const [optimisticCards, updateOptimisticCards] = useOptimistic(
     cards,
-    (prevCards, updatedCardId) => {
+    (prevCards, updatedCardId: string) => {
       const updatedCardIndex = prevCards.findIndex(
-        (card: any) => card.id === updatedCardId
+        (card) => card.id === updatedCardId
       );
 
       if (updatedCardIndex === -1) {
@@ -25,7 +25,8 @@ const DeckCards: React.FC<DeckCardsProps> = ({ cards }) => {
 
       const updatedCard = { ...prevCards[updatedCardIndex] };
 
-      updatedCard.likes = updatedCard.likes + (updatedCard.isLiked ? -1 : 1);
+      updatedCard.likes =
+        (updatedCard.likes ?? 0) + (updatedCard.isLiked ? -1 : 1);
       updatedCard.isLiked = !updatedCard.isLiked;
 
       const newCards = [...prevCards];
@@ -39,14 +40,14 @@ const DeckCards: React.FC<DeckCardsProps> = ({ cards }) => {
     return <p>There are no posts yet. Maybe start sharing some?</p>;
   }
 
-  async function updatePost(cardId: any) {
+  async function updatePost(cardId: string) {
     updateOptimisticCards(cardId);
     await toggleLikeStatusOfCard(cardId);
   }
 
   return (
     <div className={styles.grid}>
-      {cards.map((card: CardType) => (
+      {optimisticCards.map((card) => (
         <Card key={card.id} card={card} action={updatePost} />
       ))}
     </div>

@@ -89,14 +89,13 @@ const CardComponent: React.FC<CardComponentProps> = ({ card, action }) => {
               icon={card.isLiked ? <HeartFilled /> : <HeartRegular />}
               onClick={() => action(card.id)}
             />
-            <form action={action.bind(null, card.id)}>
-              <Button
-                appearance='transparent'
-                className={mergeClasses(inlineStyles.actionButton)}
-                size='large'
-                icon={<BookmarkIcons />}
-              />
-            </form>
+            <Button
+              appearance='transparent'
+              className={mergeClasses(inlineStyles.actionButton)}
+              size='large'
+              icon={<BookmarkIcons />}
+              onClick={() => action(card.id)} // Assuming same action for bookmark
+            />
           </div>
         }
       />
