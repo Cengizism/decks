@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import Link from '@/components/link/link';
+import Link from 'next/link';
 import React from 'react';
 
 import styles from './cover.module.css';

@@ -12,16 +12,20 @@ interface LinkProps {
   children: React.ReactNode;
 }
 
-export const LinkComponent: React.FC<LinkProps> = ({
+const LinkComponent: React.FC<LinkProps> = ({
   href,
   className: styleOverrides,
   children,
 }) => {
   return (
-    <Link href={href} className={mergeClasses(styles.link, styleOverrides)} passHref>
-      <FluentLink as='span'>{children}</FluentLink>
+    <Link
+      href={href}
+      className={mergeClasses(styles.link, styleOverrides)}
+      passHref
+    >
+      <FluentLink className={styles.link}>{children}</FluentLink>
     </Link>
   );
 };
 
-export default React.memo(LinkComponent);
+export { LinkComponent };

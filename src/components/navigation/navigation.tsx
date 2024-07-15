@@ -1,8 +1,8 @@
 'use client';
 
-import Link from '@/components/link/link';
 import { PathNode } from '@/interfaces/types';
 import { useStateContext } from '@/providers/state-provider';
+import { Text } from '@fluentui/react-components';
 import {
   Board20Filled,
   Board20Regular,
@@ -28,6 +28,7 @@ import {
   NavSubItem,
   NavSubItemGroup,
 } from '@fluentui/react-nav-preview';
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { useEffect, useMemo, useState } from 'react';
 
@@ -99,11 +100,8 @@ const Navigation: React.FC<NavigationProps> = ({
                 <NavSubItemGroup>
                   {deck.cards.map((card) => (
                     <Link key={card.id} href={`/cards/${card.id}`}>
-                      <NavSubItem
-                        value={`/cards/${card.id}`}
-                        className={styles.left}
-                      >
-                        {card.title}
+                      <NavSubItem value={`/cards/${card.id}`}>
+                        <Text align='start'>{card.title}</Text>
                       </NavSubItem>
                     </Link>
                   ))}

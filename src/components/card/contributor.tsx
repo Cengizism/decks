@@ -1,11 +1,10 @@
 'use client';
 
-import Link from '@/components/link/link';
+import { LinkComponent as Link } from '@/components/link/link';
 import { useDeckUtils } from '@/hooks/use-deck-utils';
 import { ContributorType } from '@/interfaces/types';
 import {
   Body1,
-  Button,
   Card,
   CardFooter,
   CardHeader,
@@ -14,6 +13,7 @@ import {
 import { BookStar20Regular } from '@fluentui/react-icons';
 import React, { useMemo } from 'react';
 
+import CardStats from '../card-stats/card-stats';
 import styles from './card.module.css';
 
 interface ContributorComponentProps {
@@ -40,17 +40,17 @@ const ContributorComponent: React.FC<ContributorComponentProps> = ({
         }
       />
 
-      <Body1 truncate wrap={false} className={styles.text}>
+      <Body1 truncate wrap={false}>
         {contributor.bio}
       </Body1>
 
       <CardFooter>
         <Link href={`/contributors/${contributor.id}`}>
-          <Button appearance='primary'>See profile</Button>
+          <Body1>See profile</Body1>
         </Link>
       </CardFooter>
 
-      <footer className={styles.flex}>
+      <CardStats>
         {deckCount > 0 ? (
           <>
             <BookStar20Regular />
@@ -59,7 +59,7 @@ const ContributorComponent: React.FC<ContributorComponentProps> = ({
         ) : (
           <Body1 italic>No decks available</Body1>
         )}
-      </footer>
+      </CardStats>
     </Card>
   );
 };

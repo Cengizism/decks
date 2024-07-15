@@ -24,7 +24,7 @@ import {
   Person20Regular,
   bundleIcon,
 } from '@fluentui/react-icons';
-import Link from '@/components/link/link';
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { useMemo } from 'react';
 

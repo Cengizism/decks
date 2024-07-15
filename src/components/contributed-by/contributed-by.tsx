@@ -1,34 +1,15 @@
-import Link from '@/components/link/link';
+import { LinkComponent as Link } from '@/components/link/link';
 import { useDeckUtils } from '@/hooks/use-deck-utils';
 import { ContributorType } from '@/interfaces/types';
-import {
-  Caption1,
-  CardHeader,
-  Subtitle2,
-  makeStyles,
-  mergeClasses,
-  tokens,
-} from '@fluentui/react-components';
+import { Body1, CardHeader, Subtitle2 } from '@fluentui/react-components';
 import { PersonCircle32Filled } from '@fluentui/react-icons';
 import React, { useMemo } from 'react';
-
-import styles from './contributed-by.module.css';
-
-const useInlineStyles = makeStyles({
-  caption: {
-    color: tokens.colorNeutralForeground3,
-  },
-  subtleColor: {
-    color: tokens.colorNeutralForeground4,
-  },
-});
 
 interface ContributedByProps {
   contributor: ContributorType | undefined;
 }
 
 const ContributedBy: React.FC<ContributedByProps> = ({ contributor }) => {
-  const inlineStyles = useInlineStyles();
   const { getDeckCountByContributorId } = useDeckUtils();
   const contributionCount = useMemo(
     () => getDeckCountByContributorId(contributor?.id || ''),
@@ -41,19 +22,13 @@ const ContributedBy: React.FC<ContributedByProps> = ({ contributor }) => {
   );
   const contributorLink = useMemo(
     () =>
-      contributor ? (
-        <Caption1
-          className={mergeClasses(styles.caption, inlineStyles.caption)}
-        >
-          {contributionCount} contribution(s)
-        </Caption1>
-      ) : null,
-    [contributor, contributionCount, inlineStyles.caption]
+      contributor ? <Body1>{contributionCount} contribution(s)</Body1> : null,
+    [contributor, contributionCount]
   );
 
   return (
     <CardHeader
-      image={<PersonCircle32Filled className={inlineStyles.subtleColor} />}
+      image={<PersonCircle32Filled />}
       header={
         <Link href={`/contributors/${contributor?.id}`}>
           <Subtitle2>{contributorName}</Subtitle2>

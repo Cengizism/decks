@@ -1,11 +1,10 @@
 'use client';
 
-import Link from '@/components/link/link';
+import { LinkComponent as Link } from '@/components/link/link';
 import { useDeckUtils } from '@/hooks/use-deck-utils';
 import { PathType } from '@/interfaces/types';
 import {
   Body1,
-  Button,
   Card,
   CardFooter,
   CardHeader,
@@ -14,6 +13,7 @@ import {
 import { BookStar20Regular } from '@fluentui/react-icons';
 import React, { useMemo } from 'react';
 
+import CardStats from '../card-stats/card-stats';
 import styles from './card.module.css';
 
 interface PathComponentProps {
@@ -35,19 +35,19 @@ const PathComponent: React.FC<PathComponentProps> = ({ path }) => {
         }
       />
 
-      <Body1 truncate wrap={false} className={styles.text}>
+      <Body1 truncate wrap={false}>
         {path.description}
       </Body1>
 
-      <CardFooter>
-        {deckCount > 0 && (
+      {deckCount > 0 && (
+        <CardFooter>
           <Link href={`/paths/${path.id}`}>
-            <Button appearance='primary'>View decks</Button>
+            <Body1>View decks</Body1>
           </Link>
-        )}
-      </CardFooter>
+        </CardFooter>
+      )}
 
-      <footer className={styles.flex}>
+      <CardStats>
         {deckCount > 0 ? (
           <>
             <BookStar20Regular />
@@ -56,7 +56,7 @@ const PathComponent: React.FC<PathComponentProps> = ({ path }) => {
         ) : (
           <Body1 italic>No decks available</Body1>
         )}
-      </footer>
+      </CardStats>
     </Card>
   );
 };

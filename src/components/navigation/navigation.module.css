@@ -11,10 +11,7 @@
   color: inherit;
 }
 
-.navigation a button:hover {
+.navigation a:hover,
+.navigation button:hover {
   cursor: pointer;
-}
-
-.left {
-  text-align: left;
 }

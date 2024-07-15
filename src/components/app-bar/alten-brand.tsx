@@ -1,6 +1,6 @@
 'use client';
 
-import Link from '@/components/link/link';
+import { LinkComponent as Link } from '@/components/link/link';
 import { TITLE } from '@/constants';
 import { Title1 } from '@fluentui/react-components';
 import Image from 'next/image';

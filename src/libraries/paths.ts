@@ -1,4 +1,5 @@
 import { PathType } from '@/interfaces/types';
+
 import { decks, paths } from './data';
 
 export function getAllPaths(): PathType[] {

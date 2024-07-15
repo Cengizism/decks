@@ -1,20 +1,17 @@
 'use client';
 
-import Link from '@/components/link/link';
+import CardStats from '@/components/card-stats/card-stats';
+import { LinkComponent as Link } from '@/components/link/link';
 import { useNodes } from '@/hooks/use-nodes';
 import { CardType } from '@/interfaces/types';
 import {
   Body1,
   Button,
-  Caption1,
   Card,
   CardFooter,
   CardHeader,
   CardPreview,
   Title3,
-  makeStyles,
-  mergeClasses,
-  tokens,
 } from '@fluentui/react-components';
 import {
   BookmarkFilled,
@@ -27,12 +24,6 @@ import React, { useMemo } from 'react';
 import Cover from '../cover/cover';
 import styles from './card.module.css';
 
-const useInlineStyles = makeStyles({
-  actionButton: {
-    color: tokens.colorNeutralBackground1,
-  },
-});
-
 interface CardComponentProps {
   card: CardType;
   actionForLiking: () => void;
@@ -44,7 +35,6 @@ const CardComponent: React.FC<CardComponentProps> = ({
   actionForLiking,
   actionForBookmarking,
 }) => {
-  const inlineStyles = useInlineStyles();
   const { getParent } = useNodes();
   const deck = useMemo(() => getParent(card), [card, getParent]);
 
@@ -66,28 +56,20 @@ const CardComponent: React.FC<CardComponentProps> = ({
         }
         description={
           <Link href={`/decks/${deck?.id}`}>
-            <Caption1
-              truncate
-              wrap={false}
-              className={styles.caption}
-            >
+            <Body1 truncate wrap={false}>
               {deck?.title}
-            </Caption1>
+            </Body1>
           </Link>
         }
         action={
-          <div className={styles.action}>
+          <div className={styles.actionButtons}>
             <Button
-              appearance='transparent'
-              className={inlineStyles.actionButton}
-              size='large'
+              appearance='secondary'
               icon={card.isLiked ? <HeartFilled /> : <HeartRegular />}
               onClick={actionForLiking}
             />
             <Button
-              appearance='transparent'
-              className={mergeClasses(inlineStyles.actionButton)}
-              size='large'
+              appearance='secondary'
               icon={
                 card.isBookmarked ? <BookmarkFilled /> : <BookmarkRegular />
               }
@@ -97,20 +79,20 @@ const CardComponent: React.FC<CardComponentProps> = ({
         }
       />
 
-      <Body1 truncate wrap={false} className={styles.text}>
+      <Body1 truncate wrap={false}>
         {card.excerpt}
       </Body1>
 
       <CardFooter>
         <Link href={`/cards/${card.id}`}>
-          <Button appearance='primary'>Read more</Button>
+          <Body1>Read more</Body1>
         </Link>
       </CardFooter>
 
-      <footer className={styles.flex}>
+      <CardStats>
         <HeartRegular />
         <Body1>{card.likes}</Body1>
-      </footer>
+      </CardStats>
     </Card>
   );
 };

@@ -1,13 +1,12 @@
 'use client';
 
-import Link from '@/components/link/link';
+import { LinkComponent as FluentLink } from '@/components/link/link';
 import { useDeckUtils } from '@/hooks/use-deck-utils';
 import { useNodes } from '@/hooks/use-nodes';
 import { DeckType } from '@/interfaces/types';
 import {
   Body1,
   Button,
-  Caption1,
   Card,
   CardFooter,
   CardHeader,
@@ -23,9 +22,11 @@ import {
   BookmarkMultiple24Regular,
   bundleIcon,
 } from '@fluentui/react-icons';
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { useMemo } from 'react';
 
+import CardStats from '../card-stats/card-stats';
 import ContributedBy from '../contributed-by/contributed-by';
 import Cover from '../cover/cover';
 import styles from './card.module.css';
@@ -66,16 +67,16 @@ const DeckComponent: React.FC<DeckComponentProps> = ({ deck }) => {
 
       <CardHeader
         header={
-          <Link href={`/decks/${deck.id}`}>
+          <FluentLink href={`/decks/${deck.id}`}>
             <Title3 truncate>{deck.title}</Title3>
-          </Link>
+          </FluentLink>
         }
         description={
-          <Link href={`/paths/${path?.id}`}>
-            <Caption1 truncate wrap={false} className={styles.caption}>
+          <FluentLink href={`/paths/${path?.id}`}>
+            <Body1 truncate wrap={false}>
               {path?.title ?? 'No path'}
-            </Caption1>
-          </Link>
+            </Body1>
+          </FluentLink>
         }
         action={
           <Button
@@ -87,20 +88,26 @@ const DeckComponent: React.FC<DeckComponentProps> = ({ deck }) => {
       />
 
       <CardPreview>
-        <Cover src={`/${deck.coverImage}`} title={deck.title} variant='small' />
+        <Link href={`/decks/${deck.id}`}>
+          <Cover
+            src={`/${deck.coverImage}`}
+            title={deck.title}
+            variant='small'
+          />
+        </Link>
       </CardPreview>
 
-      <Body1 truncate wrap={false} className={styles.text}>
+      <Body1 truncate wrap={false}>
         {deck.description}
       </Body1>
 
       <CardFooter>
-        <Link href={`/decks/${deck.id}`}>
-          <Button appearance='primary'>See all cards</Button>
-        </Link>
+        <FluentLink href={`/decks/${deck.id}`}>
+          <Body1>See all cards</Body1>
+        </FluentLink>
       </CardFooter>
 
-      <footer className={styles.flex}>
+      <CardStats>
         {cardCount > 0 ? (
           <>
             <BookStar20Regular />
@@ -109,7 +116,7 @@ const DeckComponent: React.FC<DeckComponentProps> = ({ deck }) => {
         ) : (
           <Body1 italic>No cards available</Body1>
         )}
-      </footer>
+      </CardStats>
     </Card>
   );
 };
