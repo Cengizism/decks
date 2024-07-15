@@ -16,25 +16,19 @@ const ContributedBy: React.FC<ContributedByProps> = ({ contributor }) => {
     [contributor, getDeckCountByContributorId]
   );
 
-  const contributorName = useMemo(
-    () => contributor?.name || 'Anonymous',
-    [contributor]
-  );
-  const contributorLink = useMemo(
-    () =>
-      contributor ? <Body1>{contributionCount} contribution(s)</Body1> : null,
-    [contributor, contributionCount]
-  );
-
   return (
     <CardHeader
-      image={<PersonCircle32Filled />}
-      header={
+      image={
         <Link href={`/contributors/${contributor?.id}`}>
-          <Subtitle2>{contributorName}</Subtitle2>
+          <PersonCircle32Filled />
         </Link>
       }
-      description={contributorLink}
+      header={
+        <Link href={`/contributors/${contributor?.id}`}>
+          <Subtitle2>{contributor?.name || 'Anonymous'}</Subtitle2>
+        </Link>
+      }
+      description={<Body1>{contributionCount} contribution(s)</Body1>}
     />
   );
 };

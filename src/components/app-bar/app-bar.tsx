@@ -24,8 +24,10 @@ const AppBar: React.FC<AppBarProps> = ({ isOpen, toggleHamburgerMenu }) => {
 
   return (
     <header className={mergeClasses(styles.header, inlineStyles.header)}>
-      {!isOpen && <HamburgerMenu toggleHamburgerMenu={toggleHamburgerMenu} />}
-      <AltenBrand />
+      <hgroup>
+        {!isOpen && <HamburgerMenu toggleHamburgerMenu={toggleHamburgerMenu} />}
+        <AltenBrand />
+      </hgroup>
       <ThemeSwitcher />
     </header>
   );
