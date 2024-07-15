@@ -24,7 +24,7 @@ import {
   Person20Regular,
   bundleIcon,
 } from '@fluentui/react-icons';
-import Link from 'next/link';
+import Link from '@/components/link/link';
 import { usePathname } from 'next/navigation';
 import React, { useMemo } from 'react';
 
@@ -63,7 +63,7 @@ const BreadCrumps: React.FC<BreadCrumpsProps> = ({ node }) => {
     <>
       <BreadcrumbDivider />
       <BreadcrumbItem>
-        <Link href={`/paths/${nodes.path.id}`} passHref>
+        <Link href={`/paths/${nodes.path.id}`}>
           <BreadcrumbButton icon={<PathsIcons />}>
             {nodes.path.title}
           </BreadcrumbButton>
@@ -76,7 +76,7 @@ const BreadCrumps: React.FC<BreadCrumpsProps> = ({ node }) => {
     <>
       <BreadcrumbDivider />
       <BreadcrumbItem>
-        <Link href={`/decks/${nodes.deck.id}`} passHref>
+        <Link href={`/decks/${nodes.deck.id}`}>
           <BreadcrumbButton icon={<DecksIcons />}>
             {nodes.deck.title}
           </BreadcrumbButton>
@@ -97,7 +97,7 @@ const BreadCrumps: React.FC<BreadCrumpsProps> = ({ node }) => {
   return (
     <Breadcrumb>
       <BreadcrumbItem>
-        <Link href='/' passHref>
+        <Link href='/'>
           <BreadcrumbButton icon={<DashboardIcons />}>
             Dashboard
           </BreadcrumbButton>
@@ -108,7 +108,7 @@ const BreadCrumps: React.FC<BreadCrumpsProps> = ({ node }) => {
         <>
           <BreadcrumbDivider />
           <BreadcrumbItem>
-            <Link href='/contributors' passHref>
+            <Link href='/contributors'>
               <BreadcrumbButton icon={<ContributorsIcons />}>
                 Contributors
               </BreadcrumbButton>
@@ -119,7 +119,7 @@ const BreadCrumps: React.FC<BreadCrumpsProps> = ({ node }) => {
         <>
           <BreadcrumbDivider />
           <BreadcrumbItem>
-            <Link href='/paths' passHref>
+            <Link href='/paths'>
               <BreadcrumbButton icon={<PathsIcons />}>Paths</BreadcrumbButton>
             </Link>
           </BreadcrumbItem>
@@ -128,7 +128,7 @@ const BreadCrumps: React.FC<BreadCrumpsProps> = ({ node }) => {
             <>
               <BreadcrumbDivider />
               <BreadcrumbItem>
-                <Link href='/decks' passHref>
+                <Link href='/decks'>
                   <BreadcrumbButton icon={<DecksIcons />}>
                     Decks
                   </BreadcrumbButton>

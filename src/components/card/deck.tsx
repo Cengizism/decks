@@ -1,5 +1,6 @@
 'use client';
 
+import Link from '@/components/link/link';
 import { useDeckUtils } from '@/hooks/use-deck-utils';
 import { useNodes } from '@/hooks/use-nodes';
 import { DeckType } from '@/interfaces/types';
@@ -22,7 +23,6 @@ import {
   BookmarkMultiple24Regular,
   bundleIcon,
 } from '@fluentui/react-icons';
-import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { useMemo } from 'react';
 
@@ -36,12 +36,6 @@ const BookmarkMultipleIcons = bundleIcon(
 );
 
 const useInlineStyles = makeStyles({
-  caption: {
-    color: tokens.colorNeutralForeground3,
-  },
-  grayBackground: {
-    backgroundColor: tokens.colorNeutralBackground3,
-  },
   bookmark: {
     color: tokens.colorNeutralBackground1,
   },
@@ -72,17 +66,13 @@ const DeckComponent: React.FC<DeckComponentProps> = ({ deck }) => {
 
       <CardHeader
         header={
-          <Link className={styles.link} href={`/decks/${deck.id}`}>
+          <Link href={`/decks/${deck.id}`}>
             <Title3 truncate>{deck.title}</Title3>
           </Link>
         }
         description={
-          <Link className={styles.link} href={`/paths/${path?.id}`}>
-            <Caption1
-              truncate
-              wrap={false}
-              className={mergeClasses(styles.caption, inlineStyles.caption)}
-            >
+          <Link href={`/paths/${path?.id}`}>
+            <Caption1 truncate wrap={false} className={styles.caption}>
               {path?.title ?? 'No path'}
             </Caption1>
           </Link>
@@ -96,7 +86,7 @@ const DeckComponent: React.FC<DeckComponentProps> = ({ deck }) => {
         }
       />
 
-      <CardPreview className={inlineStyles.grayBackground}>
+      <CardPreview>
         <Cover src={`/${deck.coverImage}`} title={deck.title} variant='small' />
       </CardPreview>
 
@@ -106,7 +96,7 @@ const DeckComponent: React.FC<DeckComponentProps> = ({ deck }) => {
 
       <CardFooter>
         <Link href={`/decks/${deck.id}`}>
-          <Button>Open deck</Button>
+          <Button appearance='primary'>See all cards</Button>
         </Link>
       </CardFooter>
 

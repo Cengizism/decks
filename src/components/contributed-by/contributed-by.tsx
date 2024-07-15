@@ -1,16 +1,15 @@
+import Link from '@/components/link/link';
 import { useDeckUtils } from '@/hooks/use-deck-utils';
 import { ContributorType } from '@/interfaces/types';
 import {
   Caption1,
   CardHeader,
-  Link as FluentLink,
   Subtitle2,
   makeStyles,
   mergeClasses,
   tokens,
 } from '@fluentui/react-components';
 import { PersonCircle32Filled } from '@fluentui/react-icons';
-import Link from 'next/link';
 import React, { useMemo } from 'react';
 
 import styles from './contributed-by.module.css';
@@ -57,9 +56,7 @@ const ContributedBy: React.FC<ContributedByProps> = ({ contributor }) => {
       image={<PersonCircle32Filled className={inlineStyles.subtleColor} />}
       header={
         <Link href={`/contributors/${contributor?.id}`}>
-          <FluentLink as='span'>
-            <Subtitle2>{contributorName}</Subtitle2>
-          </FluentLink>
+          <Subtitle2>{contributorName}</Subtitle2>
         </Link>
       }
       description={contributorLink}

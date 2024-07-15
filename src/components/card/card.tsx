@@ -1,5 +1,6 @@
 'use client';
 
+import Link from '@/components/link/link';
 import { useNodes } from '@/hooks/use-nodes';
 import { CardType } from '@/interfaces/types';
 import {
@@ -21,19 +22,12 @@ import {
   HeartFilled,
   HeartRegular,
 } from '@fluentui/react-icons';
-import Link from 'next/link';
 import React, { useMemo } from 'react';
 
 import Cover from '../cover/cover';
 import styles from './card.module.css';
 
 const useInlineStyles = makeStyles({
-  caption: {
-    color: tokens.colorNeutralForeground3,
-  },
-  grayBackground: {
-    backgroundColor: tokens.colorNeutralBackground3,
-  },
   actionButton: {
     color: tokens.colorNeutralBackground1,
   },
@@ -56,7 +50,7 @@ const CardComponent: React.FC<CardComponentProps> = ({
 
   return (
     <Card className={styles.card}>
-      <CardPreview className={inlineStyles.grayBackground}>
+      <CardPreview>
         <Cover
           src={deck ? `/api/content/${deck.id}/images/${card.coverImage}` : ''}
           title={card.title}
@@ -66,16 +60,16 @@ const CardComponent: React.FC<CardComponentProps> = ({
 
       <CardHeader
         header={
-          <Link className={styles.link} href={`/cards/${card.id}`}>
+          <Link href={`/cards/${card.id}`}>
             <Title3 truncate>{card.title}</Title3>
           </Link>
         }
         description={
-          <Link className={styles.link} href={`/decks/${deck?.id}`}>
+          <Link href={`/decks/${deck?.id}`}>
             <Caption1
               truncate
               wrap={false}
-              className={mergeClasses(styles.caption, inlineStyles.caption)}
+              className={styles.caption}
             >
               {deck?.title}
             </Caption1>
@@ -109,7 +103,7 @@ const CardComponent: React.FC<CardComponentProps> = ({
 
       <CardFooter>
         <Link href={`/cards/${card.id}`}>
-          <Button>Read more</Button>
+          <Button appearance='primary'>Read more</Button>
         </Link>
       </CardFooter>
 

@@ -11,16 +11,6 @@
   gap: 4px;
 }
 
-.link {
-  text-decoration: none;
-  color: inherit;
-}
-
-.link:hover {
-  text-decoration: underline;
-  opacity: 0.8;
-}
-
 .caption {
   width: 290px;
   display: block;

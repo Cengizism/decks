@@ -1,5 +1,6 @@
 'use client';
 
+import Link from '@/components/link/link';
 import { useDeckUtils } from '@/hooks/use-deck-utils';
 import { PathType } from '@/interfaces/types';
 import {
@@ -9,10 +10,8 @@ import {
   CardFooter,
   CardHeader,
   Title3,
-  mergeClasses,
 } from '@fluentui/react-components';
 import { BookStar20Regular } from '@fluentui/react-icons';
-import Link from 'next/link';
 import React, { useMemo } from 'react';
 
 import styles from './card.module.css';
@@ -30,7 +29,7 @@ const PathComponent: React.FC<PathComponentProps> = ({ path }) => {
     <Card className={styles.card}>
       <CardHeader
         header={
-          <Link className={styles.link} href={`/paths/${path.id}`}>
+          <Link href={`/paths/${path.id}`}>
             <Title3 truncate>{path.title}</Title3>
           </Link>
         }
@@ -43,7 +42,7 @@ const PathComponent: React.FC<PathComponentProps> = ({ path }) => {
       <CardFooter>
         {deckCount > 0 && (
           <Link href={`/paths/${path.id}`}>
-            <Button>View decks</Button>
+            <Button appearance='primary'>View decks</Button>
           </Link>
         )}
       </CardFooter>

@@ -1,5 +1,6 @@
 'use client';
 
+import Link from '@/components/link/link';
 import { PathNode } from '@/interfaces/types';
 import { useStateContext } from '@/providers/state-provider';
 import {
@@ -27,7 +28,6 @@ import {
   NavSubItem,
   NavSubItemGroup,
 } from '@fluentui/react-nav-preview';
-import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { useEffect, useMemo, useState } from 'react';
 
@@ -72,7 +72,7 @@ const Navigation: React.FC<NavigationProps> = ({
     icon?: React.ReactElement;
     text: string;
   }> = ({ path, icon, text }) => (
-    <Link href={path} passHref>
+    <Link href={path}>
       <NavItem
         icon={icon}
         value={path}
@@ -98,7 +98,7 @@ const Navigation: React.FC<NavigationProps> = ({
                 </NavCategoryItem>
                 <NavSubItemGroup>
                   {deck.cards.map((card) => (
-                    <Link key={card.id} href={`/cards/${card.id}`} passHref>
+                    <Link key={card.id} href={`/cards/${card.id}`}>
                       <NavSubItem
                         value={`/cards/${card.id}`}
                         className={styles.left}

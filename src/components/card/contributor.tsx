@@ -1,5 +1,6 @@
 'use client';
 
+import Link from '@/components/link/link';
 import { useDeckUtils } from '@/hooks/use-deck-utils';
 import { ContributorType } from '@/interfaces/types';
 import {
@@ -9,10 +10,8 @@ import {
   CardFooter,
   CardHeader,
   Title3,
-  mergeClasses,
 } from '@fluentui/react-components';
 import { BookStar20Regular } from '@fluentui/react-icons';
-import Link from 'next/link';
 import React, { useMemo } from 'react';
 
 import styles from './card.module.css';
@@ -35,10 +34,7 @@ const ContributorComponent: React.FC<ContributorComponentProps> = ({
     <Card className={styles.card}>
       <CardHeader
         header={
-          <Link
-            className={styles.link}
-            href={`/contributors/${contributor.id}`}
-          >
+          <Link href={`/contributors/${contributor.id}`}>
             <Title3 truncate>{contributor.name}</Title3>
           </Link>
         }
@@ -50,7 +46,7 @@ const ContributorComponent: React.FC<ContributorComponentProps> = ({
 
       <CardFooter>
         <Link href={`/contributors/${contributor.id}`}>
-          <Button>Open profile</Button>
+          <Button appearance='primary'>See profile</Button>
         </Link>
       </CardFooter>
 
