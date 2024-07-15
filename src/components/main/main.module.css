@@ -14,25 +14,6 @@
   height: 100vh;
 }
 
-.header {
-  display: flex;
-  justify-content: left;
-  gap: 20px;
-  padding: 16px;
-  align-items: center;
-  border-bottom: 1px solid;
-}
-
-.header > button {
-  margin-top: 4px;
-}
-
-.header hgroup {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
 .content {
   display: flex;
   flex-direction: column;

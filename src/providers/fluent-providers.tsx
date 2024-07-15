@@ -6,10 +6,13 @@ import {
   SSRProvider,
   createDOMRenderer,
   renderToStyleElements,
+  teamsDarkTheme,
   teamsLightTheme,
 } from '@fluentui/react-components';
 import { useServerInsertedHTML } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
+
+import { useStateContext } from './state-provider';
 
 interface FluentProvidersProps {
   children: React.ReactNode;
@@ -18,6 +21,12 @@ interface FluentProvidersProps {
 export function FluentProviders({ children }: FluentProvidersProps) {
   const [renderer] = useState(() => createDOMRenderer());
   const didRenderRef = useRef(false);
+  const { state } = useStateContext();
+
+  const [theme, setTheme] = useState(state.theme);
+  useEffect(() => {
+    setTheme(state.theme === 'dark' ? teamsDarkTheme : teamsLightTheme);
+  }, [state.theme]);
 
   const [hasMounted, setHasMounted] = useState(false);
 
@@ -40,7 +49,7 @@ export function FluentProviders({ children }: FluentProvidersProps) {
   return (
     <RendererProvider renderer={renderer}>
       <SSRProvider>
-        <FluentProvider theme={teamsLightTheme}>{children}</FluentProvider>
+        <FluentProvider theme={theme}>{children}</FluentProvider>
       </SSRProvider>
     </RendererProvider>
   );

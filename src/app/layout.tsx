@@ -2,8 +2,8 @@ import Main from '@/components/main/main';
 import { DESCRIPTION, HOME_OG_IMAGE_URL, TITLE } from '@/constants';
 import { ContributorType, DeckType, NodesTreeType } from '@/interfaces/types';
 import { getAllContributors, getAllDecks, getNodeTree } from '@/libraries/';
+import ClientStateProvider from '@/providers/client-state-provider';
 import { FluentProviders } from '@/providers/fluent-providers';
-import { StateProvider } from '@/providers/state-provider';
 import type { Metadata } from 'next';
 import * as React from 'react';
 
@@ -30,11 +30,13 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
   const nodes: NodesTreeType = getNodeTree();
   const decks: DeckType[] = getAllDecks();
   const contributors: ContributorType[] = getAllContributors();
+  const theme: 'light' | 'dark' = 'light';
 
   const state = {
     nodes,
     decks,
     contributors,
+    theme,
   };
 
   return (
@@ -73,11 +75,11 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
       </head>
 
       <body>
-        <FluentProviders>
-          <StateProvider state={state}>
+        <ClientStateProvider initialState={state}>
+          <FluentProviders>
             <Main>{children}</Main>
-          </StateProvider>
-        </FluentProviders>
+          </FluentProviders>
+        </ClientStateProvider>
       </body>
     </html>
   );
