@@ -1,9 +1,8 @@
 import Main from '@/components/main/main';
 import { DESCRIPTION, HOME_OG_IMAGE_URL, TITLE } from '@/constants';
-import { ContributorType, DeckType, NodesTreeType } from '@/interfaces/types';
-import { getAllContributors, getAllDecks, getNodeTree } from '@/libraries/api';
-import ClientStateProvider from '@/providers/client-state-provider';
-import { FluentProviders } from '@/providers/fluent-providers';
+import { FluentProvider } from '@/state/fluent-provider';
+import initialState from '@/state/initial-state';
+import { StateProvider } from '@/state/state-provider';
 import type { Metadata } from 'next';
 import * as React from 'react';
 
@@ -27,18 +26,6 @@ interface RootLayoutProps {
 }
 
 const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
-  const nodes: NodesTreeType = getNodeTree();
-  const decks: DeckType[] = getAllDecks();
-  const contributors: ContributorType[] = getAllContributors();
-  const theme: 'light' | 'dark' = 'light';
-
-  const state = {
-    nodes,
-    decks,
-    contributors,
-    theme,
-  };
-
   return (
     <html lang='en'>
       <head>
@@ -75,11 +62,11 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
       </head>
 
       <body>
-        <ClientStateProvider initialState={state}>
-          <FluentProviders>
+        <StateProvider initialState={initialState}>
+          <FluentProvider>
             <Main>{children}</Main>
-          </FluentProviders>
-        </ClientStateProvider>
+          </FluentProvider>
+        </StateProvider>
       </body>
     </html>
   );

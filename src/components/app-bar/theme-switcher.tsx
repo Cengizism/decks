@@ -1,4 +1,4 @@
-import { useStateContext } from '@/providers/state-provider';
+import { useStateContext } from '@/state/state-provider';
 import {
   Toolbar,
   ToolbarButton, // ToolbarDivider,
@@ -10,10 +10,13 @@ import {
 import React from 'react';
 
 const ThemeSwitcher: React.FC = () => {
-  const { state, setTheme } = useStateContext();
+  const { state, dispatch } = useStateContext();
 
   const toggleTheme = () => {
-    setTheme(state.theme === 'light' ? 'dark' : 'light');
+    dispatch({
+      type: 'SET_THEME',
+      payload: state.theme === 'light' ? 'dark' : 'light',
+    });
   };
 
   const themeIcon =

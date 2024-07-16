@@ -1,7 +1,7 @@
 'use client';
 
 import { PathNode } from '@/interfaces/types';
-import { useStateContext } from '@/providers/state-provider';
+import { useStateContext } from '@/state/state-provider';
 import { Text } from '@fluentui/react-components';
 import {
   Board20Filled,

@@ -1,7 +1,7 @@
 'use client';
 
 import {
-  FluentProvider,
+  FluentProvider as FluentProviderBase,
   RendererProvider,
   SSRProvider,
   createDOMRenderer,
@@ -14,22 +14,21 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import { useStateContext } from './state-provider';
 
-interface FluentProvidersProps {
+interface FluentProviderProps {
   children: React.ReactNode;
 }
 
-export function FluentProviders({ children }: FluentProvidersProps) {
+export function FluentProvider({ children }: FluentProviderProps) {
   const [renderer] = useState(() => createDOMRenderer());
   const didRenderRef = useRef(false);
-  const { state } = useStateContext();
 
-  const [theme, setTheme] = useState(state.theme);
-  useEffect(() => {
-    setTheme(state.theme === 'dark' ? teamsDarkTheme : teamsLightTheme);
-  }, [state.theme]);
+  const { state } = useStateContext();
+  const theme = state.theme === 'dark' ? teamsDarkTheme : teamsLightTheme;
 
   const [hasMounted, setHasMounted] = useState(false);
 
+  // TODO: Investigate if it is really needed
+  // TODO: Also investigate if the fluent-app-next directive library is needed
   useEffect(() => {
     setHasMounted(true);
   }, []);
@@ -49,7 +48,7 @@ export function FluentProviders({ children }: FluentProvidersProps) {
   return (
     <RendererProvider renderer={renderer}>
       <SSRProvider>
-        <FluentProvider theme={theme}>{children}</FluentProvider>
+        <FluentProviderBase theme={theme}>{children}</FluentProviderBase>
       </SSRProvider>
     </RendererProvider>
   );

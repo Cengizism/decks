@@ -1,14 +1,14 @@
 import { CardType } from '@/interfaces/types';
-import fs from 'fs';
-import matter from 'gray-matter';
-import { join } from 'path';
-
 import {
   findCardIdInDb,
   getCardLikes,
   isCardBookmarkedByUser,
   isCardLikedByUser,
 } from '@/libraries/db';
+import fs from 'fs';
+import matter from 'gray-matter';
+import { join } from 'path';
+
 import { findDeckByCardId } from './decks';
 
 const contentDirectory = join(process.cwd(), 'content');
