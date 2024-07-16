@@ -51,14 +51,14 @@ export function initDb() {
 
     const transaction = db.transaction(() => {
       insertStmt.run(
-        'John de Wolf',
-        'https://picsum.photos/id/237/200/300',
-        'john@example.com'
+        'Katri Athokas',
+        'https://fabricweb.azureedge.net/fabric-website/assets/images/avatar/KatriAthokas.jpg',
+        'katri.athokas@inbox.com'
       );
       insertStmt.run(
-        'Max Verstappen',
-        'https://picsum.photos/id/450/200/300',
-        'max@example.com'
+        'Kevin Sturgis',
+        'https://res-1.cdn.office.net/files/fabric-cdn-prod_20230815.002/office-ui-fabric-react-assets/persona-male.png',
+        'max.kevin@email.com'
       );
     });
 

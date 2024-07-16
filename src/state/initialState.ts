@@ -1,5 +1,5 @@
 import type { StateType } from '@/interfaces/';
-import { getAllContributors, getAllDecks, getNodeTree } from '@/libraries/api';
+import { getAllContributors, getAllDecks, getNodeTree, getUser } from '@/libraries/api';
 
 const initialState: StateType = {
   data: {
@@ -7,6 +7,7 @@ const initialState: StateType = {
     decks: getAllDecks(),
     contributors: getAllContributors(),
   },
+  user: getUser(),
   interface: {
     theme: 'light', // TODO: When no preference is set, get it from the system
     selectedNavigationItem: '',

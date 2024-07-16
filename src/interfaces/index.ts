@@ -4,3 +4,4 @@ export * from './pathType';
 export * from './contributorType';
 export * from './nodesType';
 export * from './stateType';
+export * from './userType';
