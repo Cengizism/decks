@@ -17,9 +17,9 @@
     "format:fix": "prettier --write --ignore-path .gitignore ."
   },
   "dependencies": {
-    "@fluentui/react-components": "^9.54.4",
+    "@fluentui/react-components": "^9.54.5",
     "@fluentui/react-icons": "^2.0.249",
-    "@fluentui/react-nav-preview": "^0.5.1",
+    "@fluentui/react-nav-preview": "^0.5.2",
     "better-sqlite3": "^11.1.2",
     "date-fns": "^3.6.0",
     "fluentui-next-appdir-directive": "^0.1.7",
