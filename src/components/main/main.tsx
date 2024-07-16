@@ -1,6 +1,6 @@
 'use client';
 
-import AppBar from '@/components/app-bar/app-bar';
+import AppBar from '@/components/appBar/appBar';
 import { mergeClasses } from '@fluentui/react-components';
 import React, { useCallback, useState } from 'react';
 

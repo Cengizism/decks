@@ -1,6 +1,6 @@
-import BreadCrumps from '@/components/bread-crumps/bread-crumps';
+import BreadCrumps from '@/components/breadCrumps/breadCrumps';
 import Contributor from '@/components/card/contributor';
-import PageHeader from '@/components/page-header/page-header';
+import PageHeader from '@/components/pageHeader/pageHeader';
 import { ContributorType } from '@/interfaces/types';
 import { getAllContributors } from '@/libraries/api';
 

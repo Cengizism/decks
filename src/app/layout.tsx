@@ -1,8 +1,8 @@
 import Main from '@/components/main/main';
 import { DESCRIPTION, HOME_OG_IMAGE_URL, TITLE } from '@/constants';
-import { FluentProvider } from '@/state/fluent-provider';
-import initialState from '@/state/initial-state';
-import { StateProvider } from '@/state/state-provider';
+import { FluentProvider } from '@/state/fluentProvider';
+import initialState from '@/state/initialState';
+import { StateProvider } from '@/state/stateProvider';
 import type { Metadata } from 'next';
 import * as React from 'react';
 

@@ -1,8 +1,8 @@
 'use client';
 
-import CardStats from '@/components/card-stats/card-stats';
+import CardStats from '@/components/cardStats/cardStats';
 import { LinkComponent as Link } from '@/components/link/link';
-import { useNodes } from '@/hooks/use-nodes';
+import { useNodes } from '@/hooks/useNodes';
 import { CardType } from '@/interfaces/types';
 import {
   Body1,

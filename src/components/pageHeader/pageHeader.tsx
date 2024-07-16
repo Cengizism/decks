@@ -5,7 +5,7 @@ import { makeStyles, tokens } from '@fluentui/react-components';
 import { format } from 'date-fns';
 import React, { useMemo } from 'react';
 
-import styles from './page-header.module.css';
+import styles from './pageHeader.module.css';
 
 const useInlineStyles = makeStyles({
   subTitle: {

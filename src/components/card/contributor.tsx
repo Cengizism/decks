@@ -1,7 +1,7 @@
 'use client';
 
 import { LinkComponent as Link } from '@/components/link/link';
-import { useDeckUtils } from '@/hooks/use-deck-utils';
+import { useDeckUtils } from '@/hooks/useDeckUtils';
 import { ContributorType } from '@/interfaces/types';
 import {
   Body1,
@@ -13,7 +13,7 @@ import {
 import { BookStar20Regular } from '@fluentui/react-icons';
 import React, { useMemo } from 'react';
 
-import CardStats from '../card-stats/card-stats';
+import CardStats from '../cardStats/cardStats';
 import styles from './card.module.css';
 
 interface ContributorComponentProps {

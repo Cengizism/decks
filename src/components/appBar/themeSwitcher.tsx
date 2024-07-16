@@ -1,4 +1,4 @@
-import { useStateContext } from '@/state/state-provider';
+import { useStateContext } from '@/state/stateProvider';
 import {
   Toolbar,
   ToolbarButton,

@@ -3,10 +3,10 @@
 import { makeStyles, mergeClasses, tokens } from '@fluentui/react-components';
 import React from 'react';
 
-import HamburgerMenu from '../navigation/hamburger-menu';
-import AltenBrand from './alten-brand';
-import styles from './app-bar.module.css';
-import ThemeSwitcher from './theme-switcher';
+import HamburgerMenu from '../navigation/hamburgerMenu';
+import AltenBrand from './altenBrand';
+import styles from './appBar.module.css';
+import ThemeSwitcher from './themeSwitcher';
 
 const useInlineStyles = makeStyles({
   header: {

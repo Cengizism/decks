@@ -1,6 +1,6 @@
 'use client';
 
-import { useNodes } from '@/hooks/use-nodes';
+import { useNodes } from '@/hooks/useNodes';
 import {
   CardType,
   ContributorType,

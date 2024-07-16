@@ -3,7 +3,7 @@
 import {
   toggleBookmarkStatusOfCard,
   toggleLikeStatusOfCard,
-} from '@/actions/card-actions';
+} from '@/actions/cardActions';
 import Card from '@/components/card/card';
 import { CardType } from '@/interfaces/types';
 import { startTransition } from 'react';

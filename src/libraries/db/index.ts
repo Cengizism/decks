@@ -1,1 +1,1 @@
-export * from './db-api';
+export * from './dbApi';

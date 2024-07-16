@@ -1,5 +1,5 @@
 import { contributors, decks, paths } from './data';
-import { readCardFiles } from './file-system';
+import { readCardFiles } from './fileSystem';
 
 export function indexCardIds(): { cardId: string }[] {
   return decks.flatMap(({ id: folder }) => {

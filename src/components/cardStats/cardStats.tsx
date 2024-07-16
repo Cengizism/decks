@@ -1,6 +1,6 @@
 import React from 'react';
 
-import styles from './card-stats.module.css';
+import styles from './cardStats.module.css';
 
 interface CardStatsProps {
   children: React.ReactNode;

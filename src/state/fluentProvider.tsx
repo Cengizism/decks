@@ -12,7 +12,7 @@ import {
 import { useServerInsertedHTML } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
 
-import { useStateContext } from './state-provider';
+import { useStateContext } from './stateProvider';
 
 interface FluentProviderProps {
   children: React.ReactNode;

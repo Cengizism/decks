@@ -1,5 +1,5 @@
 import { getAllContributors, getAllDecks, getNodeTree } from '@/libraries/api';
-import { StateType } from './state-type';
+import { StateType } from './stateType';
 
 const initialState: StateType = {
   data: {

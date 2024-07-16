@@ -1,7 +1,7 @@
 'use client';
 
 import { PathNode } from '@/interfaces/types';
-import { useStateContext } from '@/state/state-provider';
+import { useStateContext } from '@/state/stateProvider';
 import { Text } from '@fluentui/react-components';
 import {
   Board20Filled,
@@ -32,7 +32,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { useEffect, useMemo, useState } from 'react';
 
-import HamburgerMenu from './hamburger-menu';
+import HamburgerMenu from './hamburgerMenu';
 import styles from './navigation.module.css';
 
 const DashboardIcons = bundleIcon(Board20Filled, Board20Regular);

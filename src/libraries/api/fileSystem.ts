@@ -1,4 +1,4 @@
-import { cardFilesCache } from './card-files-cache';
+import { cardFilesCache } from './cardFilesCache';
 
 export function readCardFiles(folder: string): string[] {
   if (!folder) {

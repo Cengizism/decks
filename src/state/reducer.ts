@@ -1,4 +1,4 @@
-import { StateType } from './state-type';
+import { StateType } from './stateType';
 
 export type ActionType = { type: 'SET_THEME'; payload: 'light' | 'dark' };
 

@@ -3,7 +3,7 @@
 import React, { createContext, useContext } from 'react';
 
 import { ActionType } from './reducer';
-import { StateType } from './state-type';
+import { StateType } from './stateType';
 import usePersistedState from './usePersistedState';
 
 interface StateContextProps {

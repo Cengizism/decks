@@ -2,7 +2,7 @@ import { NodesTreeType } from '@/interfaces/types';
 
 import { getCardById } from './cards';
 import { decks, paths } from './data';
-import { readCardFiles } from './file-system';
+import { readCardFiles } from './fileSystem';
 
 export function getNodeTree(): NodesTreeType {
   return {

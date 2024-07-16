@@ -1,4 +1,4 @@
-import PageHeader from '@/components/page-header/page-header';
+import PageHeader from '@/components/pageHeader/pageHeader';
 import { DESCRIPTION } from '@/constants';
 import * as React from 'react';
 

@@ -2,7 +2,7 @@ import { CardType, DeckType } from '@/interfaces/types';
 
 import { getCardById } from './cards';
 import { decks } from './data';
-import { readCardFiles } from './file-system';
+import { readCardFiles } from './fileSystem';
 
 export function findDeckByCardId(cardId: string): DeckType | undefined {
   return decks.find((deck) => readCardFiles(deck.id).includes(`${cardId}.mdx`));

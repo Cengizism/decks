@@ -1,8 +1,8 @@
 'use client';
 
 import { LinkComponent as FluentLink } from '@/components/link/link';
-import { useDeckUtils } from '@/hooks/use-deck-utils';
-import { useNodes } from '@/hooks/use-nodes';
+import { useDeckUtils } from '@/hooks/useDeckUtils';
+import { useNodes } from '@/hooks/useNodes';
 import { DeckType } from '@/interfaces/types';
 import {
   Body1,
@@ -26,8 +26,8 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { useMemo } from 'react';
 
-import CardStats from '../card-stats/card-stats';
-import ContributedBy from '../contributed-by/contributed-by';
+import CardStats from '../cardStats/cardStats';
+import ContributedBy from '../contributedBy/contributedBy';
 import Cover from '../cover/cover';
 import styles from './card.module.css';
 

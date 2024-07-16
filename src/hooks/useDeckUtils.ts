@@ -7,7 +7,7 @@ import {
   PathNode,
   PathType,
 } from '@/interfaces/types';
-import { useStateContext } from '@/state/state-provider';
+import { useStateContext } from '@/state/stateProvider';
 import { useMemo } from 'react';
 
 export const useDeckUtils = () => {
