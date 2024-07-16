@@ -1,6 +1,5 @@
-import { getAllContributors, getAllDecks, getNodeTree } from '@/libraries/api';
-
 import { StateType } from '@/interfaces/';
+import { getAllContributors, getAllDecks, getNodeTree } from '@/libraries/api';
 
 const initialState: StateType = {
   data: {
@@ -10,6 +9,7 @@ const initialState: StateType = {
   },
   interface: {
     theme: 'light', // TODO: When no preference is set, get it from the system
+    selectedNavigationItem: '',
     isNavigationDrawerOpen: false,
   },
   settings: {},

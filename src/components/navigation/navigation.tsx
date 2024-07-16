@@ -16,7 +16,7 @@ import {
   NavSectionHeader,
 } from '@fluentui/react-nav-preview';
 import { usePathname } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 import HamburgerMenu from './hamburgerMenu';
 import styles from './navigation.module.css';
@@ -34,21 +34,16 @@ const Navigation: React.FC = () => {
   const { isNavigationDrawerOpen, selectedNavigationItem } = state.interface;
 
   useEffect(() => {
-    dispatch({ type: 'SET_NAVIGATION_ITEM', payload: pathname || '' });
-  }, []);
-
-  useEffect(() => {
-    if (pathname?.startsWith('/cards')) {
-      dispatch({ type: 'SET_NAVIGATION_ITEM', payload: pathname || '' });
-    } else {
-      const matchedPath = ROUTE_PATHS.find((path) =>
-        pathname?.startsWith(path)
-      );
-      if (matchedPath) {
-        dispatch({ type: 'SET_NAVIGATION_ITEM', payload: matchedPath });
-      }
+    let pathToSet = pathname || '';
+    const matchedPath = ROUTE_PATHS.find((route) =>
+      pathname?.startsWith(route)
+    );
+    if (matchedPath) {
+      pathToSet = matchedPath;
     }
-  }, [pathname]);
+
+    dispatch({ type: 'SET_NAVIGATION_ITEM', payload: pathToSet });
+  }, [pathname, dispatch]);
 
   return (
     <NavDrawer

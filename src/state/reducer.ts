@@ -12,7 +12,7 @@ export const reducer = (state: StateType, action: ActionType): StateType => {
         ...state,
         interface: {
           ...state.interface,
-          theme: action.payload
+          theme: action.payload,
         },
       };
     case 'TOGGLE_NAVIGATION_DRAWER':
@@ -20,7 +20,7 @@ export const reducer = (state: StateType, action: ActionType): StateType => {
         ...state,
         interface: {
           ...state.interface,
-          isNavigationDrawerOpen: action.payload
+          isNavigationDrawerOpen: action.payload,
         },
       };
     case 'SET_NAVIGATION_ITEM':
@@ -28,7 +28,7 @@ export const reducer = (state: StateType, action: ActionType): StateType => {
         ...state,
         interface: {
           ...state.interface,
-          selectedNavigationItem: action.payload
+          selectedNavigationItem: action.payload,
         },
       };
     default:

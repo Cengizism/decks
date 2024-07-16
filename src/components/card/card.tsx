@@ -1,6 +1,7 @@
 'use client';
 
 import CardStats from '@/components/cardStats/cardStats';
+import Cover from '@/components/cover/cover';
 import { LinkComponent as Link } from '@/components/link/link';
 import { useNodes } from '@/hooks/useNodes';
 import { CardType } from '@/interfaces/';
@@ -21,7 +22,6 @@ import {
 } from '@fluentui/react-icons';
 import React, { useMemo } from 'react';
 
-import Cover from '@/components/cover/cover';
 import styles from './card.module.css';
 
 interface CardComponentProps {
