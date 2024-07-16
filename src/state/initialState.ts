@@ -1,4 +1,4 @@
-import { StateType } from '@/interfaces/';
+import type { StateType } from '@/interfaces/';
 import { getAllContributors, getAllDecks, getNodeTree } from '@/libraries/api';
 
 const initialState: StateType = {

@@ -1,4 +1,4 @@
-import { ContributorType, DeckType, PathType } from '@/interfaces/';
+import type { ContributorType, DeckType, PathType } from '@/interfaces/';
 
 import contributorsData from '../../../content/contributors.json';
 import decksData from '../../../content/decks.json';

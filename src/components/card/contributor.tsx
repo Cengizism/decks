@@ -3,7 +3,7 @@
 import CardStats from '@/components/cardStats/cardStats';
 import { LinkComponent as Link } from '@/components/link/link';
 import { useDeckUtils } from '@/hooks/useDeckUtils';
-import { ContributorType } from '@/interfaces/';
+import type { ContributorType } from '@/interfaces/';
 import {
   Body1,
   Card,

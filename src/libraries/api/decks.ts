@@ -1,4 +1,4 @@
-import { CardType, DeckType } from '@/interfaces/';
+import type { CardType, DeckType } from '@/interfaces/';
 
 import { getCardById } from './cards';
 import { decks } from './data';

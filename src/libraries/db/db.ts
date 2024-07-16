@@ -6,6 +6,8 @@ export function initDb() {
   db.exec(`
     CREATE TABLE IF NOT EXISTS users (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      avatar TEXT,
       email TEXT UNIQUE
     )
   `);
@@ -43,13 +45,21 @@ export function initDb() {
 
   if (userCount === 0) {
     const insertStmt = db.prepare(`
-      INSERT INTO users (email)
-      VALUES (?)
+      INSERT INTO users (name, avatar, email)
+      VALUES (?, ?, ?)
     `);
 
     const transaction = db.transaction(() => {
-      insertStmt.run('john@example.com');
-      insertStmt.run('max@example.com');
+      insertStmt.run(
+        'John de Wolf',
+        'https://picsum.photos/id/237/200/300',
+        'john@example.com'
+      );
+      insertStmt.run(
+        'Max Verstappen',
+        'https://picsum.photos/id/450/200/300',
+        'max@example.com'
+      );
     });
 
     transaction();

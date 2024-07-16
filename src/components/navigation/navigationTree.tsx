@@ -1,4 +1,4 @@
-import { PathNode } from '@/interfaces/';
+import type { PathNode } from '@/interfaces/';
 import { useStateContext } from '@/state/stateProvider';
 import { Text } from '@fluentui/react-components';
 import {

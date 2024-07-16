@@ -5,7 +5,7 @@ import {
   toggleLikeStatusOfCard,
 } from '@/actions/cardActions';
 import Card from '@/components/card/card';
-import { CardType } from '@/interfaces/';
+import type { CardType } from '@/interfaces/';
 import { startTransition } from 'react';
 import React, { useOptimistic } from 'react';
 

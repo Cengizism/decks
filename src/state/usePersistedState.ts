@@ -1,4 +1,4 @@
-import { StateType } from '@/interfaces/';
+import type { StateType } from '@/interfaces/';
 import { useEffect, useReducer } from 'react';
 
 import { reducer } from './reducer';

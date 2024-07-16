@@ -1,6 +1,6 @@
 'use client';
 
-import { StateType } from '@/interfaces/';
+import type { StateType } from '@/interfaces/';
 import React, { createContext, useContext } from 'react';
 
 import { ActionType } from './reducer';

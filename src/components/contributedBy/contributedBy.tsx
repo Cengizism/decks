@@ -1,6 +1,6 @@
 import { LinkComponent as Link } from '@/components/link/link';
 import { useDeckUtils } from '@/hooks/useDeckUtils';
-import { ContributorType } from '@/interfaces/';
+import type { ContributorType } from '@/interfaces/';
 import { Body1, CardHeader, Subtitle2 } from '@fluentui/react-components';
 import { PersonCircle32Filled } from '@fluentui/react-icons';
 import React, { useMemo } from 'react';
