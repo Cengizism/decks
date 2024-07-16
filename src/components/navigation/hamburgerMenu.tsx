@@ -1,14 +1,19 @@
+import { useStateContext } from '@/state/stateProvider';
 import { Tooltip } from '@fluentui/react-components';
 import { Hamburger } from '@fluentui/react-nav-preview';
-import React from 'react';
+import React, { useCallback } from 'react';
 
-interface HamburgerMenuProps {
-  toggleHamburgerMenu: () => void;
-}
+const HamburgerMenu: React.FC = () => {
+  const { state, dispatch } = useStateContext();
+  const { isNavigationDrawerOpen } = state.interface;
 
-const HamburgerMenu: React.FC<HamburgerMenuProps> = ({
-  toggleHamburgerMenu,
-}) => {
+  const toggleHamburgerMenu = useCallback(() => {
+    dispatch({
+      type: 'TOGGLE_NAVIGATION_DRAWER',
+      payload: !isNavigationDrawerOpen,
+    });
+  }, [isNavigationDrawerOpen, dispatch]);
+
   return (
     <Tooltip content='Navigation' relationship='label'>
       <Hamburger onClick={toggleHamburgerMenu} />
@@ -16,4 +21,4 @@ const HamburgerMenu: React.FC<HamburgerMenuProps> = ({
   );
 };
 
-export default HamburgerMenu;
+export default React.memo(HamburgerMenu);

@@ -2,6 +2,8 @@ import { ContributorType, DeckType, NodesTreeType } from './index';
 
 export interface InterfaceSettings {
   theme: 'light' | 'dark' | 'system';
+  isNavigationDrawerOpen: boolean;
+  selectedNavigationItem: string;
 }
 
 export interface DataState {

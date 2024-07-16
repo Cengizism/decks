@@ -10,6 +10,7 @@ const initialState: StateType = {
   },
   interface: {
     theme: 'light', // TODO: When no preference is set, get it from the system
+    isNavigationDrawerOpen: false,
   },
   settings: {},
 };

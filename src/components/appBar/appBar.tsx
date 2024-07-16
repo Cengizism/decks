@@ -1,9 +1,10 @@
 'use client';
 
+import HamburgerMenu from '@/components/navigation/hamburgerMenu';
+import { useStateContext } from '@/state/stateProvider';
 import { makeStyles, mergeClasses, tokens } from '@fluentui/react-components';
 import React from 'react';
 
-import HamburgerMenu from '@/components/navigation/hamburgerMenu';
 import AltenBrand from './altenBrand';
 import styles from './appBar.module.css';
 import ThemeSwitcher from './themeSwitcher';
@@ -14,18 +15,15 @@ const useInlineStyles = makeStyles({
   },
 });
 
-interface AppBarProps {
-  isOpen: boolean;
-  toggleHamburgerMenu: () => void;
-}
-
-const AppBar: React.FC<AppBarProps> = ({ isOpen, toggleHamburgerMenu }) => {
+const AppBar: React.FC = () => {
   const inlineStyles = useInlineStyles();
+  const { state } = useStateContext();
+  const { isNavigationDrawerOpen } = state.interface;
 
   return (
     <header className={mergeClasses(styles.header, inlineStyles.header)}>
       <hgroup>
-        {!isOpen && <HamburgerMenu toggleHamburgerMenu={toggleHamburgerMenu} />}
+        {!isNavigationDrawerOpen && <HamburgerMenu />}
         <AltenBrand />
       </hgroup>
       <ThemeSwitcher />
@@ -33,4 +31,4 @@ const AppBar: React.FC<AppBarProps> = ({ isOpen, toggleHamburgerMenu }) => {
   );
 };
 
-export default AppBar;
+export default React.memo(AppBar);

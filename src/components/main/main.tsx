@@ -1,10 +1,11 @@
 'use client';
 
 import AppBar from '@/components/appBar/appBar';
-import { mergeClasses } from '@fluentui/react-components';
-import React, { useCallback, useState } from 'react';
-
 import Navigation from '@/components/navigation/navigation';
+import { useStateContext } from '@/state/stateProvider';
+import { mergeClasses } from '@fluentui/react-components';
+import React, { useMemo } from 'react';
+
 import styles from './main.module.css';
 
 interface MainProps {
@@ -12,24 +13,23 @@ interface MainProps {
 }
 
 const Main: React.FC<MainProps> = ({ children }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const { state } = useStateContext();
+  const { isNavigationDrawerOpen } = state.interface;
 
-  const toggleHamburgerMenu = useCallback(() => {
-    setIsOpen((prev: Boolean) => !prev);
-  }, []);
+  const contentClass = useMemo(
+    () =>
+      mergeClasses(styles.content, isNavigationDrawerOpen && styles.narrowed),
+    [isNavigationDrawerOpen]
+  );
 
   return (
     <div className={styles.root}>
-      <Navigation isOpen={isOpen} toggleHamburgerMenu={toggleHamburgerMenu} />
+      <Navigation />
 
       <div className={styles.body}>
-        <AppBar isOpen={isOpen} toggleHamburgerMenu={toggleHamburgerMenu} />
+        <AppBar />
 
-        <div
-          className={mergeClasses(styles.content, isOpen && styles.narrowed)}
-        >
-          {children}
-        </div>
+        <div className={contentClass}>{children}</div>
       </div>
     </div>
   );
