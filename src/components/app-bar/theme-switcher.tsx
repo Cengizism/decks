@@ -1,7 +1,8 @@
 import { useStateContext } from '@/state/state-provider';
 import {
   Toolbar,
-  ToolbarButton, // ToolbarDivider,
+  ToolbarButton,
+  ToolbarDivider,
 } from '@fluentui/react-components';
 import {
   WeatherMoon24Regular,
@@ -15,12 +16,12 @@ const ThemeSwitcher: React.FC = () => {
   const toggleTheme = () => {
     dispatch({
       type: 'SET_THEME',
-      payload: state.theme === 'light' ? 'dark' : 'light',
+      payload: state.interface.theme === 'light' ? 'dark' : 'light',
     });
   };
 
   const themeIcon =
-    state.theme === 'light' ? (
+    state.interface.theme === 'light' ? (
       <WeatherMoon24Regular />
     ) : (
       <WeatherSunny24Regular />
@@ -33,7 +34,7 @@ const ThemeSwitcher: React.FC = () => {
         aria-label='Toggle Theme'
         icon={themeIcon}
       />
-      {/* <ToolbarDivider /> */}
+      <ToolbarDivider />
     </Toolbar>
   );
 };

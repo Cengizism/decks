@@ -23,7 +23,8 @@ export function FluentProvider({ children }: FluentProviderProps) {
   const didRenderRef = useRef(false);
 
   const { state } = useStateContext();
-  const theme = state.theme === 'dark' ? teamsDarkTheme : teamsLightTheme;
+  const theme =
+    state.interface.theme === 'dark' ? teamsDarkTheme : teamsLightTheme;
 
   const [hasMounted, setHasMounted] = useState(false);
 

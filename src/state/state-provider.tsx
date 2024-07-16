@@ -2,11 +2,14 @@
 
 import React, { createContext, useContext, useEffect, useReducer } from 'react';
 
-import { reducer } from './reducer';
+import { ActionType, reducer } from './reducer';
+import { StateType } from './state-type';
+
+const LOCAL_STORAGE_KEY = 'decks-state';
 
 interface StateContextProps {
-  state: any;
-  dispatch: React.Dispatch<any>;
+  state: StateType;
+  dispatch: React.Dispatch<ActionType>;
 }
 
 const StateContext = createContext<StateContextProps | undefined>(undefined);
@@ -19,20 +22,37 @@ export const useStateContext = () => {
   return context;
 };
 
+const loadState = (initialState: StateType) => {
+  if (typeof window !== 'undefined') {
+    const persistedState = localStorage.getItem(LOCAL_STORAGE_KEY);
+    if (persistedState) {
+      const parsedState = JSON.parse(persistedState);
+      return {
+        ...initialState,
+        ...parsedState,
+        nodes: initialState.nodes,
+        decks: initialState.decks,
+        contributors: initialState.contributors,
+      };
+    }
+  }
+  return initialState;
+};
+
+const saveState = (state: StateType) => {
+  const { interface: interfaceSettings, settings } = state;
+  const stateToPersist = { interface: interfaceSettings, settings };
+  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(stateToPersist));
+};
+
 export const StateProvider: React.FC<{
-  initialState: any;
+  initialState: StateType;
   children: React.ReactNode;
 }> = ({ initialState, children }) => {
-  const [state, dispatch] = useReducer(reducer, initialState, (initial) => {
-    if (typeof window !== 'undefined') {
-      const persistedState = localStorage.getItem('appState');
-      return persistedState ? JSON.parse(persistedState) : initial;
-    }
-    return initial;
-  });
+  const [state, dispatch] = useReducer(reducer, initialState, loadState);
 
   useEffect(() => {
-    localStorage.setItem('appState', JSON.stringify(state));
+    saveState(state);
   }, [state]);
 
   return (
