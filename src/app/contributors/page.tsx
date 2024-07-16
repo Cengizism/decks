@@ -2,7 +2,7 @@ import BreadCrumps from '@/components/bread-crumps/bread-crumps';
 import Contributor from '@/components/card/contributor';
 import PageHeader from '@/components/page-header/page-header';
 import { ContributorType } from '@/interfaces/types';
-import { getAllContributors } from '@/libraries/';
+import { getAllContributors } from '@/libraries/api';
 
 import styles from '../page.module.css';
 

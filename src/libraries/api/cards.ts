@@ -8,7 +8,7 @@ import {
   getCardLikes,
   isCardBookmarkedByUser,
   isCardLikedByUser,
-} from './db/';
+} from '@/libraries/db';
 import { findDeckByCardId } from './decks';
 
 const contentDirectory = join(process.cwd(), 'content');

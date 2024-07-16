@@ -1,6 +1,6 @@
 'use server';
 
-import { findDeckByCardId } from '@/libraries';
+import { findDeckByCardId } from '@/libraries/api';
 import {
   findCardIdInDb,
   updateCardBookmarkStatus,

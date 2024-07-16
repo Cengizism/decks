@@ -1,7 +1,7 @@
 import Main from '@/components/main/main';
 import { DESCRIPTION, HOME_OG_IMAGE_URL, TITLE } from '@/constants';
 import { ContributorType, DeckType, NodesTreeType } from '@/interfaces/types';
-import { getAllContributors, getAllDecks, getNodeTree } from '@/libraries/';
+import { getAllContributors, getAllDecks, getNodeTree } from '@/libraries/api';
 import ClientStateProvider from '@/providers/client-state-provider';
 import { FluentProviders } from '@/providers/fluent-providers';
 import type { Metadata } from 'next';
