@@ -4,7 +4,7 @@ import AppBar from '@/components/appBar/appBar';
 import { mergeClasses } from '@fluentui/react-components';
 import React, { useCallback, useState } from 'react';
 
-import Navigation from '../navigation/navigation';
+import Navigation from '@/components/navigation/navigation';
 import styles from './main.module.css';
 
 interface MainProps {

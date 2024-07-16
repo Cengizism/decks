@@ -3,7 +3,7 @@
 import { makeStyles, mergeClasses, tokens } from '@fluentui/react-components';
 import React from 'react';
 
-import HamburgerMenu from '../navigation/hamburgerMenu';
+import HamburgerMenu from '@/components/navigation/hamburgerMenu';
 import AltenBrand from './altenBrand';
 import styles from './appBar.module.css';
 import ThemeSwitcher from './themeSwitcher';

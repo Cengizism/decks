@@ -1,4 +1,4 @@
-import { StateType } from './stateType';
+import { StateType } from '@/interfaces/';
 
 export type ActionType = { type: 'SET_THEME'; payload: 'light' | 'dark' };
 

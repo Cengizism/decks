@@ -1,7 +1,7 @@
 import { useEffect, useReducer } from 'react';
 
 import { reducer } from './reducer';
-import { StateType } from './stateType';
+import { StateType } from '@/interfaces/';
 
 const LOCAL_STORAGE_KEY = 'decks-state';
 

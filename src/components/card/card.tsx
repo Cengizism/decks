@@ -21,7 +21,7 @@ import {
 } from '@fluentui/react-icons';
 import React, { useMemo } from 'react';
 
-import Cover from '../cover/cover';
+import Cover from '@/components/cover/cover';
 import styles from './card.module.css';
 
 interface CardComponentProps {

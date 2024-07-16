@@ -13,7 +13,7 @@ import {
 import { BookStar20Regular } from '@fluentui/react-icons';
 import React, { useMemo } from 'react';
 
-import CardStats from '../cardStats/cardStats';
+import CardStats from '@/components/cardStats/cardStats';
 import styles from './card.module.css';
 
 interface PathComponentProps {
