@@ -8,7 +8,7 @@ const initialState: StateType = {
     contributors: getAllContributors(),
   },
   interface: {
-    theme: 'dark', // TODO: When no preference is set, get it from the system
+    theme: 'light', // TODO: When no preference is set, get it from the system
   },
   settings: {},
 };
