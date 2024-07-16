@@ -28,7 +28,7 @@ export const useNodes = () => {
       contributor?: ContributorType;
     } | null => {
       if (nodeType === 'contributor') {
-        const contributor = state.contributors.find(
+        const contributor = state.data.contributors.find(
           (contributor: ContributorType) => contributor.id === nodeId
         );
         return contributor ? { contributor } : null;
@@ -50,7 +50,7 @@ export const useNodes = () => {
       }
       return null;
     };
-  }, [state.contributors]);
+  }, [state.data.contributors]);
 
   const getNodeType = useMemo(() => {
     return (
@@ -74,37 +74,37 @@ export const useNodes = () => {
   }, []);
 
   const getParent = useMemo(() => {
-    return (node: any): PathType | DeckType | undefined => {
+    return (node: any): PathNode | DeckNode | undefined => {
       const nodeType = getNodeType(node);
       if (nodeType === 'card') {
-        const deck = state.nodes.paths
+        const deck = state.data.nodes.paths
           .flatMap((path: PathNode) => path.decks)
           .find((deck: DeckNode) => deck.cards.some((c) => c.id === node.id));
         return deck;
       } else if (nodeType === 'deck') {
-        const path = state.nodes.paths.find((path: PathNode) =>
+        const path = state.data.nodes.paths.find((path: PathNode) =>
           path.decks.some((d) => d.id === node.id)
         );
         return path;
       } else if (nodeType === 'contributor') {
-        const deck = state.decks.find(
+        const deck = state.data.decks.find(
           (deck: DeckType) => deck.contributorId === node.id
         );
         if (deck) {
-          return state.nodes.paths.find((path: PathNode) =>
+          return state.data.nodes.paths.find((path: PathNode) =>
             path.decks.some((d) => d.id === deck.id)
           );
         }
       }
       return undefined;
     };
-  }, [state.nodes, state.decks, getNodeType]);
+  }, [state.data.nodes, state.data.decks, getNodeType]);
 
   return {
     findNode: (
       nodeId: string,
       nodeType: 'path' | 'deck' | 'card' | 'contributor'
-    ) => findNode(state.nodes, nodeId, nodeType),
+    ) => findNode(state.data.nodes, nodeId, nodeType),
     getNodeType,
     getParent,
   };

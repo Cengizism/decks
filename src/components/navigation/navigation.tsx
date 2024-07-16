@@ -86,7 +86,7 @@ const Navigation: React.FC<NavigationProps> = ({
   );
 
   const pathNodes = useMemo(() => {
-    return state.nodes.paths
+    return state.data.nodes.paths
       .filter((path: PathNode) => path.decks.length > 0)
       .map((path: PathNode) => (
         <NavCategory key={path.id} value={path.id}>
@@ -111,7 +111,7 @@ const Navigation: React.FC<NavigationProps> = ({
           </NavSubItemGroup>
         </NavCategory>
       ));
-  }, [state.nodes.paths]);
+  }, [state.data.nodes.paths]);
 
   return (
     <NavDrawer

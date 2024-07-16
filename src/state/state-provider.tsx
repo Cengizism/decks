@@ -30,9 +30,9 @@ const loadState = (initialState: StateType) => {
       return {
         ...initialState,
         ...parsedState,
-        nodes: initialState.nodes,
-        decks: initialState.decks,
-        contributors: initialState.contributors,
+        data: {
+          ...initialState.data, // Always use initial data from the server
+        },
       };
     }
   }

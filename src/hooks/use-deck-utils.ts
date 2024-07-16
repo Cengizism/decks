@@ -15,37 +15,37 @@ export const useDeckUtils = () => {
 
   const getCardCount = useMemo(() => {
     return (deck: DeckType): number => {
-      const deckNode = state.nodes.paths
+      const deckNode = state.data.nodes.paths
         .flatMap((path: PathNode) => path.decks)
         .find((d: DeckNode) => d.id === deck.id);
       return deckNode ? deckNode.cards.length : 0;
     };
-  }, [state.nodes]);
+  }, [state.data.nodes]);
 
   const getDeckCount = useMemo(() => {
     return (path: PathType): number => {
-      const pathNode = state.nodes.paths.find(
+      const pathNode = state.data.nodes.paths.find(
         (p: PathNode) => p.id === path.id
       );
       return pathNode ? pathNode.decks.length : 0;
     };
-  }, [state.nodes]);
+  }, [state.data.nodes]);
 
   const getContributorById = useMemo(() => {
     return (contributorId: string): ContributorType | undefined => {
-      return state.contributors.find(
+      return state.data.contributors.find(
         (contributor: ContributorType) => contributor.id === contributorId
       );
     };
-  }, [state.contributors]);
+  }, [state.data.contributors]);
 
   const getDeckCountByContributorId = useMemo(() => {
     return (contributorId: string): number => {
-      return state.decks.filter(
+      return state.data.decks.filter(
         (deck: DeckType) => deck.contributorId === contributorId
       ).length;
     };
-  }, [state.decks]);
+  }, [state.data.decks]);
 
   return {
     getCardCount,
