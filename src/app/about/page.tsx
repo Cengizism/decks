@@ -1,9 +1,10 @@
+import Main from '@/components/main/main';
 import PageHeader from '@/components/pageHeader/pageHeader';
 import React from 'react';
 
 const About: React.FC = () => {
   return (
-    <>
+    <Main>
       <PageHeader
         title='About'
         subTitle='A community based knowledge sharing platform'
@@ -21,7 +22,7 @@ const About: React.FC = () => {
         facilitate conversations around card topics to share ideas and
         experiences.
       </p>
-    </>
+    </Main>
   );
 };
 

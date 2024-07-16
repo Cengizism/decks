@@ -1,4 +1,5 @@
 import BreadCrumps from '@/components/breadCrumps/breadCrumps';
+import Main from '@/components/main/main';
 import PageHeader from '@/components/pageHeader/pageHeader';
 import { HOME_OG_IMAGE_URL, TITLE } from '@/constants';
 import { getCardsOfDeck, getDeckById, indexDeckIds } from '@/libraries/api';
@@ -25,7 +26,7 @@ export default function DeckPage({ params }: Params) {
   const cards = getCardsOfDeck(deck);
 
   return (
-    <>
+    <Main>
       <BreadCrumps node={deck} />
 
       <PageHeader title={deck.title} subTitle={deck.description} />
@@ -35,7 +36,7 @@ export default function DeckPage({ params }: Params) {
       ) : (
         <div>No cards found for this deck.</div>
       )}
-    </>
+    </Main>
   );
 }
 

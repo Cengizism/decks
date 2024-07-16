@@ -1,5 +1,6 @@
 import BreadCrumps from '@/components/breadCrumps/breadCrumps';
 import Deck from '@/components/card/deck';
+import Main from '@/components/main/main';
 import PageHeader from '@/components/pageHeader/pageHeader';
 import { HOME_OG_IMAGE_URL, TITLE } from '@/constants';
 import { getDecksByPathId, getPathById, indexPathIds } from '@/libraries/api';
@@ -26,7 +27,7 @@ export default function PathPage({ params }: Params) {
   const decks = getDecksByPathId(path.id);
 
   return (
-    <>
+    <Main>
       <BreadCrumps node={path} />
 
       <PageHeader title={path.title} subTitle={path.description} />
@@ -40,7 +41,7 @@ export default function PathPage({ params }: Params) {
       ) : (
         <div>No decks found for this path.</div>
       )}
-    </>
+    </Main>
   );
 }
 

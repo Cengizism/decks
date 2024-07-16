@@ -1,5 +1,6 @@
 import BreadCrumps from '@/components/breadCrumps/breadCrumps';
 import Path from '@/components/card/path';
+import Main from '@/components/main/main';
 import PageHeader from '@/components/pageHeader/pageHeader';
 import type { PathType } from '@/interfaces/';
 import { getAllPaths } from '@/libraries/api';
@@ -10,7 +11,7 @@ const PathsPage: React.FC = () => {
   const paths: PathType[] = getAllPaths();
 
   return (
-    <>
+    <Main>
       <BreadCrumps />
 
       <PageHeader
@@ -27,7 +28,7 @@ const PathsPage: React.FC = () => {
       ) : (
         <div>No paths available.</div>
       )}
-    </>
+    </Main>
   );
 };
 

@@ -1,5 +1,6 @@
 import BreadCrumps from '@/components/breadCrumps/breadCrumps';
 import Contributor from '@/components/card/contributor';
+import Main from '@/components/main/main';
 import PageHeader from '@/components/pageHeader/pageHeader';
 import type { ContributorType } from '@/interfaces/';
 import { getAllContributors } from '@/libraries/api';
@@ -10,7 +11,7 @@ const ContributorsPage: React.FC = () => {
   const contributors: ContributorType[] = getAllContributors();
 
   return (
-    <>
+    <Main>
       <BreadCrumps />
 
       <PageHeader
@@ -27,7 +28,7 @@ const ContributorsPage: React.FC = () => {
       ) : (
         <div>No paths available.</div>
       )}
-    </>
+    </Main>
   );
 };
 

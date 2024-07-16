@@ -1,5 +1,6 @@
 import BreadCrumps from '@/components/breadCrumps/breadCrumps';
 import Cover from '@/components/cover/cover';
+import Main from '@/components/main/main';
 import PageHeader from '@/components/pageHeader/pageHeader';
 import { TITLE } from '@/constants';
 import { findDeckByCardId, getCardById, indexCardIds } from '@/libraries/api';
@@ -27,7 +28,7 @@ export default async function CardPage({ params }: Params) {
   const content = await markdownToHtml(card.content || '');
 
   return (
-    <>
+    <Main>
       <BreadCrumps node={card} />
 
       <PageHeader
@@ -48,7 +49,7 @@ export default async function CardPage({ params }: Params) {
           dangerouslySetInnerHTML={{ __html: content }}
         />
       </article>
-    </>
+    </Main>
   );
 }
 

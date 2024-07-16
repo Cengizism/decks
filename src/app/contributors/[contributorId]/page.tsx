@@ -1,5 +1,6 @@
 import BreadCrumps from '@/components/breadCrumps/breadCrumps';
 import Deck from '@/components/card/deck';
+import Main from '@/components/main/main';
 import PageHeader from '@/components/pageHeader/pageHeader';
 import { HOME_OG_IMAGE_URL, TITLE } from '@/constants';
 import {
@@ -29,7 +30,7 @@ export default function ContributorPage({ params }: Params) {
   const decks = getDecksByContributorId(contributor.id);
 
   return (
-    <>
+    <Main>
       <BreadCrumps node={contributor} />
 
       <PageHeader title={contributor.name} subTitle={contributor.bio} />
@@ -43,7 +44,7 @@ export default function ContributorPage({ params }: Params) {
       ) : (
         <div>No decks found for this path.</div>
       )}
-    </>
+    </Main>
   );
 }
 

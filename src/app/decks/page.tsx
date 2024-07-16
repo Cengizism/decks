@@ -1,5 +1,6 @@
 import BreadCrumps from '@/components/breadCrumps/breadCrumps';
 import Deck from '@/components/card/deck';
+import Main from '@/components/main/main';
 import PageHeader from '@/components/pageHeader/pageHeader';
 import type { DeckType } from '@/interfaces/';
 import { getAllDecks } from '@/libraries/api';
@@ -10,7 +11,7 @@ const DecksPage: React.FC = () => {
   const decks: DeckType[] = getAllDecks();
 
   return (
-    <>
+    <Main>
       <BreadCrumps />
 
       <PageHeader
@@ -27,7 +28,7 @@ const DecksPage: React.FC = () => {
       ) : (
         <div>No decks available.</div>
       )}
-    </>
+    </Main>
   );
 };
 

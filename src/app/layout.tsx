@@ -1,4 +1,3 @@
-import Main from '@/components/main/main';
 import { DESCRIPTION, HOME_OG_IMAGE_URL, TITLE } from '@/constants';
 import { FluentProvider } from '@/state/fluentProvider';
 import initialState from '@/state/initialState';
@@ -63,9 +62,7 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
 
       <body>
         <StateProvider initialState={initialState}>
-          <FluentProvider>
-            <Main>{children}</Main>
-          </FluentProvider>
+          <FluentProvider>{children}</FluentProvider>
         </StateProvider>
       </body>
     </html>
