@@ -1,9 +1,14 @@
+import { getAllUsers } from '@/libraries/db';
 import * as React from 'react';
 
+import UsersList from './usersList';
+
 const Login: React.FC = () => {
+  const users = getAllUsers();
+
   return (
     <>
-      <div>Users list</div>
+      <UsersList users={users} />
     </>
   );
 };

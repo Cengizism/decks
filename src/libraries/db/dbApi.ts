@@ -134,3 +134,9 @@ export function getUserById(userId: number): UserType | null {
   const result = stmt.get(userId) as UserType | undefined;
   return result ? result : null;
 }
+
+export function getAllUsers(): UserType[] {
+  const stmt = db.prepare('SELECT id, name, avatar, email FROM users');
+  const result = stmt.all() as UserType[];
+  return result;
+}
