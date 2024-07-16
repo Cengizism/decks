@@ -1,4 +1,4 @@
-import { ContributorType } from '@/interfaces/types';
+import { ContributorType } from '@/interfaces/';
 
 import { contributors } from './data';
 

@@ -3,7 +3,7 @@
 import { LinkComponent as FluentLink } from '@/components/link/link';
 import { useDeckUtils } from '@/hooks/useDeckUtils';
 import { useNodes } from '@/hooks/useNodes';
-import { DeckType } from '@/interfaces/types';
+import { DeckType } from '@/interfaces/';
 import {
   Body1,
   Button,

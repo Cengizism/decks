@@ -1,4 +1,4 @@
-import { CardType } from '@/interfaces/types';
+import { CardType } from '@/interfaces/';
 import {
   findCardIdInDb,
   getCardLikes,

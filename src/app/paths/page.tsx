@@ -1,7 +1,7 @@
 import BreadCrumps from '@/components/breadCrumps/breadCrumps';
 import Path from '@/components/card/path';
 import PageHeader from '@/components/pageHeader/pageHeader';
-import { PathType } from '@/interfaces/types';
+import { PathType } from '@/interfaces/';
 import { getAllPaths } from '@/libraries/api';
 
 import styles from '../page.module.css';

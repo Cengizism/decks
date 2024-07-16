@@ -6,7 +6,7 @@ import {
   DeckType,
   PathNode,
   PathType,
-} from '@/interfaces/types';
+} from '@/interfaces/';
 import { useStateContext } from '@/state/stateProvider';
 import { useMemo } from 'react';
 

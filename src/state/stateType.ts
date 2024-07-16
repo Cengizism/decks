@@ -1,4 +1,4 @@
-import { ContributorType, DeckType, NodesTreeType } from '@/interfaces/types';
+import { ContributorType, DeckType, NodesTreeType } from '@/interfaces/';
 
 export interface InterfaceSettings {
   theme: 'light' | 'dark' | 'system';

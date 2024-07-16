@@ -1,6 +1,6 @@
 'use client';
 
-import { PathNode } from '@/interfaces/types';
+import { PathNode } from '@/interfaces/';
 import { useStateContext } from '@/state/stateProvider';
 import { Text } from '@fluentui/react-components';
 import {

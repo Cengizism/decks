@@ -1,4 +1,4 @@
-import { NodesTreeType } from '@/interfaces/types';
+import { NodesTreeType } from '@/interfaces/';
 
 import { getCardById } from './cards';
 import { decks, paths } from './data';

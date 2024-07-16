@@ -1,7 +1,7 @@
 import BreadCrumps from '@/components/breadCrumps/breadCrumps';
 import Contributor from '@/components/card/contributor';
 import PageHeader from '@/components/pageHeader/pageHeader';
-import { ContributorType } from '@/interfaces/types';
+import { ContributorType } from '@/interfaces/';
 import { getAllContributors } from '@/libraries/api';
 
 import styles from '../page.module.css';

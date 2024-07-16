@@ -3,7 +3,7 @@
 import CardStats from '@/components/cardStats/cardStats';
 import { LinkComponent as Link } from '@/components/link/link';
 import { useNodes } from '@/hooks/useNodes';
-import { CardType } from '@/interfaces/types';
+import { CardType } from '@/interfaces/';
 import {
   Body1,
   Button,

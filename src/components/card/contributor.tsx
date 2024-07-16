@@ -2,7 +2,7 @@
 
 import { LinkComponent as Link } from '@/components/link/link';
 import { useDeckUtils } from '@/hooks/useDeckUtils';
-import { ContributorType } from '@/interfaces/types';
+import { ContributorType } from '@/interfaces/';
 import {
   Body1,
   Card,

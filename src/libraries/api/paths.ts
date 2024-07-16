@@ -1,4 +1,4 @@
-import { PathType } from '@/interfaces/types';
+import { PathType } from '@/interfaces/';
 
 import { decks, paths } from './data';
 

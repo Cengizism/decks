@@ -1,12 +1,7 @@
 'use client';
 
 import { useNodes } from '@/hooks/useNodes';
-import {
-  CardType,
-  ContributorType,
-  DeckType,
-  PathType,
-} from '@/interfaces/types';
+import { CardType, ContributorType, DeckType, PathType } from '@/interfaces/';
 import {
   Breadcrumb,
   BreadcrumbButton,
