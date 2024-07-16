@@ -1,5 +1,6 @@
 'use client';
 
+import { setUser } from '@/actions/userActions';
 import { UserType } from '@/interfaces';
 import {
   Divider,
@@ -8,7 +9,7 @@ import {
   makeStyles,
 } from '@fluentui/react-components';
 import { List, ListItem } from '@fluentui/react-list-preview';
-import * as React from 'react';
+import React from 'react';
 
 const useStyles = makeStyles({
   section: {
@@ -31,13 +32,8 @@ interface UsersListProps {
 const UsersList: React.FC<UsersListProps> = ({ users }) => {
   const styles = useStyles();
 
-  const selectUser = (userId: number) => {
-    const user = users.find((user) => user.id === userId);
-    if (user) {
-      console.log('User selected:', user);
-    } else {
-      console.log('User not found');
-    }
+  const selectUser = async (userId: number) => {
+    await setUser(userId);
   };
 
   return (
