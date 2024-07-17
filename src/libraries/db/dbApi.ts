@@ -140,3 +140,34 @@ export function getAllUsers(): UserType[] {
   const result = stmt.all() as UserType[];
   return result;
 }
+
+export function saveSession(userId: number): boolean {
+  try {
+    db.exec('DELETE FROM sessions');
+
+    const stmt = db.prepare('INSERT INTO sessions (user_id) VALUES (?)');
+    const result = stmt.run(userId);
+    return result.changes > 0;
+  } catch (error) {
+    console.error('Error saving session:', error);
+    return false;
+  }
+}
+
+// Maybe not needed at all
+export function emptySessions(): boolean {
+  try {
+    const stmt = db.prepare('DELETE FROM sessions');
+    stmt.run();
+    return true;
+  } catch (error) {
+    console.error('Error emptying sessions:', error);
+    return false;
+  }
+}
+
+export function getActiveSession(): number | null {
+  const stmt = db.prepare('SELECT user_id FROM sessions LIMIT 1');
+  const result = stmt.get() as { user_id: number } | undefined;
+  return result ? result.user_id : null;
+}

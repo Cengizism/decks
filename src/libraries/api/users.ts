@@ -1,6 +1,10 @@
 import type { UserType } from "@/interfaces";
-import { getUserById } from "../db";
+import { getActiveSession, getUserById } from "../db";
 
 export function getUser(): UserType | null {
-  return getUserById(2);
+  const userIdOfActiveSession = getActiveSession();
+  if (userIdOfActiveSession === null) {
+    return null;
+  }
+  return getUserById(userIdOfActiveSession);
 }

@@ -1,5 +1,6 @@
 'use client';
 
+import { logout } from '@/actions/userActions';
 import HamburgerMenu from '@/components/navigation/hamburgerMenu';
 import { useStateContext } from '@/state/stateProvider';
 import {
@@ -27,9 +28,14 @@ const useInlineStyles = makeStyles({
 
 const AppBar: React.FC = () => {
   const inlineStyles = useInlineStyles();
-  const { state } = useStateContext();
+  const { state, dispatch } = useStateContext();
   const { isNavigationDrawerOpen } = state.interface;
   const { user } = state;
+
+  const handleLogout = () => {
+    dispatch({ type: 'SET_USER', payload: null });
+    logout();
+  };
 
   return (
     <header className={mergeClasses(styles.header, inlineStyles.header)}>
@@ -46,9 +52,7 @@ const AppBar: React.FC = () => {
         </Link>
         <ToolbarDivider />
         <ToolbarButton
-          onClick={() => {
-            console.log('Logging out...');
-          }}
+          onClick={handleLogout}
           aria-label='Log out'
           icon={<ArrowExitRegular />}
         />
