@@ -1,8 +1,8 @@
 'use server';
 
-import { emptySessions, saveSession } from "@/libraries/db/dbApi";
-import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
+import { emptySessions, saveSession } from '@/libraries/db/dbApi';
+import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 
 export async function setUser(userId: number) {
   saveSession(userId);

@@ -35,7 +35,7 @@ export const reducer = (state: StateType, action: ActionType): StateType => {
     case 'SET_USER':
       return {
         ...state,
-        user: action.payload
+        user: action.payload,
       };
     default:
       return state;

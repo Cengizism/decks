@@ -15,7 +15,7 @@ const UserSetter: React.FC<UserSetterProps> = ({ user }) => {
     if (user) {
       dispatch({ type: 'SET_USER', payload: user });
     }
-  }, [user]);
+  }, [user, dispatch]);
 
   return null;
 };

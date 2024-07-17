@@ -17,4 +17,3 @@ const Avatar: React.FC<AvatarProps> = ({ user }) => {
 };
 
 export default React.memo(Avatar);
-

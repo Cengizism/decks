@@ -1,5 +1,10 @@
 import type { StateType } from '@/interfaces/';
-import { getAllContributors, getAllDecks, getNodeTree, getUser } from '@/libraries/api';
+import {
+  getAllContributors,
+  getAllDecks,
+  getNodeTree,
+  getUser,
+} from '@/libraries/api';
 
 const initialState: StateType = {
   data: {

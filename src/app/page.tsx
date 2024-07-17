@@ -3,7 +3,10 @@ import PageHeader from '@/components/pageHeader/pageHeader';
 import { DESCRIPTION } from '@/constants';
 import { getUser } from '@/libraries/api';
 import * as React from 'react';
-import UserSetter from './userSetter'; // TODO: Temporary solution!
+
+import UserSetter from './userSetter';
+
+// TODO: Temporary solution!
 
 const Index: React.FC = () => {
   const user = getUser();

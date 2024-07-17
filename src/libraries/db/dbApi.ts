@@ -1,4 +1,5 @@
 import { UserType } from '@/interfaces';
+
 import { db } from './db';
 
 export function findCardIdInDb(card: string, deck: string): number | null {
@@ -130,7 +131,9 @@ export function cardExists(card: string, deck: string): boolean {
 }
 
 export function getUserById(userId: number): UserType | null {
-  const stmt = db.prepare('SELECT id, name, avatar, email FROM users WHERE id = ?');
+  const stmt = db.prepare(
+    'SELECT id, name, avatar, email FROM users WHERE id = ?'
+  );
   const result = stmt.get(userId) as UserType | undefined;
   return result ? result : null;
 }
