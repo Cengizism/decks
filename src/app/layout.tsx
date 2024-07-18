@@ -7,12 +7,27 @@ import * as React from 'react';
 
 import './globals.css';
 
+const getMetadataBaseUrl = (): URL | undefined => {
+  if (process.env.NODE_ENV === 'development') {
+    return process.env.NEXT_LOCAL_BASE_URL
+      ? new URL(process.env.NEXT_LOCAL_BASE_URL)
+      : undefined;
+  } else if (process.env.NODE_ENV === 'production') {
+    return process.env.NEXT_PUBLIC_BASE_URL
+      ? new URL(process.env.NEXT_PUBLIC_BASE_URL)
+      : undefined;
+  }
+  return undefined;
+};
+
 export const metadata: Metadata = {
-  // TODO: "metadataBase" needs to be updated with env variables
-  // https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
-  metadataBase: process.env.SITE_URL
-    ? new URL(process.env.SITE_URL)
-    : undefined,
+  metadataBase: getMetadataBaseUrl(),
+  alternates: {
+    canonical: '/',
+    languages: {
+      'en-US': '/en-US',
+    },
+  },
   title: TITLE,
   description: DESCRIPTION,
   openGraph: {
