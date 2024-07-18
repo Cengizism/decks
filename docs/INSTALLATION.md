@@ -34,7 +34,7 @@ Follow these steps to set up the development environment:
 
    **Note**: Initial page loads might be slow as the server compiles pages for the first time. Subsequent loads will be faster. This delay does not occur in production mode, where all pages are precompiled during the build process.
 
-5. **Open Your Browser** and navigate to [http://localhost:3000](http://localhost:3000) to view the platform.
+5. **Open Your Browser** and navigate to [http://localhost:4000](http://localhost:4000) to view the platform.
 
 ## 2. Building and Running the Production Version
 
@@ -50,7 +50,7 @@ Follow these steps to set up the development environment:
    pnpm start
    ```
 
-3. **Open Your Browser** and navigate to [http://localhost:3000](http://localhost:3000) to view the production version of the platform.
+3. **Open Your Browser** and navigate to [http://localhost:4000](http://localhost:4000) to view the production version of the platform.
 
 ## 3. Linting and Formatting
 
