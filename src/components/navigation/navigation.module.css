@@ -15,3 +15,7 @@
 .navigation button:hover {
   cursor: pointer;
 }
+
+.navigation button {
+  transition: none;
+}
