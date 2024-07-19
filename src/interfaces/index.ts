@@ -5,3 +5,4 @@ export * from './contributorType';
 export * from './nodesType';
 export * from './stateType';
 export * from './userType';
+export * from './bookmarkType';

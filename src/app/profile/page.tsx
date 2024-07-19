@@ -1,13 +1,16 @@
+import DeckCards from '@/components/deckCards';
 import Main from '@/components/main/main';
 import PageHeader from '@/components/pageHeader/pageHeader';
 import { getActiveSession } from '@/libraries/db';
-import { getUserById } from '@/libraries/db/dbApi';
+import { getBookmarksOfUserId, getUserById } from '@/libraries/db/dbApi';
 import Image from 'next/image';
 import React from 'react';
 
 const Profile: React.FC = () => {
   const activeSessionUserId = getActiveSession();
   const user = getUserById(activeSessionUserId as number);
+
+  const cards = getBookmarksOfUserId(activeSessionUserId as number);
 
   return (
     <Main>
@@ -21,6 +24,12 @@ const Profile: React.FC = () => {
         title={user?.name as string}
         subTitle={user?.id === 1 ? 'Learner' : 'Contributor'}
       />
+
+      {cards.length > 0 ? (
+        <DeckCards cards={cards} />
+      ) : (
+        <div>No bookmarks found for this user.</div>
+      )}
     </Main>
   );
 };

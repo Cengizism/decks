@@ -1,6 +1,8 @@
-import { UserType } from '@/interfaces';
+import { BookmarkType, CardType, UserType } from '@/interfaces';
 
+import { getCardById, getUser } from '../api';
 import { db } from './db';
+import { cardFilesCache } from '../api/cardFilesCache';
 
 export function findCardIdInDb(card: string, deck: string): number | null {
   const stmt = db.prepare('SELECT id FROM cards WHERE card = ? AND deck = ?');
@@ -96,10 +98,11 @@ export async function updateCardBookmarkStatus(
 
 export function getCardsFromDb(maxNumber: number): any[] {
   const limitClause = maxNumber ? 'LIMIT ?' : '';
+  const user = getUser();
   const stmt = db.prepare(`
     SELECT id, card, deck, COUNT(likes.card_id) AS likes,
-           EXISTS(SELECT 1 FROM likes WHERE likes.card_id = id AND likes.user_id = 2) AS isLiked,
-           EXISTS(SELECT 1 FROM bookmarks WHERE bookmarks.card_id = id AND bookmarks.user_id = 2) AS isBookmarked
+           EXISTS(SELECT 1 FROM likes WHERE likes.card_id = id AND likes.user_id = ${user?.id}) AS isLiked,
+           EXISTS(SELECT 1 FROM bookmarks WHERE bookmarks.card_id = id AND bookmarks.user_id = ${user?.id}) AS isBookmarked
     FROM cards
     LEFT JOIN likes ON id = likes.card_id
     LEFT JOIN bookmarks ON id = bookmarks.card_id
@@ -173,4 +176,30 @@ export function getActiveSession(): number | null {
   const stmt = db.prepare('SELECT user_id FROM sessions LIMIT 1');
   const result = stmt.get() as { user_id: number } | undefined;
   return result ? result.user_id : null;
+}
+
+export function getBookmarksOfUserId(userId: number): CardType[] {
+  const stmt = db.prepare(
+    `SELECT card_id
+     FROM bookmarks
+     WHERE user_id = ?`
+  );
+
+  const bookmarkedCardIds = stmt.all(userId) as { card_id: number }[];
+  const bookmarkedCards: CardType[] = [];
+
+  Object.keys(cardFilesCache).forEach(deckId => {
+    cardFilesCache[deckId].forEach(cardFile => {
+      const cardId = cardFile.replace('.mdx', '');
+      const dbCardId = findCardIdInDb(cardId, deckId);
+      if (dbCardId && bookmarkedCardIds.some(b => b.card_id === dbCardId)) {
+        const card = getCardById(cardId);
+        if (card) {
+          bookmarkedCards.push(card);
+        }
+      }
+    });
+  });
+
+  return bookmarkedCards;
 }

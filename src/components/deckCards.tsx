@@ -9,7 +9,7 @@ import type { CardType } from '@/interfaces/';
 import { startTransition } from 'react';
 import React, { useOptimistic } from 'react';
 
-import styles from '../../page.module.css';
+import styles from '../app/page.module.css';
 
 interface DeckCardsProps {
   cards: CardType[];

@@ -1,12 +1,11 @@
 import BreadCrumps from '@/components/breadCrumps/breadCrumps';
+import DeckCards from '@/components/deckCards';
 import Main from '@/components/main/main';
 import PageHeader from '@/components/pageHeader/pageHeader';
 import { HOME_OG_IMAGE_URL, TITLE } from '@/constants';
 import { getCardsOfDeck, getDeckById, indexDeckIds } from '@/libraries/api';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-
-import DeckCards from './deckCards';
 
 interface Params {
   params: {

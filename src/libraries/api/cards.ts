@@ -6,10 +6,13 @@ import {
   isCardLikedByUser,
 } from '@/libraries/db';
 import fs from 'fs';
+// TODO
+// @ts-ignore
 import matter from 'gray-matter';
 import { join } from 'path';
 
 import { findDeckByCardId } from './decks';
+import { getUser } from './users';
 
 const contentDirectory = join(process.cwd(), 'content');
 
@@ -38,7 +41,7 @@ export function getCardById(cardId: string): CardType | null {
 
     const processedContent = content.replace(
       /!\[([^\]]*)\]\((images\/[^)]+)\)/g,
-      (_, imageTitle, imageFileNameWithExtension) => {
+      (_: unknown, imageTitle: string, imageFileNameWithExtension: string) => {
         return `![${imageTitle}](/api/content/${deck.id}/${imageFileNameWithExtension})`;
       }
     );
@@ -50,8 +53,10 @@ export function getCardById(cardId: string): CardType | null {
     }
 
     const likes = getCardLikes(dbCardId);
-    const isLiked = isCardLikedByUser(dbCardId, 2);
-    const isBookmarked = isCardBookmarkedByUser(dbCardId, 2);
+
+    const user = getUser();
+    const isLiked = isCardLikedByUser(dbCardId, user?.id || 0); // TODO: Temporary
+    const isBookmarked = isCardBookmarkedByUser(dbCardId, user?.id || 0); // TODO: Temporary
 
     return {
       ...data,

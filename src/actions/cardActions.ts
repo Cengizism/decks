@@ -1,6 +1,6 @@
 'use server';
 
-import { findDeckByCardId } from '@/libraries/api';
+import { findDeckByCardId, getUser } from '@/libraries/api';
 import {
   findCardIdInDb,
   updateCardBookmarkStatus,
@@ -14,11 +14,14 @@ async function toggleCardStatus(
 ): Promise<void> {
   const deck = findDeckByCardId(cardId);
   const cardIdInDb = deck ? findCardIdInDb(cardId, deck.id) : null;
+
+  const user = getUser();
+
   if (cardIdInDb !== null) {
     if (type === 'like') {
-      await updateCardLikeStatus(cardIdInDb, 2);
+      await updateCardLikeStatus(cardIdInDb, user?.id || 0); // TODO: Temporary
     } else {
-      await updateCardBookmarkStatus(cardIdInDb, 2);
+      await updateCardBookmarkStatus(cardIdInDb, user?.id || 0); // TODO: Temporary
     }
     revalidatePath('/', 'layout');
   }
