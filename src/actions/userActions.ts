@@ -1,6 +1,6 @@
 'use server';
 
-import { emptySessions, saveSession } from '@/libraries/db/dbApi';
+import { emptySessions, saveSession } from '@/libraries/api';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 

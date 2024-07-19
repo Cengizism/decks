@@ -1,4 +1,4 @@
-import { getAllUsers } from '@/libraries/db';
+import { getAllUsers } from '@/libraries/api';
 import * as React from 'react';
 
 import styles from './page.module.css';

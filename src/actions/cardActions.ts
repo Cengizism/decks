@@ -5,7 +5,7 @@ import {
   findCardIdInDb,
   updateCardBookmarkStatus,
   updateCardLikeStatus,
-} from '@/libraries/db/';
+} from '@/libraries/api';
 import { revalidatePath } from 'next/cache';
 
 async function toggleCardStatus(
