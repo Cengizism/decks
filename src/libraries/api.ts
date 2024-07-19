@@ -16,19 +16,19 @@ import contributorsData from '../../content/contributors.json';
 import decksData from '../../content/decks.json';
 import pathsData from '../../content/paths.json';
 
-export const contributors: ContributorType[] = contributorsData;
-export const decks: DeckType[] = decksData;
-export const paths: PathType[] = pathsData;
+const contributors: ContributorType[] = contributorsData;
+const decks: DeckType[] = decksData;
+const paths: PathType[] = pathsData;
 
 const contentDirectory = join(process.cwd(), 'content');
 
-export const db = new sql('data.db');
+const db = new sql('data.db');
 
-export const cardFilesCache: Record<string, string[]> = {};
+const cardFilesCache: Record<string, string[]> = {};
 
 initializeCardFilesCache(decks);
 
-export function initDb() {
+function initDb() {
   db.exec(`
     CREATE TABLE IF NOT EXISTS users (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -115,11 +115,11 @@ function getCount(table: string, cardIdInDb: number): number {
   return result.count;
 }
 
-export function getCardLikes(cardIdInDb: number): number {
+function getCardLikes(cardIdInDb: number): number {
   return getCount('likes', cardIdInDb);
 }
 
-export function getCardBookmarks(cardIdInDb: number): number {
+function getCardBookmarks(cardIdInDb: number): number {
   return getCount('bookmarks', cardIdInDb);
 }
 
@@ -135,11 +135,11 @@ function isActionByUser(
   return result.count > 0;
 }
 
-export function isCardLikedByUser(cardIdInDb: number, userId: number): boolean {
+function isCardLikedByUser(cardIdInDb: number, userId: number): boolean {
   return isActionByUser('likes', cardIdInDb, userId);
 }
 
-export function isCardBookmarkedByUser(
+function isCardBookmarkedByUser(
   cardIdInDb: number,
   userId: number
 ): boolean {
@@ -193,7 +193,7 @@ export async function updateCardBookmarkStatus(
   return updateCardStatus('bookmarks', cardId, userId);
 }
 
-export function getCardsFromDb(maxNumber: number): any[] {
+function getCardsFromDb(maxNumber: number): any[] {
   const limitClause = maxNumber ? 'LIMIT ?' : '';
   const user = getUser();
   const stmt = db.prepare(`
@@ -211,7 +211,7 @@ export function getCardsFromDb(maxNumber: number): any[] {
   return maxNumber ? stmt.all(maxNumber) : stmt.all();
 }
 
-export function storeCardInDb(card: string, deck: string): boolean {
+function storeCardInDb(card: string, deck: string): boolean {
   try {
     if (!db) {
       throw new Error('Database connection is not initialized.');
@@ -225,7 +225,7 @@ export function storeCardInDb(card: string, deck: string): boolean {
   }
 }
 
-export function doesCardExistInDb(card: string, deck: string): boolean {
+function doesCardExistInDb(card: string, deck: string): boolean {
   try {
     if (!db) {
       throw new Error('Database connection is not initialized.');
@@ -312,7 +312,7 @@ export function getBookmarksOfUserId(userId: number): CardType[] {
   return bookmarkedCards;
 }
 
-export function initializeCardFilesCache(decks: { id: string }[]): void {
+function initializeCardFilesCache(decks: { id: string }[]): void {
   decks.forEach(({ id }) => {
     const deckPath = join(contentDirectory, id);
     try {
@@ -425,7 +425,7 @@ export function getCardsOfDeck(deck: DeckType): CardType[] {
     .filter((card): card is CardType => card !== null);
 }
 
-export function readCardFiles(folder: string): string[] {
+function readCardFiles(folder: string): string[] {
   if (!folder) {
     console.error('Invalid folder name:', folder);
     return [];
@@ -488,7 +488,7 @@ export function getPathById(id: string): PathType | null {
   return path && decks.some((deck) => deck.pathId === path.id) ? path : null;
 }
 
-export function getPathOfDeck(deckId: string): PathType | null {
+function getPathOfDeck(deckId: string): PathType | null {
   const deck = decks.find((deck) => deck.id === deckId);
   if (deck) {
     return paths.find((path) => path.id === deck.pathId) || null;

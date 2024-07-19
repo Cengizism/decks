@@ -10,11 +10,7 @@ const Profile: React.FC = () => {
   const activeSessionUserId = getActiveSession();
   const user = getUserById(activeSessionUserId as number);
 
-  console.log('user', user);
-
   const cards = getBookmarksOfUserId(activeSessionUserId as number);
-
-  console.log('cards', cards);
 
   return (
     <Main>
