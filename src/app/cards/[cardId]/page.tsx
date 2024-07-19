@@ -3,7 +3,7 @@ import Cover from '@/components/cover/cover';
 import Main from '@/components/main/main';
 import PageHeader from '@/components/pageHeader/pageHeader';
 import { TITLE } from '@/constants';
-import { findDeckByCardId, getCardById, indexCardIds } from '@/libraries/api';
+import { getCardById, indexCardIds, traceDeckByCardId } from '@/libraries/api';
 import markdownToHtml from '@/libraries/utilities/markdownToHtml';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
@@ -24,7 +24,7 @@ export default async function CardPage({ params }: Params) {
     return notFound();
   }
 
-  const deck = findDeckByCardId(cardId);
+  const deck = traceDeckByCardId(cardId);
   const content = await markdownToHtml(card.content || '');
 
   return (

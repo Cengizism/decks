@@ -2,7 +2,7 @@ import DeckCards from '@/components/deckCards';
 import Main from '@/components/main/main';
 import PageHeader from '@/components/pageHeader/pageHeader';
 import { getActiveSession } from '@/libraries/api';
-import { getBookmarksOfUserId, getUserById } from '@/libraries/api';
+import { getBookmarksByUserId, getUserById } from '@/libraries/api';
 import Image from 'next/image';
 import React from 'react';
 
@@ -10,7 +10,7 @@ const Profile: React.FC = () => {
   const activeSessionUserId = getActiveSession();
   const user = getUserById(activeSessionUserId as number);
 
-  const cards = getBookmarksOfUserId(activeSessionUserId as number);
+  const cards = getBookmarksByUserId(activeSessionUserId as number);
 
   return (
     <Main>

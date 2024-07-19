@@ -1,8 +1,8 @@
 'use server';
 
-import { findDeckByCardId, getUser } from '@/libraries/api';
+import { getUser, traceDeckByCardId } from '@/libraries/api';
 import {
-  findCardIdInDb,
+  traceCardIdInDb,
   updateCardBookmarkStatus,
   updateCardLikeStatus,
 } from '@/libraries/api';
@@ -12,8 +12,8 @@ async function toggleCardStatus(
   cardId: string,
   type: 'like' | 'bookmark'
 ): Promise<void> {
-  const deck = findDeckByCardId(cardId);
-  const cardIdInDb = deck ? findCardIdInDb(cardId, deck.id) : null;
+  const deck = traceDeckByCardId(cardId);
+  const cardIdInDb = deck ? traceCardIdInDb(cardId, deck.id) : null;
 
   const user = getUser();
 
