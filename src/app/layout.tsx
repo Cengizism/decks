@@ -7,21 +7,10 @@ import * as React from 'react';
 
 import './globals.css';
 
-const getMetadataBaseUrl = (): URL | undefined => {
-  if (process.env.NODE_ENV === 'development') {
-    return process.env.NEXT_LOCAL_BASE_URL
-      ? new URL(process.env.NEXT_LOCAL_BASE_URL)
-      : undefined;
-  } else if (process.env.NODE_ENV === 'production') {
-    return process.env.NEXT_PUBLIC_BASE_URL
-      ? new URL(process.env.NEXT_PUBLIC_BASE_URL)
-      : undefined;
-  }
-  return undefined;
-};
-
 export const metadata: Metadata = {
-  metadataBase: getMetadataBaseUrl(),
+  metadataBase: process.env.NEXT_BASE_URL
+    ? new URL(process.env.NEXT_BASE_URL)
+    : undefined,
   alternates: {
     canonical: '/',
     languages: {
