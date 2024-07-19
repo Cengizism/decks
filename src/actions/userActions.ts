@@ -4,7 +4,7 @@ import { emptySessions, saveSession } from '@/libraries/api';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
-export async function setUser(userId: number) {
+export async function login(userId: number) {
   saveSession(userId);
   revalidatePath('/', 'layout');
   redirect('/');

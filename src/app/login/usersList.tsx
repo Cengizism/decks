@@ -1,6 +1,6 @@
 'use client';
 
-import { setUser } from '@/actions/userActions';
+import { login } from '@/actions/userActions';
 import { UserType } from '@/interfaces';
 import {
   Divider,
@@ -33,7 +33,7 @@ const UsersList: React.FC<UsersListProps> = ({ users }) => {
   const styles = useStyles();
 
   const selectUser = async (userId: number) => {
-    await setUser(userId);
+    await login(userId);
   };
 
   return (
