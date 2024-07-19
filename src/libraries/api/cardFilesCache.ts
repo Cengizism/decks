@@ -1,4 +1,4 @@
-import { cardExists, storeCard } from '@/libraries/db';
+import { doesCardExistInDb, storeCardInDb } from '@/libraries/db';
 import fs from 'fs';
 import { join } from 'path';
 
@@ -18,8 +18,8 @@ export function initializeCardFilesCache(decks: { id: string }[]): void {
 
       cardFiles.forEach((file) => {
         const cardId = file.replace('.mdx', '');
-        if (!cardExists(cardId, id)) {
-          storeCard(cardId, id);
+        if (!doesCardExistInDb(cardId, id)) {
+          storeCardInDb(cardId, id);
         }
       });
     } catch (error) {

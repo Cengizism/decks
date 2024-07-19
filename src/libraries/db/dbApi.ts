@@ -1,8 +1,12 @@
-import { BookmarkType, CardType, UserType } from '@/interfaces';
+import {
+  BookmarkType, // Not used for now
+  CardType,
+  UserType,
+} from '@/interfaces';
 
 import { getCardById, getUser } from '../api';
-import { db } from './db';
 import { cardFilesCache } from '../api/cardFilesCache';
+import { db } from './db';
 
 export function findCardIdInDb(card: string, deck: string): number | null {
   const stmt = db.prepare('SELECT id FROM cards WHERE card = ? AND deck = ?');
@@ -114,8 +118,12 @@ export function getCardsFromDb(maxNumber: number): any[] {
   return maxNumber ? stmt.all(maxNumber) : stmt.all();
 }
 
-export function storeCard(card: string, deck: string): boolean {
+export function storeCardInDb(card: string, deck: string): boolean {
+  // console.log('Storing card:', card, deck); // Debug log
   try {
+    if (!db) {
+      throw new Error('Database connection is not initialized.');
+    }
     const stmt = db.prepare('INSERT INTO cards (card, deck) VALUES (?, ?)');
     const result = stmt.run(card, deck);
     return result.changes > 0;
@@ -125,12 +133,21 @@ export function storeCard(card: string, deck: string): boolean {
   }
 }
 
-export function cardExists(card: string, deck: string): boolean {
-  const stmt = db.prepare(
-    'SELECT COUNT(*) AS count FROM cards WHERE card = ? AND deck = ?'
-  );
-  const result = stmt.get(card, deck) as { count: number };
-  return result.count > 0;
+export function doesCardExistInDb(card: string, deck: string): boolean {
+  // console.log('Checking card existence for:', card, deck); // Debug log
+  try {
+    if (!db) {
+      throw new Error('Database connection is not initialized.');
+    }
+    const stmt = db.prepare(
+      'SELECT COUNT(*) AS count FROM cards WHERE card = ? AND deck = ?'
+    );
+    const result = stmt.get(card, deck) as { count: number };
+    return result.count > 0;
+  } catch (error) {
+    console.error('Error in cardExists:', error);
+    return false;
+  }
 }
 
 export function getUserById(userId: number): UserType | null {
@@ -188,11 +205,11 @@ export function getBookmarksOfUserId(userId: number): CardType[] {
   const bookmarkedCardIds = stmt.all(userId) as { card_id: number }[];
   const bookmarkedCards: CardType[] = [];
 
-  Object.keys(cardFilesCache).forEach(deckId => {
-    cardFilesCache[deckId].forEach(cardFile => {
+  Object.keys(cardFilesCache).forEach((deckId) => {
+    cardFilesCache[deckId].forEach((cardFile) => {
       const cardId = cardFile.replace('.mdx', '');
       const dbCardId = findCardIdInDb(cardId, deckId);
-      if (dbCardId && bookmarkedCardIds.some(b => b.card_id === dbCardId)) {
+      if (dbCardId && bookmarkedCardIds.some((b) => b.card_id === dbCardId)) {
         const card = getCardById(cardId);
         if (card) {
           bookmarkedCards.push(card);
