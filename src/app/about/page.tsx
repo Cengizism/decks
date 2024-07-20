@@ -1,27 +1,28 @@
 import Main from '@/components/main/main';
 import PageHeader from '@/components/pageHeader/pageHeader';
+import { getPageContent } from '@/libraries/api';
+import markdownToHtml from '@/libraries/utilities/markdownToHtml';
 import React from 'react';
 
-const About: React.FC = () => {
+import styles from '../cards/[cardId]/page.module.css';
+
+const About: React.FC = async () => {
+  const { data, content } = getPageContent('about') ?? {
+    data: null,
+    content: '',
+  };
+  const article = await markdownToHtml(content !== null ? content : '');
+
   return (
     <Main>
-      <PageHeader
-        title='About'
-        subTitle='A community based knowledge sharing platform'
-      />
+      <PageHeader title={data?.title} subTitle={data?.subTitle} />
 
-      {/* TODO: This content should come from a markdown as well */}
-      <p>
-        Alten Decks is designed to be a community-based knowledge sharing
-        platform. Its content is driven by collaborators and consists of decks
-        and cards. Decks are logical clusters of subject-related topics, which
-        are represented by cards in this context. Each card provides crucial
-        information on a topic and includes links to external resources for
-        further reading. Users can read and bookmark cards, allowing them to
-        return to them easily. In future iterations, the platform aims to
-        facilitate conversations around card topics to share ideas and
-        experiences.
-      </p>
+      <article>
+        <div
+          className={styles.markdown}
+          dangerouslySetInnerHTML={{ __html: article }}
+        />
+      </article>
     </Main>
   );
 };

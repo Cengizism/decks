@@ -2,8 +2,8 @@
 
 import {
   getUser,
-  traceDeckByCardId,
   traceCardIdInDb,
+  traceDeckByCardId,
   updateCardBookmarkStatus,
   updateCardLikeStatus,
 } from '@/libraries/api';

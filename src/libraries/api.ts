@@ -15,7 +15,8 @@ const contributors: ContributorType[] = contributorsData;
 const decks: DeckType[] = decksData;
 const paths: PathType[] = pathsData;
 
-const contentDirectory = join(process.cwd(), 'content');
+const decksContentDirectory = join(process.cwd(), 'content/decks');
+const pagesContentDirectory = join(process.cwd(), 'content/pages');
 
 const cardFilesCache: Record<string, string[]> = {};
 
@@ -29,7 +30,7 @@ function readCardFiles(folder: string): string[] {
 
 function initializeCardFilesCache(decks: { id: string }[]): void {
   decks.forEach(({ id }) => {
-    const deckPath = join(contentDirectory, id);
+    const deckPath = join(decksContentDirectory, id);
     try {
       const cardFiles = fs
         .readdirSync(deckPath)
@@ -178,7 +179,7 @@ export function getCardById(cardId: string): CardType | null {
   }
 
   const fullPath = join(
-    contentDirectory,
+    decksContentDirectory,
     deck.id,
     `${cardIdWithoutExtension}.mdx`
   );
@@ -390,4 +391,29 @@ export function getActiveSession(): number | null {
   const query = db.prepare('SELECT user_id FROM sessions LIMIT 1');
   const result = query.get() as { user_id: number } | undefined;
   return result ? result.user_id : null;
+}
+
+// Page functions
+export function getPageContent(
+  pageId: string
+): { content: string; data: any } | null {
+  if (!pageId) {
+    console.error('Invalid pageId parameter:', pageId);
+    return null;
+  }
+
+  const fullPath = join(pagesContentDirectory, `${pageId}.mdx`);
+
+  try {
+    const fileContents = fs.readFileSync(fullPath, 'utf8');
+    const { data, content } = matter(fileContents);
+
+    return {
+      data,
+      content,
+    };
+  } catch (error) {
+    console.error(`Error reading file at path ${fullPath}:`, error);
+    return null;
+  }
 }
