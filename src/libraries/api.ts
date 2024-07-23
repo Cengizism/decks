@@ -191,7 +191,7 @@ export function getCardById(cardId: string): CardType | null {
     const processedContent = content.replace(
       /!\[([^\]]*)\]\((images\/[^)]+)\)/g,
       (_: unknown, imageTitle: string, imageFileNameWithExtension: string) => {
-        return `![${imageTitle}](/api/content/${deck.id}/${imageFileNameWithExtension})`;
+        return `![${imageTitle}](/api/content/decks/${deck.id}/${imageFileNameWithExtension})`;
       }
     );
 

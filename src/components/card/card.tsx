@@ -42,7 +42,7 @@ const CardComponent: React.FC<CardComponentProps> = ({
     <Card className={styles.card}>
       <CardPreview>
         <Cover
-          src={deck ? `/api/content/${deck.id}/images/${card.coverImage}` : ''}
+          src={deck ? `/api/content/decks/${deck.id}/images/${card.coverImage}` : ''}
           title={card.title}
           id={card.id}
         />
