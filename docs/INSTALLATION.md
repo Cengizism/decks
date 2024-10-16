@@ -16,8 +16,8 @@ Follow these steps to set up the development environment:
 2. **Clone the Repository**:
 
    ```bash
-   git clone https://altenitbitfs@dev.azure.com/altenitbitfs/Decks/_git/Decks
-   cd Decks
+   git clone https://github.com/Cengizism/decks.git
+   cd decks
    ```
 
 3. **Install Dependencies**:

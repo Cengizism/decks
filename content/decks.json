@@ -14,13 +14,5 @@
     "coverImage": "user-experience.png",
     "pathId": "user-experience",
     "contributorId": "jane-smit"
-  },
-  {
-    "id": "unit-testing",
-    "title": "Unit Testing",
-    "description": "This deck explains different topics related to unit testing.",
-    "coverImage": "testing.jpg",
-    "pathId": "testing",
-    "contributorId": "boris-blokland"
   }
 ]

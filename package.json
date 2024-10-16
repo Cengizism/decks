@@ -1,11 +1,11 @@
 {
-  "name": "alten-decks",
+  "name": "decks",
   "version": "0.0.1",
   "private": true,
   "contributors": [
     {
       "name": "Cengiz Ulusoy",
-      "email": "cengiz.ulusoy@alten.nl"
+      "email": "slings_header08@icloud.com"
     }
   ],
   "scripts": {

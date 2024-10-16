@@ -15,7 +15,7 @@ import { ArrowExitRegular } from '@fluentui/react-icons';
 import Link from 'next/link';
 import React from 'react';
 
-import AltenBrand from './altenBrand';
+import Brand from './brand';
 import styles from './appBar.module.css';
 import Avatar from './avatar';
 import ThemeSwitcher from './themeSwitcher';
@@ -41,7 +41,7 @@ const AppBar: React.FC = () => {
     <header className={mergeClasses(styles.header, inlineStyles.header)}>
       <hgroup>
         {!isNavigationDrawerOpen && <HamburgerMenu />}
-        <AltenBrand />
+        <Brand />
       </hgroup>
 
       <Toolbar aria-label='Default'>
